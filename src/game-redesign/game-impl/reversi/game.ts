@@ -45,10 +45,10 @@ export class ReversiGame extends Game {
       r = +s[1],
       c = +s[2];
 
-    this.placePiece(r, c, i);
+    this.placePiece(s, r, c, i);
   }
 
-  placePiece(...[r, c, i]: number[]) {
+  placePiece(s: string, ...[r, c, i]: number[]) {
     const grid = this.grid;
 
     this.grid[r][c] = i;
@@ -56,11 +56,21 @@ export class ReversiGame extends Game {
     let row = this.r,
       col = this.c;
 
+    let changedPieces: number[][] | null = [];
+
     for (let j = 0; j < 8; ++j) {
       if (checkValidDir(j)) {
         reverse(j);
       }
     }
+
+    this.pushStep(s, () => {
+      this.grid[r][c] = 2;
+      changedPieces!.forEach(([x, y]) => {
+        this.grid[x][y] = 1 - i;
+      });
+      changedPieces = null;
+    });
 
     function checkValidDir(d = 0) {
       let x = r + dx[d],
@@ -81,6 +91,7 @@ export class ReversiGame extends Game {
         y = c + dy[d];
       while (isIn(x, y) && grid[x][y] === 1 - i) {
         grid[x][y] = i;
+        changedPieces!.push([x, y]);
         (x += dx[d]), (y += dy[d]);
       }
     }
