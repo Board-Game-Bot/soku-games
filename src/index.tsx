@@ -13,6 +13,8 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
+import './game-redesign/index';
+
 render(
   () => (
     <Router>
