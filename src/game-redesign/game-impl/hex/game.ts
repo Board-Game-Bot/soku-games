@@ -15,6 +15,7 @@ export class HexGame extends Game {
 
   grid = <number[][]>[];
   w = 0;
+  turn = 0;
   initImpl(data: { w: number; mask: string }): void {
     const { w, mask } = data;
 
@@ -39,8 +40,10 @@ export class HexGame extends Game {
 
   put(s: string, ...[id, r, c]: number[]) {
     this.grid[r][c] = id;
+    this.turn ^= 1;
     this.pushStep(s, () => {
       this.grid[r][c] = 2;
+      this.turn ^= 1;
     });
   }
 }
