@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #282c34;
 }
 
 code {
@@ -37,4 +38,10 @@ button {
 
 button:focus {
   outline: 1px solid #777;
+}
+
+input[type=text] {
+  border-radius: 5px;  
+  
+  height: 20px;
 }
