@@ -65,6 +65,20 @@ export class G {
     });
   }
 
+  Text(options: {
+    x: number;
+    y: number;
+    text: string;
+    font: string;
+    color?: string;
+  }) {
+    const { x, y, text, font, color } = options;
+    const c = this.context;
+    c.font = font;
+    c.fillStyle = color || '#000';
+    c.fillText(text, x, y);
+  }
+
   Poly(options: { ps: number[][]; color?: string }) {
     const { ps, color } = options;
     const c = this.context;
