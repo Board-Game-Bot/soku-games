@@ -43,8 +43,8 @@ export class G {
     c.lineWidth = width;
     c.strokeStyle = color || '#000';
     c.beginPath();
-    c.moveTo(y0, x0);
-    c.lineTo(y1, x1);
+    c.moveTo(x0, y0);
+    c.lineTo(x1, y1);
     c.closePath();
     c.stroke();
     c.restore();
