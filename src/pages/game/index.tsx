@@ -1,7 +1,16 @@
+import { Window } from '@/components/window';
 import { generate } from '@/game-redesign/data.generator.decorator';
 import { createGame } from '@/game-redesign/game-implement.decorator';
 import { Game } from '@/game-redesign/game.base';
-import { createSignal } from 'solid-js';
+import { ComponentProps, ParentProps, createSignal } from 'solid-js';
+
+function Button(props: ParentProps & ComponentProps<'button'>) {
+  return (
+    <button {...props} class={'rounded-md px-2 py-1 text-sm flex-1'}>
+      {props.children}
+    </button>
+  );
+}
 
 export function GameView() {
   let canvas: HTMLCanvasElement;
@@ -10,12 +19,7 @@ export function GameView() {
   const [gameName, setGameName] = createSignal('');
 
   function startGame() {
-    const data = generate(gameName(), {
-      r: 12,
-      c: 13,
-      wallCount: 15,
-    });
-    game = createGame(gameName()).setCanvas(canvas).init(data).start();
+    game = createGame(gameName()).setCanvas(canvas);
   }
 
   const [step, setStep] = createSignal('');
@@ -23,34 +27,49 @@ export function GameView() {
     game.step(step());
   }
 
+  let textarea: HTMLTextAreaElement;
+  function init() {
+    const data = generate(gameName(), JSON.parse(textarea.value));
+
+    game.init(data).start();
+  }
+
   return (
     <div class={'w-screen h-screen flex flex-col justify-center items-center'}>
       <div
-        class={'w-[500px] h-[500px] bg-slate-400 rounded-md overflow-hidden'}
+        class={
+          'w-[500px] h-[500px] bg-slate-400 rounded-md overflow-hidden flex justify-center items-center'
+        }
       >
-        <canvas class={'w-full h-full'} ref={(el) => (canvas = el)} />
-      </div>
-      <div>
-        <input
-          class={'w-[300px] mt-3'}
-          value={gameName()}
-          onChange={(e) => setGameName(e.currentTarget.value)}
-          type="text"
-        />
-      </div>
-      <div class={'flex mt-3 gap-2 items-center'}>
-        <input
-          type="text"
-          value={step()}
-          onChange={(e) => setStep(e.currentTarget.value)}
-        />
-        <button onClick={nextStep} class={'rounded-md px-2 py-1 text-sm'}>
-          step
-        </button>
-      </div>
-      <button onClick={startGame} class={'mt-6'}>
-        start
-      </button>
+        <canvas class={'max-w-full max-h-full'} ref={(el) => (canvas = el)} />
+      </div>{' '}
+      <Window width={400} height={400}>
+        <div class={'flex gap-2 mt-3'}>
+          <textarea
+            ref={(el) => (textarea = el)}
+            class={'w-[300px] resize-y'}
+          ></textarea>
+          <Button onClick={init}>init</Button>
+        </div>
+        <div class={'flex mt-3 gap-2'}>
+          <input
+            class={'w-[300px]'}
+            value={gameName()}
+            onChange={(e) => setGameName(e.currentTarget.value)}
+            type="text"
+          />
+          <Button onClick={startGame}>start</Button>
+        </div>
+        <div class={'flex mt-3 gap-2 items-center'}>
+          <input
+            class={'w-[300px]'}
+            type="text"
+            value={step()}
+            onChange={(e) => setStep(e.currentTarget.value)}
+          />
+          <Button onClick={nextStep}>step</Button>
+        </div>
+      </Window>
     </div>
   );
 }
