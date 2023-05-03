@@ -41,13 +41,16 @@ export class ReversiGame extends Game {
   }
   stepImpl(s: string): void {
     'i.r.c';
+    'p';
+    if (s === 'p') return this.pass();
     const i = +s[0],
-      r = +s[1],
-      c = +s[2];
+      r = parseInt(s[1], 36),
+      c = parseInt(s[2], 36);
 
     this.placePiece(s, r, c, i);
   }
 
+  turn = 0;
   placePiece(s: string, ...[r, c, i]: number[]) {
     const grid = this.grid;
 
@@ -64,12 +67,15 @@ export class ReversiGame extends Game {
       }
     }
 
+    this.turn ^= 1;
+
     this.pushStep(s, () => {
       this.grid[r][c] = 2;
       changedPieces!.forEach(([x, y]) => {
         this.grid[x][y] = 1 - i;
       });
       changedPieces = null;
+      this.turn ^= 1;
     });
 
     function checkValidDir(d = 0) {
@@ -99,5 +105,13 @@ export class ReversiGame extends Game {
     function isIn(x = 0, y = 0) {
       return 0 <= x && x < row && 0 <= y && y < col;
     }
+  }
+
+  pass() {
+    this.turn ^= 1;
+
+    this.pushStep('p', () => {
+      this.turn ^= 1;
+    });
   }
 }
