@@ -18,6 +18,23 @@ export class Renderer extends GameObject {
       });
     });
 
+    this.mkUpdater('render-current', () => {
+      const L = this.L!;
+      const g = game.g!;
+
+      if (!game.currentPosition) return;
+
+      const [cx, cy] = game.currentPosition;
+      const { x, y } = getPosition(cx, cy);
+
+      g.Hex({
+        x: x * L,
+        y: y * L,
+        radius: 0.6 * L,
+        color: game.turn ? '#00f' : '#f00',
+      });
+    });
+
     this.mkUpdater('render-grid', () => {
       const g = game.g!;
       const L = this.L!;

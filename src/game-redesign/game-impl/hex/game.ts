@@ -2,6 +2,7 @@ import { GameImplement } from '@/game-redesign/game-implement.decorator';
 import { Game } from '@/game-redesign/game.base';
 import { Renderer } from './renderer';
 import { Vector } from '@/game-redesign/g';
+import { C, IPosition } from '@/game-redesign/c';
 
 @GameImplement('hex', 4)
 export class HexGame extends Game {
@@ -16,6 +17,7 @@ export class HexGame extends Game {
   grid = <number[][]>[];
   w = 0;
   turn = 0;
+  currentPosition: number[] | null = null;
   initImpl(data: { w: number; mask: string }): void {
     const { w, mask } = data;
 
@@ -56,4 +58,16 @@ export function getPosition(x: number, y: number) {
   vx.mul(x);
   vy.mul(y);
   return vx.add(vy).add(new Vector(1, 10));
+}
+
+export function findPosition(x: number, y: number) {
+  let ret: IPosition | undefined;
+  new Array(11).fill(0).forEach((_, i) => {
+    new Array(11).fill(0).forEach((_, j) => {
+      const p = getPosition(i, j);
+      const d = C.distance([p.x, p.y], [x, y]);
+      if (d < 0.8) ret = [i, j];
+    });
+  });
+  return ret;
 }

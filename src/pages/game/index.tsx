@@ -22,7 +22,7 @@ export function GameView() {
 
   function startGame() {
     game = createGame(gameName()).setCanvas(canvas);
-    (getController('local', 'reversi') as Controller).setGame(game);
+    (getController('local', gameName()) as Controller).setGame(game);
   }
 
   const [step, setStep] = createSignal('');
