@@ -1,6 +1,7 @@
-import { GameObject } from '@/game-redesign/game.object';
+import { C } from '../../c';
+import { GameObject } from '../../game.object';
+import { IPosition } from '../snake/game';
 import { BackgammonGame } from './game';
-import { C, IPosition } from '@/game-redesign/c';
 
 export class Piece extends GameObject {
   id = 0;

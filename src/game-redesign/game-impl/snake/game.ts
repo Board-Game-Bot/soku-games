@@ -1,5 +1,5 @@
-import { GameImplement } from '@/game-redesign/game-implement.decorator';
-import { Game } from '@/game-redesign/game.base';
+import { GameImplement } from '../../game-implement.decorator';
+import { Game } from '../../game.base';
 import { GameMap } from './map';
 import { Snake } from './snake';
 

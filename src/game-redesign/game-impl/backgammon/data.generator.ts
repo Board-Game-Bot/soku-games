@@ -1,5 +1,5 @@
-import { DataGenerator } from '@/game-redesign/data.generator';
-import { GeneratorImplement } from '@/game-redesign/data.generator.decorator';
+import { DataGenerator } from '../../data.generator';
+import { GeneratorImplement } from '../../data.generator.decorator';
 
 @GeneratorImplement('backgammon', 3)
 export class BackgammonDataGenerator extends DataGenerator {

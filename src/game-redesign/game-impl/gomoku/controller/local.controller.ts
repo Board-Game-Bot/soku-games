@@ -1,10 +1,10 @@
-import { IPosition } from '@/game-redesign/c';
-import { Controller } from '@/game-redesign/controller.base';
-import { GameControllerImplement } from '@/game-redesign/controller.decorator';
+import { Controller } from '../../../controller.base';
+import { GameControllerImplement } from '../../../controller.decorator';
+import { IPosition } from '../../snake/game';
 import { GomokuGame } from '../game';
 
 @GameControllerImplement('local', 'gomoku', 5)
-export class LocalController extends Controller {
+export class GomokuLocalController extends Controller {
   setGame(game: GomokuGame): void {
     super.setGame(game);
 

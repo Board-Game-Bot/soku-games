@@ -1,6 +1,6 @@
-import { Game } from '@/game-redesign/game.base';
+import { Game } from '../../game.base';
+import { GameObject } from '../../game.object';
 import { SnakeGame } from './game';
-import { GameObject } from '@/game-redesign/game.object';
 
 export class GameMap extends GameObject {
   constructor(game: Game) {

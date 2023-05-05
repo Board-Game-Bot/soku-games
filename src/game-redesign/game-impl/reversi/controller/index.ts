@@ -1,1 +1,1 @@
-export { LocalController } from './local.controller';
+export { ReversiLocalController } from './local.controller';

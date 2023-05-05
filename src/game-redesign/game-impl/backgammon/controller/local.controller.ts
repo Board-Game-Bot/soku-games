@@ -1,11 +1,11 @@
-import { IPosition } from '@/game-redesign/c';
-import { Controller } from '@/game-redesign/controller.base';
-import { GameControllerImplement } from '@/game-redesign/controller.decorator';
+import { Controller } from '../../../controller.base';
+import { GameControllerImplement } from '../../../controller.decorator';
+import { IPosition } from '../../snake/game';
 import { BackgammonGame } from '../game';
 import { Piece } from '../piece';
 
 @GameControllerImplement('local', 'backgammon', 3)
-export class LocalController extends Controller {
+export class BackgammonLocalController extends Controller {
   setGame(game: BackgammonGame): void {
     super.setGame(game);
 

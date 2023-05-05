@@ -1,9 +1,9 @@
-import { Controller } from '@/game-redesign/controller.base';
-import { GameControllerImplement } from '@/game-redesign/controller.decorator';
+import { Controller } from '../../../controller.base';
+import { GameControllerImplement } from '../../../controller.decorator';
 import { ReversiGame } from '../game';
 
 @GameControllerImplement('local', 'reversi', 2)
-export class LocalController extends Controller {
+export class ReversiLocalController extends Controller {
   events = <[HTMLCanvasElement, 'mousedown', (e: MouseEvent) => void][]>[];
   setGame(game: ReversiGame) {
     super.setGame(game);

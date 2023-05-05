@@ -1,1 +1,1 @@
-export { LocalController } from './local.controller';
+export { BackgammonLocalController } from './local.controller';

@@ -1,9 +1,9 @@
-import { Controller } from '@/game-redesign/controller.base';
-import { GameControllerImplement } from '@/game-redesign/controller.decorator';
+import { Controller } from '../../../controller.base';
+import { GameControllerImplement } from '../../../controller.decorator';
 import { HexGame, findPosition } from '../game';
 
 @GameControllerImplement('local', 'hex', 4)
-export class LocalController extends Controller {
+export class HexLocalController extends Controller {
   setGame(game: HexGame): void {
     super.setGame(game);
     console.log('hex');

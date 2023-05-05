@@ -1,7 +1,7 @@
-import { Game } from '@/game-redesign/game.base';
-import { GameObject } from '@/game-redesign/game.object';
+import { C } from '../../c';
+import { Game } from '../../game.base';
+import { GameObject } from '../../game.object';
 import { IPosition } from './game';
-import { C } from '@/game-redesign/c';
 
 const dx = [-1, 0, 1, 0];
 const dy = [0, 1, 0, -1];

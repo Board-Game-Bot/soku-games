@@ -1,1 +1,1 @@
-export { LocalController } from './local.controller';
+export { HexLocalController } from './local.controller';

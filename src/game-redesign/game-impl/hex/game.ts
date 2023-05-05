@@ -1,8 +1,9 @@
-import { GameImplement } from '@/game-redesign/game-implement.decorator';
-import { Game } from '@/game-redesign/game.base';
+import { C } from '../../c';
+import { Vector } from '../../g';
+import { GameImplement } from '../../game-implement.decorator';
+import { Game } from '../../game.base';
+import { IPosition } from '../snake/game';
 import { Renderer } from './renderer';
-import { Vector } from '@/game-redesign/g';
-import { C, IPosition } from '@/game-redesign/c';
 
 @GameImplement('hex', 4)
 export class HexGame extends Game {

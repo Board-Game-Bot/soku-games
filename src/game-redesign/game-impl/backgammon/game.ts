@@ -1,7 +1,7 @@
-import { GameImplement } from '@/game-redesign/game-implement.decorator';
-import { Game } from '@/game-redesign/game.base';
+import { GameImplement } from '../../game-implement.decorator';
+import { Game } from '../../game.base';
+import { IPosition } from '../snake/game';
 import { Piece, calcPos } from './piece';
-import { IPosition } from '@/game-redesign/c';
 import { Renderer } from './renderer';
 
 @GameImplement('backgammon', 3)

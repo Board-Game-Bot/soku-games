@@ -1,5 +1,5 @@
-import { DataGenerator } from '@/game-redesign/data.generator';
-import { GeneratorImplement } from '@/game-redesign/data.generator.decorator';
+import { DataGenerator } from '../../data.generator';
+import { GeneratorImplement } from '../../data.generator.decorator';
 
 @GeneratorImplement('reversi', 2)
 export class ReversiDataGenerator extends DataGenerator {

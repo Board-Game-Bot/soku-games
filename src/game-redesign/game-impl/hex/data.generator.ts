@@ -1,4 +1,4 @@
-import { GeneratorImplement } from '@/game-redesign/data.generator.decorator';
+import { GeneratorImplement } from '../../data.generator.decorator';
 
 @GeneratorImplement('hex', 4)
 export class HexDataGenerator {

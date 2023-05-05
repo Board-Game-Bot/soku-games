@@ -1,4 +1,4 @@
-import { GameObject } from '@/game-redesign/game.object';
+import { GameObject } from '../../game.object';
 import { GomokuGame } from './game';
 
 export class Renderer extends GameObject {

@@ -1,4 +1,4 @@
-import { GameObject } from '@/game-redesign/game.object';
+import { GameObject } from '../../game.object';
 import { ReversiGame } from './game';
 
 export class GameMap extends GameObject {

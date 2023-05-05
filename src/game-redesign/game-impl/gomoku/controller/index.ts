@@ -1,1 +1,1 @@
-export { LocalController } from './local.controller';
+export { GomokuLocalController } from './local.controller';
