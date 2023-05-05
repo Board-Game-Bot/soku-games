@@ -73,6 +73,7 @@ export class Renderer extends GameObject {
             p: [x, y],
             isInHome,
             id,
+            isSelected,
           } = p;
 
           if (!isInHome) {
@@ -88,6 +89,15 @@ export class Renderer extends GameObject {
               radius: (L / 2) * 0.95,
               color: id ? '#900' : '#ccc',
             });
+
+            if (isSelected) {
+              g.Cir({
+                y: x * L,
+                x: y * L,
+                radius: L * 0.2,
+                color: '#005',
+              });
+            }
           } else {
             g.Rect({
               y: x * L,

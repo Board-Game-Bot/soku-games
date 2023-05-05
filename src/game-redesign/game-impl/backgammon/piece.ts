@@ -5,6 +5,7 @@ import { C, IPosition } from '@/game-redesign/c';
 export class Piece extends GameObject {
   id = 0;
   p = <[number, number]>[0, 0];
+  isSelected = false;
   constructor(
     game: BackgammonGame,
     config: {
