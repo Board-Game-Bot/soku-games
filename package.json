@@ -1,5 +1,5 @@
 {
-  "name": "soku-game",
+  "name": "soku-games",
   "version": "0.0.1",
   "description": "Target to implement all board and card games in Nintendo's 世界のアソビ大全51.",
   "keywords": ["games", "package", "customizable"],

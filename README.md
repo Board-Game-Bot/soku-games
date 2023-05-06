@@ -1,4 +1,4 @@
-# SokuGame
+# SokuGames
 
 Target to implement all board and card games in Nintendo's 世界のアソビ大全51.
 
