@@ -1,3 +1,7 @@
+export { getController } from './controller.decorator';
+export { generate } from './data.generator.decorator';
+export { createGame } from './game-implement.decorator';
+
 export { Controller } from './controller.base';
 export { GeneratorImplement } from './data.generator.decorator';
 export { GameImplement } from './game-implement.decorator';
