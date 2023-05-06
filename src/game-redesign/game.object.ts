@@ -1,4 +1,4 @@
-import { Eventer } from './eventer';
+import { Eventer } from './utils/eventer';
 import { Game } from './game.base';
 
 export class GameObject {

@@ -1,4 +1,4 @@
-import { C } from '../../c';
+import { C } from '../../utils/c';
 import { Game } from '../../game.base';
 import { GameObject } from '../../game.object';
 import { IPosition } from './game';

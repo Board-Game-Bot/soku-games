@@ -1,5 +1,5 @@
-import { C } from '../../c';
-import { Vector } from '../../g';
+import { C } from '../../utils/c';
+import { Vector } from '../../utils/g';
 import { GameImplement } from '../../game-implement.decorator';
 import { Game } from '../../game.base';
 import { IPosition } from '../snake/game';

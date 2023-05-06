@@ -1,5 +1,5 @@
-import { Eventer } from './eventer';
-import { G } from './g';
+import { Eventer } from './utils/eventer';
+import { G } from './utils/g';
 import { GameObject } from './game.object';
 import { Screen } from './screen';
 
