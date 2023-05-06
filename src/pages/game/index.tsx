@@ -1,5 +1,4 @@
 import { Window } from '@/components/window';
-import { Controller } from '@/game-redesign/controller.base';
 import { getController } from '@/game-redesign/controller.decorator';
 import { generate } from '@/game-redesign/data.generator.decorator';
 import { createGame } from '@/game-redesign/game-implement.decorator';
@@ -22,7 +21,7 @@ export function GameView() {
 
   function startGame() {
     game = createGame(gameName()).setCanvas(canvas);
-    (getController('local', gameName()) as Controller).setGame(game);
+    getController('local', gameName()).setGame(game);
   }
 
   const [step, setStep] = createSignal('');
