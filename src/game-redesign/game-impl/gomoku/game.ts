@@ -1,12 +1,13 @@
 import { GameImplement } from '../../game-implement.decorator';
 import { Game } from '../../game.base';
 import { IPosition } from '../snake/game';
+import { Judgement } from './judgement';
 import { Renderer } from './renderer';
 
 @GameImplement('gomoku', 5)
 export class GomokuGame extends Game {
   setJudgementImpl(): void {
-    throw new Error('Method not implemented.');
+    new Judgement(this);
   }
 
   addRendererImpl(): void {
