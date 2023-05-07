@@ -27,13 +27,18 @@ export class Judgement {
       });
 
       if (failed) {
-        game.after.on('step', () => {
-          if (failed !== 3) {
-            game.stop(`${failed === 1 ? 0 : 1}号蛇碰撞致死`);
-          } else {
-            game.stop(`双方蛇均碰撞致死`);
-          }
-        });
+        const flg = window && !!window.requestAnimationFrame;
+        setTimeout(
+          () => {
+            if (failed !== 3) {
+              game.stop(`${failed === 1 ? 0 : 1}号蛇碰撞致死`);
+            } else {
+              game.stop(`双方蛇均碰撞致死`);
+              flg ? 200 : 0;
+            }
+          },
+          flg ? 200 : 0
+        );
       }
     });
 
