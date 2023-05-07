@@ -1,6 +1,6 @@
 import { GameImplement } from '../../game-implement.decorator';
 import { Game } from '../../game.base';
-import { GameMap } from './map';
+import { Renderer } from './renderer';
 import { Snake } from './snake';
 
 export type IPosition = [number, number];
@@ -9,9 +9,11 @@ export type IPosition = [number, number];
 export class SnakeGame extends Game {
   constructor() {
     super();
+  }
 
+  addRendererImpl(): void {
     this.before.on('start', () => {
-      new GameMap(this);
+      new Renderer(this);
     });
   }
 

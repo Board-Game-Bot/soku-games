@@ -9,12 +9,12 @@ import { Renderer } from './renderer';
 export class HexGame extends Game {
   constructor() {
     super();
-
+  }
+  addRendererImpl(): void {
     this.before.on('start', () => {
       new Renderer(this);
     });
   }
-
   grid = <number[][]>[];
   w = 0;
   turn = 0;

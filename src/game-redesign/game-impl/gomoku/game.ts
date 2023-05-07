@@ -7,12 +7,12 @@ import { Renderer } from './renderer';
 export class GomokuGame extends Game {
   constructor() {
     super();
-
+  }
+  addRendererImpl(): void {
     this.before.on('start', () => {
       new Renderer(this);
     });
   }
-
   row = 0;
   col = 0;
   grid = <number[][]>[];

@@ -25,8 +25,11 @@ export abstract class Game {
     this.canvas = canvas;
     this.g = new G(canvas);
     this.screen = new Screen(this);
+    this.addRendererImpl();
     return this;
   }
+
+  abstract addRendererImpl(): void;
 
   mode?: IMode;
   setMode(mode: IMode) {

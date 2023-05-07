@@ -8,7 +8,9 @@ import { Renderer } from './renderer';
 export class BackgammonGame extends Game {
   constructor() {
     super();
+  }
 
+  addRendererImpl(): void {
     this.before.on('start', () => {
       new Renderer(this);
     });

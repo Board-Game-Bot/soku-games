@@ -10,53 +10,6 @@ export class Snake extends GameObject {
   constructor(game: Game) {
     super(game);
 
-    this.mkUpdater('render-body', () => {
-      const L = this.L!;
-      const g = game.g;
-      this.cells.reduce((pre, cur) => {
-        const [dx, dy] = [pre[0] - cur[0], pre[1] - cur[1]];
-        if (!!dx) {
-          g?.Rect({
-            y: (Math.min(pre[0], cur[0]) + 0.5) * L,
-            x: (pre[1] + 0.1) * L,
-            ly: Math.abs(dx) * L,
-            lx: 0.8 * L,
-            color: this.color,
-          });
-        } else {
-          g?.Rect({
-            y: (pre[0] + 0.1) * L,
-            x: (Math.min(pre[1], cur[1]) + 0.5) * L,
-            ly: 0.8 * L,
-            lx: Math.abs(dy) * L,
-            color: this.color,
-          });
-        }
-        return cur;
-      });
-    });
-    this.mkUpdater('render-cells', () => {
-      const L = this.L!;
-      const g = game.g;
-
-      this.cells.forEach((c) => {
-        const [x, y] = c;
-        g?.Cir({
-          x: (y + 0.5) * L,
-          y: (x + 0.5) * L,
-          radius: 0.4 * L,
-          color: this.color,
-        });
-      });
-      const [x, y] = this.cells[0];
-      g?.Cir({
-        x: (y + 0.5) * L,
-        y: (x + 0.5) * L,
-        radius: 0.2 * L,
-        color: '#000',
-      });
-    });
-
     const fn = () => {
       if (!this.stepMq.length) return;
       this.next(...this.stepMq.shift()!);

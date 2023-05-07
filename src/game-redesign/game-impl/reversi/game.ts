@@ -9,12 +9,12 @@ const dy = [-1, 0, 1, 1, 1, 0, -1, -1];
 export class ReversiGame extends Game {
   constructor() {
     super();
-
+  }
+  addRendererImpl(): void {
     this.before.on('start', () => {
       new GameMap(this);
     });
   }
-
   grid = <number[][]>[];
   r = 0;
   c = 0;
