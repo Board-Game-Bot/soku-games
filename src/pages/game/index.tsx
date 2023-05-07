@@ -20,11 +20,18 @@ export function GameView() {
   const [gameName, setGameName] = createSignal('');
 
   function startGame() {
+    if (game) {
+      game.stop('');
+    }
     game = createGame(gameName())
       .setCanvas(canvas)
       .openValidate(true)
       .setJudgement();
     getController('local', gameName()).setGame(game);
+
+    game.after.on('stop', (reason: string) => {
+      console.log(`Game over: ${reason}`);
+    });
   }
 
   const [step, setStep] = createSignal('');
