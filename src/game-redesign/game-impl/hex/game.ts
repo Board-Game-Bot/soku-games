@@ -4,12 +4,14 @@ import { GameImplement } from '../../game-implement.decorator';
 import { Game } from '../../game.base';
 import { IPosition } from '../snake/game';
 import { Renderer } from './renderer';
+import { Judgement } from './judgement';
 
 @GameImplement('hex', 4)
 export class HexGame extends Game {
   setJudgementImpl() {
-    throw new Error('Method not implemented.');
+    new Judgement(this);
   }
+
   addRendererImpl(): void {
     this.before.on('start', () => {
       new Renderer(this);
