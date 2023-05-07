@@ -1,6 +1,6 @@
 import { Controller } from '../../../controller.base';
 import { GameControllerImplement } from '../../../controller.decorator';
-import { HexGame, findPosition } from '../game';
+import { findPosition, HexGame } from '../game';
 
 @GameControllerImplement('local', 'hex', 4)
 export class HexLocalController extends Controller {

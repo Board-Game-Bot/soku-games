@@ -6,8 +6,8 @@ import { Renderer } from './renderer';
 
 @GameImplement('backgammon', 3)
 export class BackgammonGame extends Game {
-  constructor() {
-    super();
+  setJudgementImpl(): void {
+    throw new Error('Method not implemented.');
   }
 
   addRendererImpl(): void {

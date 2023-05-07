@@ -1,13 +1,13 @@
-export class Eventer {
-  private map: Map<string, Function[]> = new Map();
+export class Eventer<T = string> {
+  private map: Map<T, Function[]> = new Map();
 
-  on(tag: string, fn: Function) {
+  on(tag: T, fn: Function) {
     const fns = this.map.get(tag) || [];
     this.map.set(tag, [...fns, fn]);
     return this;
   }
 
-  off(tag: string, fn?: Function) {
+  off(tag: T, fn?: Function) {
     let fns = this.map.get(tag) || [];
     if (fn) {
       fns = fns.filter((f) => f !== fn);
@@ -20,7 +20,7 @@ export class Eventer {
     return this;
   }
 
-  emit(tag: string, ...args: any) {
+  emit(tag: T, ...args: any) {
     const fns = this.map.get(tag) || [];
     fns.forEach((fn) => fn(...args));
     return this;

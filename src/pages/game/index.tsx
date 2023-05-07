@@ -20,7 +20,10 @@ export function GameView() {
   const [gameName, setGameName] = createSignal('');
 
   function startGame() {
-    game = createGame(gameName()).setCanvas(canvas).openValidate(true);
+    game = createGame(gameName())
+      .setCanvas(canvas)
+      .openValidate(true)
+      .setJudgement();
     getController('local', gameName()).setGame(game);
   }
 

@@ -7,8 +7,8 @@ import { Renderer } from './renderer';
 
 @GameImplement('hex', 4)
 export class HexGame extends Game {
-  constructor() {
-    super();
+  setJudgementImpl() {
+    throw new Error('Method not implemented.');
   }
   addRendererImpl(): void {
     this.before.on('start', () => {

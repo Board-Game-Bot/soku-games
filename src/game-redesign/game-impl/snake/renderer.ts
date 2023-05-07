@@ -27,8 +27,8 @@ export class Renderer extends GameObject {
       const g = game.g;
       const snakes = game.snakes;
 
-      snakes.forEach(({ cells, color }) => {
-        cells.reduce((pre, cur) => {
+      snakes.forEach(({ shownCells, color }) => {
+        shownCells.reduce((pre, cur) => {
           const [dx, dy] = [pre[0] - cur[0], pre[1] - cur[1]];
           if (!!dx) {
             g?.Rect({
@@ -36,7 +36,7 @@ export class Renderer extends GameObject {
               x: (pre[1] + 0.1) * L,
               ly: Math.abs(dx) * L,
               lx: 0.8 * L,
-              color: color,
+              color,
             });
           } else {
             g?.Rect({
@@ -44,7 +44,7 @@ export class Renderer extends GameObject {
               x: (Math.min(pre[1], cur[1]) + 0.5) * L,
               ly: 0.8 * L,
               lx: Math.abs(dy) * L,
-              color: color,
+              color,
             });
           }
           return cur;
@@ -57,22 +57,22 @@ export class Renderer extends GameObject {
       const g = game.g;
       const snakes = game.snakes;
 
-      snakes.forEach(({ cells, color }) => {
-        cells.forEach((c) => {
+      snakes.forEach(({ shownCells, color, eyeColor }) => {
+        shownCells.forEach((c) => {
           const [x, y] = c;
           g?.Cir({
             x: (y + 0.5) * L,
             y: (x + 0.5) * L,
             radius: 0.4 * L,
-            color: color,
+            color,
           });
         });
-        const [x, y] = cells[0];
+        const [x, y] = shownCells[0];
         g?.Cir({
           x: (y + 0.5) * L,
           y: (x + 0.5) * L,
           radius: 0.2 * L,
-          color: '#000',
+          color: eyeColor,
         });
       });
     });

@@ -4,6 +4,7 @@ import { GameObject } from './game.object';
 import { Screen } from './screen';
 
 export type IMode = 'single' | 'multi' | 'record' | 'watch';
+export type IEvent = 'start' | 'step' | 'rev-step' | 'stop';
 export type IStepDo = {
   step: string;
   todo: Function;
@@ -11,8 +12,8 @@ export type IStepDo = {
 
 export abstract class Game {
   objs: GameObject[] = [];
-  before: Eventer = new Eventer();
-  after: Eventer = new Eventer();
+  before: Eventer<IEvent> = new Eventer();
+  after: Eventer<IEvent> = new Eventer();
 
   screen?: Screen;
   get L() {
@@ -30,6 +31,12 @@ export abstract class Game {
   }
 
   abstract addRendererImpl(): void;
+
+  setJudgement() {
+    this.setJudgementImpl();
+    return this;
+  }
+  abstract setJudgementImpl(): void;
 
   mode?: IMode;
   setMode(mode: IMode) {
@@ -59,14 +66,7 @@ export abstract class Game {
         if (!tp) {
           tp = _tp;
         } else {
-          this.objs.forEach((obj) => {
-            if (!obj.started) {
-              obj.start();
-            } else {
-              obj.dt = _tp - tp;
-              obj.update();
-            }
-          });
+          this.frame(_tp, tp);
         }
         tp = _tp;
         window.requestAnimationFrame(frame);
@@ -79,9 +79,21 @@ export abstract class Game {
     return this;
   }
 
+  frame(_tp = 0, tp = 0) {
+    this.objs.forEach((obj) => {
+      if (!obj.started) {
+        obj.start();
+      } else {
+        obj.dt = _tp - tp;
+        obj.update();
+      }
+    });
+  }
+
   // 游戏结束
-  stop() {
-    this.before.emit('stop');
+  reason: string = '';
+  stop(reason: string) {
+    this.before.emit('stop', reason);
 
     if (window && window.cancelAnimationFrame) {
       window.cancelAnimationFrame(this.engine);
@@ -89,7 +101,7 @@ export abstract class Game {
 
     this.objs = [];
 
-    this.after.emit('stop');
+    this.after.emit('stop', reason);
 
     return this;
   }

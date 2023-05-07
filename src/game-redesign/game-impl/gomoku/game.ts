@@ -5,9 +5,10 @@ import { Renderer } from './renderer';
 
 @GameImplement('gomoku', 5)
 export class GomokuGame extends Game {
-  constructor() {
-    super();
+  setJudgementImpl(): void {
+    throw new Error('Method not implemented.');
   }
+
   addRendererImpl(): void {
     this.before.on('start', () => {
       new Renderer(this);

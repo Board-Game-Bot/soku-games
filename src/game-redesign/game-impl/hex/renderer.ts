@@ -1,5 +1,5 @@
 import { GameObject } from '../../game.object';
-import { HexGame, getPosition } from './game';
+import { getPosition, HexGame } from './game';
 
 export class Renderer extends GameObject {
   constructor(game: HexGame) {

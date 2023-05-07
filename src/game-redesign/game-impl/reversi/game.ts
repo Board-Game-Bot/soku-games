@@ -7,9 +7,10 @@ const dy = [-1, 0, 1, 1, 1, 0, -1, -1];
 
 @GameImplement('reversi', 2)
 export class ReversiGame extends Game {
-  constructor() {
-    super();
+  setJudgementImpl(): void {
+    throw new Error('Method not implemented.');
   }
+
   addRendererImpl(): void {
     this.before.on('start', () => {
       new GameMap(this);
