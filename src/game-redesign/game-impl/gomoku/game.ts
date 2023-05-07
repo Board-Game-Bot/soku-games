@@ -54,4 +54,14 @@ export class GomokuGame extends Game {
       this.lastPut.pop();
     });
   }
+
+  /// TODO:
+  validateImpl(s: string): boolean {
+    if (!/^[0-1][0-9a-zA-Z]{2,2}$/.test(s)) return false;
+    const [id, r, c] = [+s[0], parseInt(s[1], 36), parseInt(s[2], 36)];
+    if (id !== this.turn || r < 0 || this.row <= r || c < 0 || this.col <= c)
+      return false;
+    if (this.grid[r][c] !== 2) return false;
+    return true;
+  }
 }

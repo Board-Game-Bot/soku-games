@@ -67,6 +67,85 @@ export class BackgammonGame extends Game {
     }
   }
 
+  /// TODO:
+  validateImpl(s: string): boolean {
+    if (!/^(v[0-9a-zA-Z]{2,2}|t|p|d[1-6]{2,2}|d[1-6]{4,4})$/.test(s))
+      return false;
+    if (['t', 'p', 'd'].includes(s[0])) return true;
+
+    const [f, t] = [parseInt(s[1], 36), parseInt(s[2], 36)];
+    const { pieces, dice, turn } = this;
+
+    if (!this.isIn(f) || !this.isIn(t)) return false;
+    if (27 - f <= 1) return false;
+    if (turn + t === 27) return false;
+    // if (i != turn) return false;
+    if (!pieces[f].length) return false;
+    // CHECK
+    if (pieces[f][0].id !== turn) return false;
+
+    const h = turn * 25;
+    const e = turn + 26;
+    let step = t - f;
+
+    if (!!pieces[h].length && f !== h) return false;
+    if (27 - t <= 1) step = (1 - turn) * 25 - f;
+    if (turn === 1) step *= -1;
+    if (t !== e) {
+      if (dice.indexOf(step) === -1) return false;
+      if (pieces[t].length > 1 && pieces[t][0].id !== turn) return false;
+
+      return true;
+    } else {
+      if (this.checkBQ(turn, (!turn && 19) || 1) + pieces[e].length !== 15) {
+        return false;
+      }
+      if (dice.indexOf(step) === -1) {
+        const more = Math.max(...dice);
+
+        if (more <= step) return false;
+        if (!this.checkWhereOut(turn, f)) return false;
+
+        return true;
+      }
+    }
+
+    return true;
+  }
+
+  checkBQ(i: number, f: number) {
+    let c = 0;
+    const pieces = this.pieces;
+
+    for (let j = 0; j < 6; ++j) {
+      const k = j + f;
+
+      if (!!pieces[k].length && pieces[k][0].id === i) {
+        c += pieces[k].length;
+      }
+    }
+
+    return c;
+  }
+
+  checkWhereOut(turn: number, f: number) {
+    const stp = turn ? -1 : 1;
+    const st = turn ? 6 : 19;
+    const pieces = this.pieces;
+
+    for (let i = st; i !== f; i += stp) {
+      if (pieces[i].length > 0 && pieces[i][0].id === turn) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  isIn(i: number) {
+    return 0 <= i && i < 28;
+  }
+
   addPieceIn(pos: number, typ: number) {
     const pieces = this.pieces;
 

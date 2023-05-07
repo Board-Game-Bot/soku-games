@@ -49,6 +49,23 @@ export class ReversiGame extends Game {
 
     this.placePiece(s, r, c, i);
   }
+  validateImpl(s: string): boolean {
+    if (s === 'p') return true;
+    if (!/^[0-1][0-9a-zA-Z]{2,2}$/.test(s)) return false;
+
+    const id = +s[0],
+      r = parseInt(s[1], 36),
+      c = parseInt(s[2], 36);
+
+    if (this.turn !== id) return false;
+    if (r < 0 || this.r <= r || c < 0 || this.c <= c) return false;
+    if (this.grid[r][c] !== 2) return false;
+    for (let i = 0; i < 8; ++i) {
+      if (this.checkValidDir(r, c, id, i)) return true;
+    }
+
+    return false;
+  }
 
   turn = 0;
   placePiece(s: string, ...[r, c, i]: number[]) {
@@ -62,7 +79,7 @@ export class ReversiGame extends Game {
     let changedPieces: number[][] | null = [];
 
     for (let j = 0; j < 8; ++j) {
-      if (checkValidDir(j)) {
+      if (this.checkValidDir(r, c, i, j)) {
         reverse(j);
       }
     }
@@ -78,20 +95,6 @@ export class ReversiGame extends Game {
       this.turn ^= 1;
     });
 
-    function checkValidDir(d = 0) {
-      let x = r + dx[d],
-        y = c + dy[d];
-      let flg = false;
-      while (isIn(x, y) && grid[x][y] === 1 - i) {
-        flg = true;
-        (x += dx[d]), (y += dy[d]);
-      }
-      if (!isIn(x, y) || grid[x][y] === 2 || !flg) {
-        return false;
-      }
-      return true;
-    }
-
     function reverse(d = 0) {
       let x = r + dx[d],
         y = c + dy[d];
@@ -105,6 +108,28 @@ export class ReversiGame extends Game {
     function isIn(x = 0, y = 0) {
       return 0 <= x && x < row && 0 <= y && y < col;
     }
+  }
+
+  checkValidDir(r: number, c: number, id: number, d = 0) {
+    const grid = this.grid;
+    const row = this.r,
+      col = this.c;
+    let x = r + dx[d],
+      y = c + dy[d];
+    let flg = false;
+
+    while (isIn(x, y) && grid[x][y] === 1 - id) {
+      flg = true;
+      (x += dx[d]), (y += dy[d]);
+    }
+    if (!isIn(x, y) || grid[x][y] === 2 || !flg) {
+      return false;
+    }
+    function isIn(x = 0, y = 0) {
+      return 0 <= x && x < row && 0 <= y && y < col;
+    }
+
+    return true;
   }
 
   pass() {

@@ -37,7 +37,6 @@ export class SnakeGame extends Game {
       new Snake(this).init([this.rows - 2, 1], '#00f'),
     ];
   }
-
   stepImpl(s: string): void {
     'd0.d1.incr';
     const d = [+s[0], +s[1]];
@@ -50,5 +49,9 @@ export class SnakeGame extends Game {
         this.snakes[i].toNext(d[i], incr, true);
       });
     });
+  }
+  validateImpl(s: string): boolean {
+    if (!/^[0-3]{2,2}[0-1]$/.test(s)) return false;
+    return true;
   }
 }

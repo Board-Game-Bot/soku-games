@@ -40,6 +40,18 @@ export class HexGame extends Game {
     const [r, c] = [parseInt(s[1], 36), parseInt(s[2], 36)];
     this.put(s, id, r, c);
   }
+  validateImpl(s: string): boolean {
+    if (!/^[0-1][0-9a-zA-Z]{2,2}$/.test(s)) return false;
+
+    const id = +s[0];
+    const [r, c] = [parseInt(s[1], 36), parseInt(s[2], 36)];
+
+    if (this.turn !== id) return false;
+    if (r < 0 || this.w <= r || (c < 0 && this.w <= c)) return false;
+    if (this.grid[r][c] !== 2) return false;
+
+    return true;
+  }
 
   put(s: string, ...[id, r, c]: number[]) {
     this.grid[r][c] = id;

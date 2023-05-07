@@ -86,15 +86,23 @@ export abstract class Game {
     return this;
   }
 
+  shouldValidate = false;
+  openValidate(ops: boolean) {
+    this.shouldValidate = ops;
+    return this;
+  }
+
   step(s: string) {
+    if (this.shouldValidate && !this.validateImpl(s)) return;
+
     this.before.emit('step', s);
-
     this.stepImpl(s);
-
     this.after.emit('step', s);
 
     return this;
   }
+
+  abstract validateImpl(s: string): boolean;
 
   abstract stepImpl(s: string): void;
 
