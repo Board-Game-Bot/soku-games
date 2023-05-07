@@ -54,23 +54,25 @@ export abstract class Game {
     this.before.emit('start');
 
     let tp = 0;
-    const frame = (_tp: number) => {
-      if (!tp) {
+    if (window && window.requestAnimationFrame) {
+      const frame = (_tp: number) => {
+        if (!tp) {
+          tp = _tp;
+        } else {
+          this.objs.forEach((obj) => {
+            if (!obj.started) {
+              obj.start();
+            } else {
+              obj.dt = _tp - tp;
+              obj.update();
+            }
+          });
+        }
         tp = _tp;
-      } else {
-        this.objs.forEach((obj) => {
-          if (!obj.started) {
-            obj.start();
-          } else {
-            obj.dt = _tp - tp;
-            obj.update();
-          }
-        });
-      }
-      tp = _tp;
-      window.requestAnimationFrame(frame);
-    };
-    this.engine = window.requestAnimationFrame(frame);
+        window.requestAnimationFrame(frame);
+      };
+      this.engine = window.requestAnimationFrame(frame);
+    }
 
     this.after.emit('start');
 
@@ -81,7 +83,10 @@ export abstract class Game {
   stop() {
     this.before.emit('stop');
 
-    window.cancelAnimationFrame(this.engine);
+    if (window && window.cancelAnimationFrame) {
+      window.cancelAnimationFrame(this.engine);
+    }
+
     this.objs = [];
 
     this.after.emit('stop');
