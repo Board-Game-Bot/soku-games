@@ -1,6 +1,8 @@
 import { GameImplement } from '../../game-implement.decorator';
 import { Game } from '../../game.base';
-import { GameMap } from './map';
+import { IPosition } from '../snake/game';
+import { Judgement } from './judgement';
+import { Renderer } from './renderer';
 
 const dx = [-1, -1, -1, 0, 1, 1, 1, 0];
 const dy = [-1, 0, 1, 1, 1, 0, -1, -1];
@@ -8,17 +10,18 @@ const dy = [-1, 0, 1, 1, 1, 0, -1, -1];
 @GameImplement('reversi', 2)
 export class ReversiGame extends Game {
   setJudgementImpl(): void {
-    throw new Error('Method not implemented.');
+    new Judgement(this);
   }
 
   addRendererImpl(): void {
     this.before.on('start', () => {
-      new GameMap(this);
+      new Renderer(this);
     });
   }
   grid = <number[][]>[];
   r = 0;
   c = 0;
+  turn = 0;
   initImpl(data: { rc: number; mask: string }): void {
     let { rc } = data;
     const { mask } = data;
@@ -42,8 +45,11 @@ export class ReversiGame extends Game {
   }
   stepImpl(s: string): void {
     'i.r.c';
-    'p';
-    if (s === 'p') return this.pass();
+    'ps';
+    if (s === 'ps') {
+      return this.pass();
+    }
+
     const i = +s[0],
       r = parseInt(s[1], 36),
       c = parseInt(s[2], 36);
@@ -51,7 +57,7 @@ export class ReversiGame extends Game {
     this.placePiece(s, r, c, i);
   }
   validateImpl(s: string): boolean {
-    if (s === 'p') return true;
+    if (s === 'ps') return true;
     if (!/^[0-1][0-9a-zA-Z]{2,2}$/.test(s)) return false;
 
     const id = +s[0],
@@ -68,11 +74,15 @@ export class ReversiGame extends Game {
     return false;
   }
 
-  turn = 0;
+  lastPlace: IPosition | null = null;
   placePiece(s: string, ...[r, c, i]: number[]) {
     const grid = this.grid;
+    const oldLastPlace = !!this.lastPlace
+      ? <IPosition>[...this.lastPlace]
+      : null;
 
     this.grid[r][c] = i;
+    this.lastPlace = [r, c];
 
     let row = this.r,
       col = this.c;
@@ -89,6 +99,7 @@ export class ReversiGame extends Game {
 
     this.pushStep(s, () => {
       this.grid[r][c] = 2;
+      this.lastPlace = oldLastPlace;
       changedPieces!.forEach(([x, y]) => {
         this.grid[x][y] = 1 - i;
       });
@@ -113,8 +124,8 @@ export class ReversiGame extends Game {
 
   checkValidDir(r: number, c: number, id: number, d = 0) {
     const grid = this.grid;
-    const row = this.r,
-      col = this.c;
+    const row = this.r;
+    const col = this.c;
     let x = r + dx[d],
       y = c + dy[d];
     let flg = false;

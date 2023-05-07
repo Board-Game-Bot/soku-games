@@ -1,7 +1,7 @@
 import { GameObject } from '../../game.object';
 import { ReversiGame } from './game';
 
-export class GameMap extends GameObject {
+export class Renderer extends GameObject {
   constructor(game: ReversiGame) {
     super(game);
 
@@ -64,6 +64,21 @@ export class GameMap extends GameObject {
             });
           }
         });
+      });
+    });
+
+    this.mkUpdater('render-last-place', () => {
+      const { g, L, lastPlace } = game;
+
+      if (!lastPlace) return;
+
+      const [x, y] = lastPlace;
+
+      g?.Cir({
+        x: (y + 0.5) * L!,
+        y: (x + 0.5) * L!,
+        radius: 0.1 * L!,
+        color: '#77a',
       });
     });
   }

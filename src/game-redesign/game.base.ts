@@ -80,6 +80,7 @@ export abstract class Game {
   }
 
   frame(_tp = 0, tp = 0) {
+    if (!window || !window.requestAnimationFrame) return this;
     this.objs.forEach((obj) => {
       if (!obj.started) {
         obj.start();
@@ -88,6 +89,7 @@ export abstract class Game {
         obj.update();
       }
     });
+    return this;
   }
 
   // 游戏结束
@@ -100,6 +102,7 @@ export abstract class Game {
     }
 
     this.objs = [];
+    this.canvas = undefined;
 
     this.after.emit('stop', reason);
 
