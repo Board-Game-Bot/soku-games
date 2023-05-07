@@ -50,24 +50,27 @@ export function GameView() {
           <textarea
             ref={(el) => (textarea = el)}
             class={'w-[300px] resize-y'}
+            placeholder="Init Data"
           ></textarea>
           <Button onClick={init}>init</Button>
         </div>
         <div class={'flex mt-3 gap-2'}>
           <input
-            class={'w-[300px]'}
+            class="w-[300px] font-serif"
+            type="text"
             value={gameName()}
             onChange={(e) => setGameName(e.currentTarget.value)}
-            type="text"
+            placeholder="game tag"
           />
           <Button onClick={startGame}>start</Button>
         </div>
         <div class={'flex mt-3 gap-2 items-center'}>
           <input
-            class={'w-[300px]'}
+            class="w-[300px] font-serif"
             type="text"
             value={step()}
             onChange={(e) => setStep(e.currentTarget.value)}
+            placeholder="step string"
           />
           <Button onClick={nextStep}>step</Button>
         </div>

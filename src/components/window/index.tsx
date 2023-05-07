@@ -31,7 +31,7 @@ export function Window(props: ParentProps & { width: number; height: number }) {
     >
       <h4
         onMouseDown={startMove}
-        class={'select-none m-0 bg-slate-500 px-2 py-1'}
+        class={'select-none m-0 bg-slate-500 px-2 py-1 text-white'}
       >
         WINDOW
       </h4>
