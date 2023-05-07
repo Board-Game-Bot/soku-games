@@ -6,7 +6,6 @@ import { findPosition, HexGame } from '../game';
 export class HexLocalController extends Controller {
   setGame(game: HexGame): void {
     super.setGame(game);
-    console.log('hex');
 
     const canvas = game.canvas!;
     const clickFn = (e: MouseEvent) => {

@@ -28,7 +28,7 @@ export class Judgement {
           ny -= dy[i];
         }
         if (count >= 5) {
-          game.frame().stop(`Game over: ${id}方棋子胜利`);
+          game.frame().stop(`${id}方棋子胜利`);
           return;
         }
       }
@@ -48,7 +48,7 @@ export class Judgement {
       }
 
       if (!hasEmpty) {
-        game.stop('Game over: 双方没有连成，平局');
+        game.stop('双方没有连成，平局');
       }
 
       function isIn(x = 0, y = 0) {

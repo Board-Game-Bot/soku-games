@@ -41,9 +41,5 @@ export class Judgement {
         );
       }
     });
-
-    game.after.on('stop', (reason: string) => {
-      console.log(`Game over: ${reason}`);
-    });
   }
 }

@@ -11,7 +11,7 @@ export class Judgement {
       const visited = new Array(w).fill(0).map(() => new Array(w).fill(false));
 
       if (dfs(x, y) === 3) {
-        game.frame().stop(`Game over: ${id}方连接两边`);
+        game.frame().stop(`${id}方连接两边`);
       }
 
       function dfs(x = 0, y = 0) {

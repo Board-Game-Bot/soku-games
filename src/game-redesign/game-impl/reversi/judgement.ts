@@ -2,10 +2,6 @@ import { ReversiGame } from './game';
 
 export class Judgement {
   constructor(game: ReversiGame) {
-    game.after.on('step', (s: string) => {
-      console.log(s);
-    });
-
     game.after.on('step', () => {
       const { grid, turn, r, c } = game;
 
@@ -25,13 +21,13 @@ export class Judgement {
       if (!isEmpty) {
         game.frame();
         if (count[0] !== count[1]) {
-          game.stop(`Game over: ${count[0] > count[1] ? 0 : 1}方棋子更多`);
+          game.stop(`${count[0] > count[1] ? 0 : 1}方棋子更多`);
         } else {
-          game.stop(`Game over: 双方棋子数相同，平局`);
+          game.stop(`双方棋子数相同，平局`);
         }
         return;
       } else if (count.includes(0)) {
-        game.frame().stop(`Game over: ${count.indexOf(0)}方棋子蒸发`);
+        game.frame().stop(`${count.indexOf(0)}方棋子蒸发`);
         return;
       }
 
