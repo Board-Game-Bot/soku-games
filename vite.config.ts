@@ -24,7 +24,6 @@ export default defineConfig(({ command }) => {
         },
       },
       build: {
-        dist: 'dist',
         rollupOptions: {
           output: {
             dir: 'dist',
