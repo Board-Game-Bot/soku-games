@@ -1,4 +1,3 @@
-import { Game } from '../game.base';
 import { Renderer } from './base';
 
 const CONTAINER = new Map<string, Renderer>();
