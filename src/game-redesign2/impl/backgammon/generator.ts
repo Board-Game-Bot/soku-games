@@ -1,5 +1,5 @@
-import { Generator } from '@/game-redesign2/generator/base';
-import { GeneratorImplement } from '@/game-redesign2/generator/decorator';
+import { Generator } from '../../generator/base';
+import { GeneratorImplement } from '../../generator/decorator';
 
 @GeneratorImplement('backgammon')
 export class BackgammonGenerator extends Generator {

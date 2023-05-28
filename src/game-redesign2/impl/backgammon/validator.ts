@@ -1,5 +1,5 @@
-import { Validator } from '@/game-redesign2/validator/base';
-import { ValidatorImplement } from '@/game-redesign2/validator/decorator';
+import { Validator } from '../../validator/base';
+import { ValidatorImplement } from '../../validator/decorator';
 import { BackgammonGame } from './game';
 
 @ValidatorImplement('backgammon')

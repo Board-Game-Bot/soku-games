@@ -1,7 +1,7 @@
-import { Controller } from '@/game-redesign2/controller/base';
-import { ControllerImplement } from '@/game-redesign2/controller/decorator';
+import { Controller } from '../../controller/base';
+import { ControllerImplement } from '../../controller/decorator';
 import { BackgammonGame } from './game';
-import { Renderer } from '@/game-redesign2/renderer/base';
+import { Renderer } from '../../renderer/base';
 import { Piece } from './piece';
 
 @ControllerImplement('backgammon-local')

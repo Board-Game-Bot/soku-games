@@ -1,5 +1,5 @@
-import { Game } from '@/game-redesign2/game.base';
-import { GameImplement } from '@/game-redesign2/game.decorator';
+import { Game } from '../../game.base';
+import { GameImplement } from '../../game.decorator';
 import { Piece, calcPos } from './piece';
 
 type IPosition = [number, number];

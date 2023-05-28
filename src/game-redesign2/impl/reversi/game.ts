@@ -1,6 +1,6 @@
-import { GameImplement } from '@/game-redesign2/game.decorator';
+import { GameImplement } from '../../game.decorator';
 import { Game } from '../../game.base';
-import { IPosition } from '@/game-redesign2/utils/c';
+import { IPosition } from '../../utils/c';
 
 const dx = [-1, -1, -1, 0, 1, 1, 1, 0];
 const dy = [-1, 0, 1, 1, 1, 0, -1, -1];

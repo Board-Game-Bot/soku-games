@@ -1,6 +1,6 @@
-import { Controller } from '@/game-redesign2/controller/base';
-import { ControllerImplement } from '@/game-redesign2/controller/decorator';
-import { Renderer } from '@/game-redesign2/renderer/base';
+import { Controller } from '../../controller/base';
+import { ControllerImplement } from '../../controller/decorator';
+import { Renderer } from '../../renderer/base';
 import { ReversiGame } from './game';
 
 @ControllerImplement('reversi-local')

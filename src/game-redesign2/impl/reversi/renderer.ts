@@ -1,5 +1,5 @@
-import { Renderer } from '@/game-redesign2/renderer/base';
-import { RendererImplement } from '@/game-redesign2/renderer/decorator';
+import { Renderer } from '../../renderer/base';
+import { RendererImplement } from '../../renderer/decorator';
 import { ReversiGame } from './game';
 
 @RendererImplement('reversi')
