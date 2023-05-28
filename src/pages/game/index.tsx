@@ -9,6 +9,7 @@ import '@/game-redesign2/impl/reversi';
 import '@/game-redesign2/impl/backgammon';
 import '@/game-redesign2/impl/hex';
 import '@/game-redesign2/impl/gomoku';
+import '@/game-redesign2/impl/snake';
 import { createGame as createGame2 } from '@/game-redesign2/game.decorator';
 import { createRenderer } from '@/game-redesign2/renderer/decorator';
 import { Screen as Screen2 } from '@/game-redesign2/screen';
@@ -33,7 +34,7 @@ export function GameView() {
 
   // test
   onMount(() => {
-    const gameName = 'gomoku';
+    const gameName = 'snake';
     game2 = createGame2(gameName);
 
     const renderer = createRenderer(gameName);
@@ -42,6 +43,7 @@ export function GameView() {
       r: 15,
       c: 15,
       w: 11,
+      wallCount: 20,
     });
     const controller = createController(`${gameName}-local`);
     const validator = createValidator(gameName);
