@@ -1,14 +1,14 @@
 import { Window } from '@/components/window';
 import { ComponentProps, ParentProps, createSignal, onMount } from 'solid-js';
-import { Game as Game2 } from '@/game-redesign/game.base';
+import { Game as Game2 } from '@/game-redesign/game/base';
 import '@/game-redesign/impl/reversi';
 import '@/game-redesign/impl/backgammon';
 import '@/game-redesign/impl/hex';
 import '@/game-redesign/impl/gomoku';
 import '@/game-redesign/impl/snake';
-import { createGame as createGame2 } from '@/game-redesign/game.decorator';
+import { createGame as createGame2 } from '@/game-redesign/game/decorator';
 import { createRenderer } from '@/game-redesign/renderer/decorator';
-import { Screen as Screen2 } from '@/game-redesign/screen';
+import { Screen as Screen2 } from '@/game-redesign/utils/screen';
 import { createController } from '@/game-redesign/controller/decorator';
 import { createValidator } from '@/game-redesign/validator/decorator';
 import { generate as generate2 } from '@/game-redesign/generator/decorator';

@@ -1,4 +1,4 @@
-import { Game } from '../game.base';
+import { Game } from '../game/base';
 
 export abstract class Controller {
   game?: Game;

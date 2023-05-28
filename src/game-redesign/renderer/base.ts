@@ -1,5 +1,5 @@
-import { Game } from '../game.base';
-import { Screen } from '../screen';
+import { Game } from '../game/base';
+import { Screen } from '../utils/screen';
 
 export abstract class Renderer {
   game?: Game;

@@ -1,5 +1,4 @@
-import { frame } from './utils/frame';
-import { G } from './utils/g';
+import { G } from './g';
 
 export class Screen {
   L = 0;

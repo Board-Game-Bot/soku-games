@@ -1,5 +1,5 @@
-import { GameImplement } from '../../game.decorator';
-import { Game } from '../../game.base';
+import { GameImplement } from '../../game/decorator';
+import { Game } from '../../game/base';
 import { IPosition } from '../../utils/c';
 
 const dx = [-1, -1, -1, 0, 1, 1, 1, 0];

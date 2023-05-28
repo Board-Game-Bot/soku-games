@@ -1,7 +1,7 @@
-import { Controller } from './controller/base';
-import { Renderer } from './renderer/base';
-import { Eventer } from './utils/eventer';
-import { Validator } from './validator/base';
+import { Controller } from '../controller/base';
+import { Renderer } from '../renderer/base';
+import { Eventer } from '../utils/eventer';
+import { Validator } from '../validator/base';
 
 export type IEvent = 'start' | 'step' | 'rev-step' | 'stop';
 export type IStepDo = {

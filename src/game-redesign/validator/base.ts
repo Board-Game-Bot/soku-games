@@ -1,4 +1,4 @@
-import { Game } from '../game.base';
+import { Game } from '../game/base';
 
 export abstract class Validator {
   game?: Game;

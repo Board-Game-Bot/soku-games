@@ -1,5 +1,5 @@
-import { Game } from '../../game.base';
-import { GameImplement } from '../../game.decorator';
+import { Game } from '../../game/base';
+import { GameImplement } from '../../game/decorator';
 import { Snake } from './extra/snake';
 
 type InitData = {

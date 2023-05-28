@@ -1,4 +1,4 @@
-import { Game } from './game.base';
+import { Game } from './base';
 
 const CONTAINER = new Map<string, Game>();
 

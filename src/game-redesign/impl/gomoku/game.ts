@@ -1,5 +1,5 @@
-import { Game } from '../../game.base';
-import { GameImplement } from '../../game.decorator';
+import { Game } from '../../game/base';
+import { GameImplement } from '../../game/decorator';
 import { IPosition } from '../../utils/c';
 
 type InitData = {
