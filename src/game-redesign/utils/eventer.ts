@@ -20,6 +20,10 @@ export class Eventer<T = string> {
     return this;
   }
 
+  clear() {
+    this.map.clear();
+  }
+
   emit(tag: T, ...args: any) {
     const fns = this.map.get(tag) || [];
     fns.forEach((fn) => fn(...args));

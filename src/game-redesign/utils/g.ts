@@ -39,6 +39,7 @@ export class G {
   }) {
     const { x0, y0, x1, y1, width, color } = options;
     const c = this.context;
+
     c.save();
     c.lineWidth = width;
     c.strokeStyle = color || '#000';

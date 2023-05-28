@@ -1,48 +1,37 @@
-import { Game } from './game.base';
-import { GameObject } from './game.object';
+import { frame } from './utils/frame';
+import { G } from './utils/g';
 
-export class Screen extends GameObject {
-  _container?: HTMLElement;
-  get container() {
-    if (!this._container) {
-      this._container = this.game.canvas?.parentElement!;
-    }
-    return this._container;
-  }
-  constructor(game: Game) {
-    super(game);
+export class Screen {
+  L = 0;
+  width = 0;
+  height = 0;
+  g: G;
+  c: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
 
-    this.mkUpdater('get-scale', () => {
-      const c = this.c!;
-      const { clientHeight: height, clientWidth: width } = this.container;
-      const [w, h] = this.aspectRatio;
-
-      const L = (this._L = Math.min(width / w, height / h) >>> 0);
-      Object.assign(c.canvas, {
-        width: L * w,
-        height: L * h,
-      });
-      
-      this._L = L;
-    });
-    this.mkUpdater('render-screen', () => {
-      const L = this._L;
-      const g = this.game.g;
-      const [w, h] = this.aspectRatio;
-
-      g?.Rect({
-        x: 0,
-        y: 0,
-        lx: L * w,
-        ly: L * h,
-      });
-    });
+  constructor(canvas: HTMLCanvasElement) {
+    this.g = new G(canvas);
+    this.canvas = canvas;
+    this.c = canvas.getContext('2d')!;
   }
 
-  _L = 0;
-  aspectRatio = [8, 8];
-  config(aspectRatio: [number, number]) {
-    this.aspectRatio = aspectRatio;
+  updateL() {
+    const parent = this.canvas.parentElement!;
+    const { clientHeight: h, clientWidth: w } = parent;
+    const L = (this.L = Math.min(w / this.width, h / this.height) >> 0);
+    const c = this.c;
+
+    Object.assign(c!.canvas, {
+      width: this.width * L,
+      height: this.height * L,
+    });
+    c.scale(L, L);
+  }
+
+  setAspectRatio(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+
     return this;
   }
 }
