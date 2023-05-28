@@ -1,21 +1,15 @@
 import { Window } from '@/components/window';
-import { getController } from '@/game-redesign/controller.decorator';
-import { generate } from '@/game-redesign/data.generator.decorator';
-import { createGame } from '@/game-redesign/game-implement.decorator';
-import { Game } from '@/game-redesign/game.base';
 import { ComponentProps, ParentProps, createSignal, onMount } from 'solid-js';
-import { Game as Game2 } from '@/game-redesign2/game.base';
-import '@/game-redesign2/impl/reversi';
-import '@/game-redesign2/impl/backgammon';
-import '@/game-redesign2/impl/hex';
-import '@/game-redesign2/impl/gomoku';
-import '@/game-redesign2/impl/snake';
-import { createGame as createGame2 } from '@/game-redesign2/game.decorator';
-import { createRenderer } from '@/game-redesign2/renderer/decorator';
-import { Screen as Screen2 } from '@/game-redesign2/screen';
-import { createController } from '@/game-redesign2/controller/decorator';
-import { createValidator } from '@/game-redesign2/validator/decorator';
-import { generate as generate2 } from '@/game-redesign2/generator/decorator';
+import '@/game-redesign';
+import {
+  Game,
+  Screen,
+  createController,
+  createGame,
+  createRenderer,
+  createValidator,
+  generate,
+} from '@/game-redesign';
 
 function Button(props: ParentProps & ComponentProps<'button'>) {
   return (
@@ -27,19 +21,18 @@ function Button(props: ParentProps & ComponentProps<'button'>) {
 
 export function GameView() {
   let canvas: HTMLCanvasElement;
-  let game: Game;
-  let game2: Game2;
+  let game2: Game;
 
   const [gameName, setGameName] = createSignal('');
 
   // test
   onMount(() => {
     const gameName = 'snake';
-    game2 = createGame2(gameName);
+    game2 = createGame(gameName);
 
     const renderer = createRenderer(gameName);
-    const screen = new Screen2(canvas);
-    const data = generate2(gameName, {
+    const screen = new Screen(canvas);
+    const data = generate(gameName, {
       r: 15,
       c: 15,
       w: 11,
@@ -57,32 +50,34 @@ export function GameView() {
       .start();
   });
 
-  function startGame() {
-    if (game) {
-      game.stop('');
-    }
-    game = createGame(gameName())
-      .setCanvas(canvas)
-      .openValidate(true)
-      .setJudgement();
-
-    getController('local', gameName()).setGame(game);
-
-    game.after.on('stop', (reason: string) => {
-      console.log(`Game over: ${reason}`);
-    });
-  }
-
   const [step, setStep] = createSignal('');
   function nextStep() {
-    game.step(step());
+    game2.step(step());
   }
 
   let textarea: HTMLTextAreaElement;
   function init() {
-    const data = generate(gameName(), JSON.parse(textarea.value));
+    game2 = createGame(gameName());
 
-    game.init(data).start();
+    const renderer = createRenderer(gameName());
+    const screen = new Screen(canvas);
+    const data = generate(gameName(), {
+      r: 15,
+      c: 15,
+      w: 11,
+      wallCount: 20,
+    });
+    const controller = createController(`${gameName()}-local`);
+    const validator = createValidator(gameName());
+
+    renderer.setScreen(screen);
+    game2
+      .setRenderer(renderer)
+      .setController(controller)
+      .setValidator(validator)
+      .init(data)
+      .start();
+    game2.init(data).start();
   }
 
   return (
@@ -111,7 +106,7 @@ export function GameView() {
             onChange={(e) => setGameName(e.currentTarget.value)}
             placeholder="game tag"
           />
-          <Button onClick={startGame}>start</Button>
+          <Button onClick={init}>start</Button>
         </div>
         <div class={'flex mt-3 gap-2 items-center'}>
           <input
