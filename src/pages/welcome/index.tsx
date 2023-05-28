@@ -1,8 +1,11 @@
+import { useNavigate } from '@solidjs/router';
 import { Counter } from '../../components/counter';
 import logo from '../../logo.svg';
 import styles from './index.module.css';
 
 export function WelcomeView() {
+  const nav = useNavigate();
+
   return (
     <div class={styles.App}>
       <header class={styles.header}>
@@ -13,7 +16,10 @@ export function WelcomeView() {
           src="https://skillicons.dev/icons?i=solidjs,ts,vite,tailwindcss"
           alt="skillicons"
         />
-        <Counter class={'mt-5'} />
+        <Counter class="mt-5" />
+        <button class="mt-5" onClick={() => nav('/game')}>
+          To Game
+        </button>
       </header>
     </div>
   );

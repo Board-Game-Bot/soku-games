@@ -39,12 +39,13 @@ export class G {
   }) {
     const { x0, y0, x1, y1, width, color } = options;
     const c = this.context;
+
     c.save();
     c.lineWidth = width;
     c.strokeStyle = color || '#000';
     c.beginPath();
-    c.moveTo(y0, x0);
-    c.lineTo(y1, x1);
+    c.moveTo(x0, y0);
+    c.lineTo(x1, y1);
     c.closePath();
     c.stroke();
     c.restore();
@@ -63,6 +64,20 @@ export class G {
       });
       return cur;
     });
+  }
+
+  Text(options: {
+    x: number;
+    y: number;
+    text: string;
+    font: string;
+    color?: string;
+  }) {
+    const { x, y, text, font, color } = options;
+    const c = this.context;
+    c.font = font;
+    c.fillStyle = color || '#000';
+    c.fillText(text, x, y);
   }
 
   Poly(options: { ps: number[][]; color?: string }) {

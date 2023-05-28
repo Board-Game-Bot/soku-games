@@ -1,9 +1,10 @@
-import { Eventer } from './eventer';
-import { G } from './g';
+import { Eventer } from './utils/eventer';
+import { G } from './utils/g';
 import { GameObject } from './game.object';
 import { Screen } from './screen';
 
 export type IMode = 'single' | 'multi' | 'record' | 'watch';
+export type IEvent = 'start' | 'step' | 'rev-step' | 'stop';
 export type IStepDo = {
   step: string;
   todo: Function;
@@ -11,8 +12,8 @@ export type IStepDo = {
 
 export abstract class Game {
   objs: GameObject[] = [];
-  before: Eventer = new Eventer();
-  after: Eventer = new Eventer();
+  before: Eventer<IEvent> = new Eventer();
+  after: Eventer<IEvent> = new Eventer();
 
   screen?: Screen;
   get L() {
@@ -25,8 +26,17 @@ export abstract class Game {
     this.canvas = canvas;
     this.g = new G(canvas);
     this.screen = new Screen(this);
+    this.addRendererImpl();
     return this;
   }
+
+  abstract addRendererImpl(): void;
+
+  setJudgement() {
+    this.setJudgementImpl();
+    return this;
+  }
+  abstract setJudgementImpl(): void;
 
   mode?: IMode;
   setMode(mode: IMode) {
@@ -51,50 +61,71 @@ export abstract class Game {
     this.before.emit('start');
 
     let tp = 0;
-    const frame = (_tp: number) => {
-      if (!tp) {
+    if (window && window.requestAnimationFrame) {
+      const frame = (_tp: number) => {
+        if (!tp) {
+          tp = _tp;
+        } else {
+          this.frame(_tp, tp);
+        }
         tp = _tp;
-      } else {
-        this.objs.forEach((obj) => {
-          if (!obj.started) {
-            obj.start();
-          } else {
-            obj.dt = _tp - tp;
-            obj.update();
-          }
-        });
-      }
-      tp = _tp;
-      window.requestAnimationFrame(frame);
-    };
-    this.engine = window.requestAnimationFrame(frame);
+        window.requestAnimationFrame(frame);
+      };
+      this.engine = window.requestAnimationFrame(frame);
+    }
 
     this.after.emit('start');
 
     return this;
   }
 
+  frame(_tp = 0, tp = 0) {
+    if (!window || !window.requestAnimationFrame) return this;
+    this.objs.forEach((obj) => {
+      if (!obj.started) {
+        obj.start();
+      } else {
+        obj.dt = _tp - tp;
+        obj.update();
+      }
+    });
+    return this;
+  }
+
   // 游戏结束
-  stop() {
-    this.before.emit('stop');
+  reason: string = '';
+  stop(reason: string) {
+    this.before.emit('stop', reason);
 
-    window.cancelAnimationFrame(this.engine);
+    if (window && window.cancelAnimationFrame) {
+      window.cancelAnimationFrame(this.engine);
+    }
+
     this.objs = [];
+    this.canvas = undefined;
 
-    this.after.emit('stop');
+    this.after.emit('stop', reason);
 
+    return this;
+  }
+
+  shouldValidate = false;
+  openValidate(ops: boolean) {
+    this.shouldValidate = ops;
     return this;
   }
 
   step(s: string) {
+    if (this.shouldValidate && !this.validateImpl(s)) return;
+
     this.before.emit('step', s);
-
     this.stepImpl(s);
-
     this.after.emit('step', s);
 
     return this;
   }
+
+  abstract validateImpl(s: string): boolean;
 
   abstract stepImpl(s: string): void;
 

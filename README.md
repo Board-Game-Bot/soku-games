@@ -1,3 +1,7 @@
+# SokuGames
+
+Target to implement all board and card games in Nintendo's 世界のアソビ大全51.
+
 # SolidJS TS Template
 
 ![skills](https://skillicons.dev/icons?i=solidjs,ts,vite,tailwindcss)

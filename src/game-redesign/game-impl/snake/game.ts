@@ -1,20 +1,22 @@
-import { GameImplement } from '@/game-redesign/game-implement.decorator';
-import { Game } from '@/game-redesign/game.base';
-import { GameMap } from './map';
+import { GameImplement } from '../../game-implement.decorator';
+import { Game } from '../../game.base';
+import { Judgement } from './judgement';
+import { Renderer } from './renderer';
 import { Snake } from './snake';
 
 export type IPosition = [number, number];
 
 @GameImplement('snake', 1)
 export class SnakeGame extends Game {
-  constructor() {
-    super();
-
+  addRendererImpl(): void {
     this.before.on('start', () => {
-      new GameMap(this);
+      new Renderer(this);
     });
   }
 
+  setJudgementImpl(): void {
+    new Judgement(this);
+  }
   rows = 0;
   cols = 0;
   grid = <number[][]>[];
@@ -33,11 +35,10 @@ export class SnakeGame extends Game {
       .map(() => new Array(this.cols).fill(0))
       .map((x) => x.map(() => +mask[k++]));
     this.snakes = [
-      new Snake(this).init([1, this.cols - 2], '#f00'),
-      new Snake(this).init([this.rows - 2, 1], '#00f'),
+      new Snake(this).init([1, this.cols - 2], '#f33'),
+      new Snake(this).init([this.rows - 2, 1], '#33f'),
     ];
   }
-
   stepImpl(s: string): void {
     'd0.d1.incr';
     const d = [+s[0], +s[1]];
@@ -50,5 +51,9 @@ export class SnakeGame extends Game {
         this.snakes[i].toNext(d[i], incr, true);
       });
     });
+  }
+  validateImpl(s: string): boolean {
+    if (!/^[0-3]{2,2}[0-1]$/.test(s)) return false;
+    return true;
   }
 }

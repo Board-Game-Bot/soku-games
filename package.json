@@ -1,7 +1,12 @@
 {
-  "name": "solidjs-ts-template",
-  "version": "0.0.0",
-  "description": "",
+  "name": "soku-games",
+  "version": "0.0.2",
+  "description": "Target to implement all board and card games in Nintendo's 世界のアソビ大全51.",
+  "keywords": [
+    "games",
+    "package",
+    "customizable"
+  ],
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -9,19 +14,34 @@
     "serve": "vite preview",
     "test": "vitest"
   },
+  "bin": "./bin/index.js",
   "license": "MIT",
+  "type": "module",
   "devDependencies": {
+    "@types/inquirer": "^9.0.3",
     "autoprefixer": "^10.4.14",
+    "inquirer": "^9.2.6",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.3.2",
     "typescript": "^4.9.5",
     "vite": "^4.1.1",
+    "vite-plugin-dts": "^2.3.0",
     "vite-plugin-solid": "^2.5.0",
     "vitest": "^0.30.1"
   },
   "dependencies": {
     "@solidjs/router": "^0.8.2",
     "solid-js": "^1.6.10"
-  }
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist"
+  ]
 }

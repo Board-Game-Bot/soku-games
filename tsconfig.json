@@ -12,9 +12,11 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "isolatedModules": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["bin/example"]
 }

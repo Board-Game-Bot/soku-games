@@ -1,5 +1,5 @@
-import { DataGenerator } from '@/game-redesign/data.generator';
-import { GeneratorImplement } from '@/game-redesign/data.generator.decorator';
+import { DataGenerator } from '../../data.generator';
+import { GeneratorImplement } from '../../data.generator.decorator';
 
 const dx = [0, 1, 0, -1];
 const dy = [1, 0, -1, 0];
