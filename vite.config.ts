@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
 import path from 'path';
 import dts from 'vite-plugin-dts';
+import { transformBin } from './plugins/transformBin';
 
 export default defineConfig(({ command }) => {
   if (command === 'serve') {
@@ -33,10 +34,10 @@ export default defineConfig(({ command }) => {
           entry: './src/game-redesign/index.ts',
           name: 'soku-games',
           fileName: 'index',
-          formats: ['es', 'cjs', 'umd'],
+          formats: ['es', 'cjs'],
         },
       },
-      plugins: [dts()],
+      plugins: [dts(), transformBin()],
     };
   }
 });
