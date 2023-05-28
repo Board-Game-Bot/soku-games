@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { Game, GameImplement } from '../../game';
+import { Game, GameImplement } from 'soku-games';
 
 type InitData = {};
 
