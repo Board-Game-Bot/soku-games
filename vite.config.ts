@@ -31,7 +31,7 @@ export default defineConfig(({ command }) => {
         },
         lib: {
           entry: './src/game-redesign/index.ts',
-          name: 'soku-game',
+          name: 'soku-games',
           fileName: 'index',
           formats: ['es', 'cjs', 'umd'],
         },

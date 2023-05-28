@@ -1,6 +1,6 @@
 {
   "name": "soku-games",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Target to implement all board and card games in Nintendo's 世界のアソビ大全51.",
   "keywords": [
     "games",
@@ -36,8 +36,8 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     }
   },
   "types": "./dist/index.d.ts",

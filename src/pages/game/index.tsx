@@ -1,17 +1,15 @@
 import { Window } from '@/components/window';
 import { ComponentProps, ParentProps, createSignal, onMount } from 'solid-js';
-import { Game as Game2 } from '@/game-redesign/game/base';
-import '@/game-redesign/impl/reversi';
-import '@/game-redesign/impl/backgammon';
-import '@/game-redesign/impl/hex';
-import '@/game-redesign/impl/gomoku';
-import '@/game-redesign/impl/snake';
-import { createGame as createGame2 } from '@/game-redesign/game/decorator';
-import { createRenderer } from '@/game-redesign/renderer/decorator';
-import { Screen as Screen2 } from '@/game-redesign/utils/screen';
-import { createController } from '@/game-redesign/controller/decorator';
-import { createValidator } from '@/game-redesign/validator/decorator';
-import { generate as generate2 } from '@/game-redesign/generator/decorator';
+import '@/game-redesign';
+import {
+  Game,
+  Screen,
+  createController,
+  createGame,
+  createRenderer,
+  createValidator,
+  generate,
+} from '@/game-redesign';
 
 function Button(props: ParentProps & ComponentProps<'button'>) {
   return (
@@ -23,18 +21,18 @@ function Button(props: ParentProps & ComponentProps<'button'>) {
 
 export function GameView() {
   let canvas: HTMLCanvasElement;
-  let game2: Game2;
+  let game2: Game;
 
   const [gameName, setGameName] = createSignal('');
 
   // test
   onMount(() => {
     const gameName = 'snake';
-    game2 = createGame2(gameName);
+    game2 = createGame(gameName);
 
     const renderer = createRenderer(gameName);
-    const screen = new Screen2(canvas);
-    const data = generate2(gameName, {
+    const screen = new Screen(canvas);
+    const data = generate(gameName, {
       r: 15,
       c: 15,
       w: 11,
@@ -59,11 +57,11 @@ export function GameView() {
 
   let textarea: HTMLTextAreaElement;
   function init() {
-    game2 = createGame2(gameName());
+    game2 = createGame(gameName());
 
     const renderer = createRenderer(gameName());
-    const screen = new Screen2(canvas);
-    const data = generate2(gameName(), {
+    const screen = new Screen(canvas);
+    const data = generate(gameName(), {
       r: 15,
       c: 15,
       w: 11,
