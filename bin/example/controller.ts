@@ -1,7 +1,6 @@
 // @ts-nocheck
 
-import { Controller } from '../../controller/base';
-import { ControllerImplement } from '../../controller/decorator';
+import { Controller, ControllerImplement } from '../../controller';
 
 @ControllerImplement('__example__-local')
 export class __Example__Controller extends Controller {

@@ -1,7 +1,6 @@
 // @ts-nocheck
 
-import { Generator } from '../../generator/base';
-import { GeneratorImplement } from '../../generator/decorator';
+import { Generator, GeneratorImplement } from '../../generator';
 
 @GeneratorImplement('__example__')
 export class __Example__Generator extends Generator {

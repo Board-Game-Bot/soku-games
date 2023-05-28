@@ -1,7 +1,6 @@
 // @ts-nocheck
 
-import { Validator } from '../../validator/base';
-import { ValidatorImplement } from '../../validator/decorator';
+import { Validator, ValidatorImplement } from '../../validator';
 
 @ValidatorImplement('__example__')
 export class __Example__Validator extends Validator {
