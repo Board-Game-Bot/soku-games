@@ -8,6 +8,7 @@ import { Game as Game2 } from '@/game-redesign2/game.base';
 import '@/game-redesign2/impl/reversi';
 import '@/game-redesign2/impl/backgammon';
 import '@/game-redesign2/impl/hex';
+import '@/game-redesign2/impl/gomoku';
 import { createGame as createGame2 } from '@/game-redesign2/game.decorator';
 import { createRenderer } from '@/game-redesign2/renderer/decorator';
 import { Screen as Screen2 } from '@/game-redesign2/screen';
@@ -32,14 +33,14 @@ export function GameView() {
 
   // test
   onMount(() => {
-    const gameName = 'hex';
+    const gameName = 'gomoku';
     game2 = createGame2(gameName);
 
     const renderer = createRenderer(gameName);
     const screen = new Screen2(canvas);
     const data = generate2(gameName, {
-      r: 8,
-      c: 8,
+      r: 15,
+      c: 15,
       w: 11,
     });
     const controller = createController(`${gameName}-local`);
