@@ -10,8 +10,4 @@ export class __Example__Game extends Game {
   initImpl(data: InitData): void {}
 
   stepImpl(s: string): void {}
-
-  validateImpl(s: string): boolean {
-    return true;
-  }
 }
