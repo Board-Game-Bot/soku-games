@@ -1,42 +1,33 @@
-# SokuGames
+<h1 align="center">Soku Games</h1>
 
-Target to implement all board and card games in Nintendo's 世界のアソビ大全51.
+> 以下说明基本全是字，~~因为还没有怎么截图、设计 Logo~~，敬请谅解。
 
-# SolidJS TS Template
+# 介绍
 
-![skills](https://skillicons.dev/icons?i=solidjs,ts,vite,tailwindcss)
+这是一个关于**简单棋牌游戏**的**架构设计**的代码仓库，旨在能够设计一个比较完美的架构（虽然比较 Toy Project），帮助其他人快速、高效地开发出新的游戏，以及能够接入社区发展成一个生态，类似于**Steam创意工坊**，以及**插件生态**。
 
-## Usage
+# 思想
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+软件开发的设计模式中有非常重要的原则是**开闭原则（Open Closed Principle）**，是插件生态里面非常重要的基石，比如**Vite、Webpack**等前端工具链，他们都有各自的**生命周期**，以及**成套的钩子**，开发插件只需要监听对应的钩子，**在正确的时间做正确的事情**。实际上有对应的设计模式，它的名字叫**发布订阅模型**。发布订阅的实现并不难，难得是**如何设计一个比较完善的生命周期**。
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+# 设计
 
-```bash
-$ npm install # or pnpm install or yarn install
+本项目还在发展初期，因此设计上相对来讲还是比较稚嫩，相信后续的发展以及讨论，会更完善此设计。
+
+## 整体架构设计
+
+![游戏架构设计](https://github.com/Board-Game-Bot/soku-game/assets/84608230/68babcf4-fb93-4acc-a6ca-b2662e5fcec2)
+
+**注意**：图中所示的只有**游戏核心要素**是必须的，其他的对其核心要素来说只是一个**插件**，如想产生关联，比如`renderer`，那么方式如下：
+
+```js
+const renderer = new Renderer();
+renderer.setGame(game);
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## 生命周期设计
 
-## Available Scripts
+![生命周期设计](https://github.com/Board-Game-Bot/soku-game/assets/84608230/5d8a0faf-0fd1-47eb-8d95-c2d4181b7270)
 
-In the project directory, you can run:
+游戏的生命周期模型使用**发布订阅模式**设计，设计相当复杂。
 
-### `npm dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
