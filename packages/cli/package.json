@@ -1,0 +1,18 @@
+{
+  "name": "@soku-games/cli",
+  "version": "1.0.0",
+  "description": "The cli for Soku-Game",
+  "scripts": {
+    "build": "rimraf ./dist && rollup -c --configPlugin typescript"
+  },
+  "bin": {
+    "soku-cli": "./bin/index.js"
+  },
+  "files": ["bin", "dist"],
+  "keywords": ["soku-games", "cli"],
+  "author": "SokuRitszZ <1062708758@qq.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "commander": "^11.0.0"
+  }
+}

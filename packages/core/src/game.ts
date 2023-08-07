@@ -1,0 +1,100 @@
+import { EventEmitter } from './util';
+
+/**
+ * The core of game
+ */
+export default abstract class Game {
+  private ee = new EventEmitter();
+
+  public prepare(strData: string) {
+    this.ee.emit('before:prepare', strData);
+    this._prepare(strData);
+    this.ee.emit('after:prepare', strData);
+  }
+
+  public beforePrepare(fn: (strData: string) => void) {
+    this.ee.on('before:prepare', fn);
+  }
+
+  abstract _prepare(strData: string): void;
+
+  public afterPrepare(fn: (strData: string) => void) {
+    this.ee.on('after:prepare', fn);
+  }
+
+  public beforeStart(fn: () => void) {
+    this.ee.on('before:start', fn);
+  }
+
+  abstract _start(): void;
+
+  public afterStart(fn: () => void) {
+    this.ee.on('after:start', fn);
+  }
+
+  public start() {
+    this.ee.emit('before:start');
+    this._start();
+    this.ee.emit('after:start');
+  }
+
+  abstract isValidFormat(stepStr: string): boolean;
+
+  public onInvalidFormat(fn: (stepStr: string) => void) {
+    this.ee.on('after:invalid-format', fn);
+  }
+
+  abstract shouldStep(stepStr: string): boolean;
+
+  public onInvalidStep(fn: (stepStr: string) => void): void {
+    this.ee.on('after:invalid-step', fn);
+  }
+
+  public beforeStep(fn: (stepStr: string) => void): void {
+    this.ee.on('before:step', fn);
+  }
+
+  abstract _step(stepStr: string): void;
+
+  public afterStep(fn: (stepStr: string) => void): void {
+    this.ee.on('after:step', fn);
+  }
+
+  public sysStep(stepStr: string): void {
+    this.ee.emit('before:step', stepStr);
+    this._step(stepStr);
+    this.ee.emit('after:step', stepStr);
+  }
+
+  public step(stepStr: string) {
+    if (!this.isValidFormat(stepStr)) {
+      this.ee.emit('after:invalid-format', stepStr);
+      return;
+    }
+    if (!this.shouldStep(stepStr)) {
+      this.ee.emit('after:invalid-step', stepStr);
+      return;
+    }
+    this.ee.emit('before:step', stepStr);
+    this._step(stepStr);
+    this.ee.emit('after:step', stepStr);
+  }
+
+  public beforeEnd(fn: (reason: string) => void) {
+    this.ee.on('before:end', fn);
+  }
+
+  abstract _end(reason: string): void;
+
+  public afterEnd(fn: (reason: string) => void) {
+    this.ee.on('after:end', fn);
+  }
+
+  public end(reason: string) {
+    this.ee.emit('before:end', reason);
+    this._end(reason);
+    this.ee.emit('after:end', reason);
+
+    this.ee.clear();
+  }
+}
