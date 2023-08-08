@@ -1,4 +1,8 @@
+import Game from './game';
+
 /**
  * The base of Renderer
  */
-export default class Renderer {}
+export default abstract class Renderer {
+  abstract bindGame(game: Game, extra?: any): void;
+}

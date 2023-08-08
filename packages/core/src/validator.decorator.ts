@@ -1,6 +1,6 @@
 import Validator from './validator';
 
-const CONTAINER = new Map<string, Validator>();
+const CONTAINER = new Map<string, any>();
 
 export default function RendererImpl(tag: string): ClassDecorator {
   return (target) => {

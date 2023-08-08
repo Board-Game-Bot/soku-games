@@ -1,6 +1,6 @@
 import Renderer from './renderer';
 
-const CONTAINER = new Map<string, Renderer>();
+const CONTAINER = new Map<string, any>();
 
 export default function RendererImpl(tag: string): ClassDecorator {
   return (target) => {
@@ -8,7 +8,7 @@ export default function RendererImpl(tag: string): ClassDecorator {
   };
 }
 
-export function NewRenderer(tag: string): Generator {
+export function NewRenderer(tag: string): Renderer {
   try {
     const MAKER = CONTAINER.get(tag);
     return new (MAKER as any)();

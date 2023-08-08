@@ -5,6 +5,7 @@ import { EventEmitter } from './util';
  */
 export default abstract class Game {
   private ee = new EventEmitter();
+  private checkChain: ((stepStr: string) => string)[] = [];
 
   public prepare(strData: string) {
     this.ee.emit('before:prepare', strData);
@@ -40,11 +41,22 @@ export default abstract class Game {
 
   abstract isValidFormat(stepStr: string): boolean;
 
-  public onInvalidFormat(fn: (stepStr: string) => void) {
+  public onInvalidFormat(fn: (stepStr: string, reason: string) => void) {
     this.ee.on('after:invalid-format', fn);
   }
 
-  abstract shouldStep(stepStr: string): boolean;
+  public stepCheck(fn: (stepStr: string) => string) {
+    this.checkChain.push(fn);
+  }
+
+  public shouldStep(stepStr: string): string {
+    return this.checkChain.reduce((pre, cur) => {
+      if (pre) {
+        return pre;
+      }
+      return pre + cur(stepStr);
+    }, '');
+  }
 
   public onInvalidStep(fn: (stepStr: string) => void): void {
     this.ee.on('after:invalid-step', fn);
@@ -71,8 +83,9 @@ export default abstract class Game {
       this.ee.emit('after:invalid-format', stepStr);
       return;
     }
-    if (!this.shouldStep(stepStr)) {
-      this.ee.emit('after:invalid-step', stepStr);
+    let reason: string;
+    if ((reason = this.shouldStep(stepStr))) {
+      this.ee.emit('after:invalid-step', stepStr, reason);
       return;
     }
     this.ee.emit('before:step', stepStr);

@@ -1,6 +1,6 @@
 import Controller from './controller';
 
-const CONTAINER = new Map<string, Controller>();
+const CONTAINER = new Map<string, any>();
 
 export default function ControllerImpl(tag: string): ClassDecorator {
   return (target) => {

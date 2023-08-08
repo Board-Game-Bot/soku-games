@@ -1,6 +1,6 @@
 import Generator from './generator';
 
-const CONTAINER = new Map<string, Generator>();
+const CONTAINER = new Map<string, any>();
 
 export default function GeneratorImpl(tag: string): ClassDecorator {
   return (target) => {

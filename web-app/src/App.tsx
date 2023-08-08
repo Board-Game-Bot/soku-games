@@ -8,14 +8,54 @@ import 'soku-game-snake';
 import 'soku-game-reversi';
 
 // 获取游戏的方式
-import { NewGame } from '@soku-games/core';
+import {
+  NewController,
+  NewGame,
+  NewGenerator,
+  NewRenderer,
+} from '@soku-games/core';
 
 function App(): JSX.Element {
   const [count, setCount] = createSignal(0);
+  const [text, setText] = createSignal('');
+  const [view, setView] = createSignal('');
+  const objectiveView = () =>
+    view()
+      .replace(/1/g, '🧱')
+      .replace(/0/g, '🌿')
+      .replace(/A/g, '🐱')
+      .replace(/B/g, '🐶');
+  const abstractiveView = () => view();
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      const str = (e.target as HTMLInputElement).value;
+      control(str);
+      setText('');
+    }
+  }
 
   // 获取游戏实例
-  const game = NewGame('reversi');
+  const game = NewGame('snake');
+  const generator = NewGenerator('snake');
+  const renderer = NewRenderer('snake');
+  const controller = NewController('snake');
+  let control: (strStep: string) => void;
+
   onMount(() => {
+    renderer.bindGame(game, {
+      print: setView,
+    });
+
+    controller.bindRenderer(renderer, {
+      bindController: (con: (strStep: string) => void) => {
+        control = con;
+      },
+    });
+
+    const initData = generator.generate(13, 14, 10);
+    game.prepare(initData);
+
     game.start();
   });
 
@@ -38,6 +78,16 @@ function App(): JSX.Element {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
+      <div style={{ display: 'flex', gap: '30px' }}>
+        <pre>{objectiveView()}</pre>
+        <pre>{abstractiveView()}</pre>
+      </div>
+      <input
+        value={text()}
+        type="text"
+        onKeyDown={handleKeyDown}
+        onChange={(e) => setText((e.target as HTMLInputElement).value)}
+      />
       <p class="read-the-docs">
         Click on the Vite and Solid logos to learn more
       </p>
