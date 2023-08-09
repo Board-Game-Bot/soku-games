@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "The cli for Soku-Game",
   "scripts": {
+    "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
     "build": "rimraf ./dist && rollup -c --configPlugin typescript"
   },
   "bin": {
-    "soku-cli": "./bin/index.js"
+    "soku-game-cli": "./bin/index.js"
   },
   "files": ["bin", "dist"],
   "keywords": ["soku-games", "cli"],

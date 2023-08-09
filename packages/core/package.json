@@ -16,6 +16,7 @@
   "types": "dist/index.d.ts",
   "files": ["dist"],
   "scripts": {
+    "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
     "build": "rimraf ./dist && rollup -c --configPlugin typescript"
   },
   "keywords": ["games"]

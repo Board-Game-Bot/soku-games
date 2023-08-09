@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      soku-game-reversi:
-        specifier: workspace:^
-        version: link:example/soku-game-reversi
-      soku-game-snake:
-        specifier: workspace:^
-        version: link:example/soku-game-snake
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: ^15.1.0
@@ -98,6 +91,12 @@ importers:
       '@soku-games/core':
         specifier: workspace:^
         version: link:../packages/core
+      soku-game-reversi:
+        specifier: workspace:^
+        version: link:../example/soku-game-reversi
+      soku-game-snake:
+        specifier: workspace:^
+        version: link:../example/soku-game-snake
       solid-js:
         specifier: ^1.7.8
         version: 1.7.8

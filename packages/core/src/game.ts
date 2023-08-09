@@ -6,6 +6,7 @@ import { EventEmitter } from './util';
 export default abstract class Game {
   private ee = new EventEmitter();
   private checkChain: ((stepStr: string) => string)[] = [];
+  private status: 'prepare' | 'started' | 'ended' = 'prepare';
 
   public prepare(strData: string) {
     this.ee.emit('before:prepare', strData);
@@ -34,9 +35,13 @@ export default abstract class Game {
   }
 
   public start() {
+    if (this.status !== 'prepare') {
+      return;
+    }
     this.ee.emit('before:start');
     this._start();
     this.ee.emit('after:start');
+    this.status = 'started';
   }
 
   abstract isValidFormat(stepStr: string): boolean;
@@ -79,6 +84,9 @@ export default abstract class Game {
   }
 
   public step(stepStr: string) {
+    if (this.status !== 'started') {
+      return;
+    }
     if (!this.isValidFormat(stepStr)) {
       this.ee.emit('after:invalid-format', stepStr);
       return;
@@ -104,9 +112,13 @@ export default abstract class Game {
   }
 
   public end(reason: string) {
+    if (this.status !== 'started') {
+      return;
+    }
     this.ee.emit('before:end', reason);
     this._end(reason);
     this.ee.emit('after:end', reason);
+    this.status = 'ended';
 
     this.ee.clear();
   }

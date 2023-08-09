@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The example of reversi game",
   "scripts": {
+    "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
     "build": "rimraf ./dist && rollup -c --configPlugin typescript"
   },
   "exports": {
