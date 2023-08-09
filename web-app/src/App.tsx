@@ -17,29 +17,32 @@ import {
 
 function App(): JSX.Element {
   const [count, setCount] = createSignal(0);
-  const [text, setText] = createSignal('');
   const [view, setView] = createSignal('');
   const objectiveView = () =>
     view()
-      .replace(/1/g, '🧱')
-      .replace(/0/g, '🌿')
+      .replace(/1/g, '⚪️')
+      .replace(/0/g, '⚫️')
+      .replace(/2/g, '🟩')
       .replace(/A/g, '🐱')
       .replace(/B/g, '🐶');
   const abstractiveView = () => view();
+  let inputRef: HTMLInputElement;
 
   function handleKeyDown(e: KeyboardEvent) {
     if (e.key === 'Enter') {
-      const str = (e.target as HTMLInputElement).value;
+      const str = inputRef.value;
       control(str);
-      setText('');
+      inputRef.value = '';
     }
   }
 
   // 获取游戏实例
-  const game = NewGame('snake');
-  const generator = NewGenerator('snake');
-  const renderer = NewRenderer('snake');
-  const controller = NewController('snake');
+  const gameName = 'reversi';
+  const game = NewGame(gameName);
+  const generator = NewGenerator(gameName);
+  const renderer = NewRenderer(gameName);
+  const controller = NewController(gameName);
+
   let control: (strStep: string) => void;
 
   onMount(() => {
@@ -53,7 +56,7 @@ function App(): JSX.Element {
       },
     });
 
-    const initData = generator.generate(13, 14, 10);
+    const initData = generator.generate(8, 8, 10);
     game.prepare(initData);
 
     game.start();
@@ -83,10 +86,9 @@ function App(): JSX.Element {
         <pre>{abstractiveView()}</pre>
       </div>
       <input
-        value={text()}
+        ref={(t) => (inputRef = t)}
         type="text"
         onKeyDown={handleKeyDown}
-        onChange={(e) => setText((e.target as HTMLInputElement).value)}
       />
       <p class="read-the-docs">
         Click on the Vite and Solid logos to learn more

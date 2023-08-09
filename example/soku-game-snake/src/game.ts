@@ -1,10 +1,6 @@
 import { Game, GameImpl } from '@soku-games/core';
 import { initialGrid } from './util';
-
-const dir = [
-  [-1, 0, 1, 0],
-  [0, 1, 0, -1],
-];
+import { dir } from './constants';
 
 type P = [number, number];
 

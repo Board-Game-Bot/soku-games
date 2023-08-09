@@ -3,7 +3,10 @@
  * @param object
  * @param newMap
  */
-export function deepClone(object: any, newMap = new WeakMap()): any {
+export function deepClone<T extends Record<string, any> | any[]>(
+  object: T,
+  newMap = new WeakMap(),
+): T {
   if (typeof object !== 'object') {
     return object;
   }

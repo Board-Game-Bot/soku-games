@@ -19,7 +19,9 @@ export class ConsoleSnakeRenderer extends Renderer {
     const { print } = extra;
     function render() {
       const { grid, snakes } = game;
-      const newGrid = deepClone(grid);
+      const newGrid = deepClone(grid).map((row) =>
+        row.map((col) => col.toString()),
+      );
 
       snakes.forEach((snake, i) => {
         const c = i === 0 ? 'A' : 'B';
@@ -28,7 +30,7 @@ export class ConsoleSnakeRenderer extends Renderer {
         });
       });
 
-      print(newGrid.map((row: string[]) => row.join(' ')).join('\n'));
+      print(newGrid.map((row) => row.join(' ')).join('\n'));
     }
 
     // 游戏开始，渲染一帧
