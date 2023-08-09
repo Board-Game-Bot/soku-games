@@ -17,9 +17,6 @@ importers:
       '@soku-games/cli':
         specifier: workspace:^
         version: link:packages/cli
-      '@soku-games/core':
-        specifier: workspace:^
-        version: link:packages/core
       '@types/node':
         specifier: ^20.4.8
         version: 20.4.8
@@ -69,13 +66,13 @@ importers:
   example/soku-game-reversi:
     dependencies:
       '@soku-games/core':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/core
 
   example/soku-game-snake:
     dependencies:
       '@soku-games/core':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/core
 
   packages/cli:

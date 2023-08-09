@@ -24,6 +24,6 @@
     "games"
   ],
   "dependencies": {
-    "@soku-games/core": "latest"
+    "@soku-games/core": "workspace:*"
   }
 }
