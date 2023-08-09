@@ -1,5 +1,4 @@
 import { createSignal, JSX, onMount } from 'solid-js';
-// FIXME: 静态检查
 import solidLogo from './assets/solid.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
