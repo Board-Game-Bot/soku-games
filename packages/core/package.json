@@ -17,7 +17,8 @@
   "files": ["dist"],
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
-    "build": "rimraf ./dist && rollup -c --configPlugin typescript"
+    "build": "rimraf ./dist && rollup -c --configPlugin typescript",
+    "pub": "npm publish --access public"
   },
   "keywords": ["games"]
 }

@@ -2,7 +2,7 @@ import Validator from './validator';
 
 const CONTAINER = new Map<string, any>();
 
-export default function RendererImpl(tag: string): ClassDecorator {
+export default function ValidatorImpl(tag: string): ClassDecorator {
   return (target) => {
     CONTAINER.set(tag, target);
   };

@@ -6,11 +6,12 @@ import { dir } from './constants';
 export class SnakeGenerator extends Generator {
   generate(...args: any[]): string {
     const [r, c, wallCount] = args as number[];
-    const grid = Array(r)
-      .fill(0)
-      .map(() => Array(c).fill(0));
-
-    generate(grid, wallCount);
+    const grid = generate(
+      Array(r)
+        .fill(0)
+        .map(() => Array(c).fill(0)),
+      wallCount,
+    );
 
     return `${r} ${c} ${grid.toString().replace(/,/g, '')}`;
   }

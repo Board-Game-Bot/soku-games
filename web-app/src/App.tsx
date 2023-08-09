@@ -19,8 +19,8 @@ function App(): JSX.Element {
   const [view, setView] = createSignal('');
   const objectiveView = () =>
     view()
-      .replace(/1/g, '⚪️')
-      .replace(/0/g, '⚫️')
+      .replace(/0/g, '⚪️')
+      .replace(/1/g, '⚫️')
       .replace(/2/g, '🟩')
       .replace(/A/g, '🐱')
       .replace(/B/g, '🐶');
@@ -36,7 +36,7 @@ function App(): JSX.Element {
   }
 
   // 获取游戏实例
-  const gameName = 'reversi';
+  const gameName = 'snake';
   const game = NewGame(gameName);
   const generator = NewGenerator(gameName);
   const renderer = NewRenderer(gameName);

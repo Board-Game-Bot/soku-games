@@ -1,10 +1,11 @@
 {
   "name": "soku-game-snake",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "The example of snake game",
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
-    "build": "rimraf ./dist && rollup -c --configPlugin typescript"
+    "build": "rimraf ./dist && rollup -c --configPlugin typescript",
+    "pub": "npm publish --access public"
   },
   "exports": {
     ".": {
@@ -23,6 +24,6 @@
     "games"
   ],
   "dependencies": {
-    "@soku-games/core": "workspace:^"
+    "@soku-games/core": "latest"
   }
 }
