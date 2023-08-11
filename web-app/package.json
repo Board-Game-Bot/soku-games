@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@soku-games/core": "workspace:^",
+    "soku-game-recorder": "workspace:^",
     "soku-game-reversi": "workspace:^",
     "soku-game-snake": "workspace:^",
     "solid-js": "^1.7.8"

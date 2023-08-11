@@ -5,6 +5,7 @@ import './App.css';
 
 import 'soku-game-snake';
 import 'soku-game-reversi';
+import 'soku-game-recorder';
 
 // 获取游戏的方式
 import {
@@ -12,6 +13,7 @@ import {
   NewGame,
   NewGenerator,
   NewRenderer,
+  NewValidator,
 } from '@soku-games/core';
 
 function App(): JSX.Element {
@@ -19,8 +21,8 @@ function App(): JSX.Element {
   const [view, setView] = createSignal('');
   const objectiveView = () =>
     view()
-      .replace(/0/g, '⚪️')
-      .replace(/1/g, '⚫️')
+      .replace(/0/g, '🌿️')
+      .replace(/1/g, '🧱️')
       .replace(/2/g, '🟩')
       .replace(/A/g, '🐱')
       .replace(/B/g, '🐶');
@@ -41,12 +43,22 @@ function App(): JSX.Element {
   const generator = NewGenerator(gameName);
   const renderer = NewRenderer(gameName);
   const controller = NewController(gameName);
+  const validator = NewValidator(gameName);
+  const recorder = NewRenderer('recorder');
 
   let control: (strStep: string) => void;
 
   onMount(() => {
+    validator.bindGame(game);
+
     renderer.bindGame(game, {
       print: setView,
+    });
+
+    recorder.bindGame(game, {
+      getResult(record: Record<string, any>) {
+        console.log(record);
+      },
     });
 
     controller.bindRenderer(renderer, {

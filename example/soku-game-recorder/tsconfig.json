@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "lib": ["esnext", "dom"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+
+    "strict": true,
+
+    "types": ["node"],
+    "paths": { }
+  },
+  "exclude": [
+    "**/dist/**",
+    "**/node_modules/**",
+  ]
+}

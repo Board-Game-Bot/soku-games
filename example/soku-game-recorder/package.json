@@ -1,7 +1,7 @@
 {
-  "name": "soku-game-reversi",
+  "name": "soku-game-recorder",
   "version": "0.0.1",
-  "description": "The example of reversi game",
+  "description": "The example that use to be recorder.",
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
     "build": "rimraf ./dist && rollup -c --configPlugin typescript",

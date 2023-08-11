@@ -63,6 +63,12 @@ importers:
         specifier: ^0.30.1
         version: 0.30.1
 
+  example/soku-game-recorder:
+    dependencies:
+      '@soku-games/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+
   example/soku-game-reversi:
     dependencies:
       '@soku-games/core':
@@ -88,6 +94,9 @@ importers:
       '@soku-games/core':
         specifier: workspace:^
         version: link:../packages/core
+      soku-game-recorder:
+        specifier: workspace:^
+        version: link:../example/soku-game-recorder
       soku-game-reversi:
         specifier: workspace:^
         version: link:../example/soku-game-reversi

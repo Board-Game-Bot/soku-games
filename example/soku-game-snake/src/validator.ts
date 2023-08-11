@@ -20,15 +20,17 @@ export class SnakeValidator extends Validator {
         }
       });
 
-      if (die) {
-        if (die === 3) {
-          game.end(`双方平局：两蛇皆撞`);
-        } else if (die === 1) {
-          game.end(`零蛇战败`);
-        } else if (die === 2) {
-          game.end(`壹蛇战败`);
+      setTimeout(() => {
+        if (die) {
+          if (die === 3) {
+            game.end(`双方平局：两蛇皆撞`);
+          } else if (die === 1) {
+            game.end(`零蛇战败`);
+          } else if (die === 2) {
+            game.end(`壹蛇战败`);
+          }
         }
-      }
+      });
     });
   }
 }
