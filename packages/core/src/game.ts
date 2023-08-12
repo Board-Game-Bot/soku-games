@@ -8,6 +8,16 @@ export default abstract class Game {
   private checkChain: ((stepStr: string) => string)[] = [];
   private status: 'prepare' | 'started' | 'ended' = 'prepare';
 
+  data: Record<string, any> = {};
+
+  public customBind(...args: Parameters<typeof this.ee.on>) {
+    this.ee.on(...args);
+  }
+
+  public customEmit(...args: Parameters<typeof this.ee.emit>) {
+    this.ee.emit(...args);
+  }
+
   public prepare(strData: string) {
     this.ee.emit('before:prepare', strData);
     this._prepare(strData);

@@ -15,12 +15,13 @@ export default class ConsoleReversiRenderer extends Renderer {
     const { print } = extra || {};
     function render() {
       if (print) {
-        const { grid } = game;
+        const { grid } = game.data;
 
         print(grid.map((row) => row.join(' ')).join('\n'));
       }
     }
     game.afterStart(render);
     game.afterStep(render);
+    game.customBind('render', render);
   }
 }

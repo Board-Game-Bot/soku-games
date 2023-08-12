@@ -1,10 +1,13 @@
 import { Game, GameImpl } from '@soku-games/core';
+import { reverse } from './utils';
 
 @GameImpl('reversi')
 export class ReversiGame extends Game {
-  grid: number[][] = [];
-  r = 0;
-  c = 0;
+  data = {
+    grid: <number[][]>[],
+    r: 0,
+    c: 0,
+  };
   _end(reason: string): void {}
 
   _prepare(strData: string): void {
@@ -27,7 +30,9 @@ export class ReversiGame extends Game {
       }
     }
 
-    Object.assign(this, { r, c, grid });
+    const data = { r, c, grid };
+
+    Object.assign(this, { data });
   }
 
   _start(): void {
@@ -39,14 +44,16 @@ export class ReversiGame extends Game {
      * 一步数据格式：{id}{r}{c}
      */
     const [id, r, c] = stepStr.split('').map((x) => +x);
-    this.grid[r][c] = id;
+    reverse(this.data.grid, id, r, c);
+    this.data.grid[r][c] = id;
   }
 
   isValidFormat(stepStr: string): boolean {
     if (!/^[0-1]\d\d$/.test(stepStr)) {
       return false;
     }
+    const { data } = this;
     const [, x, y] = stepStr.split('').map((x) => +x);
-    return 0 <= x && x < this.r && 0 <= y && y < this.c;
+    return 0 <= x && x < data.r && 0 <= y && y < data.c;
   }
 }

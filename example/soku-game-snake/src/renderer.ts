@@ -18,7 +18,7 @@ export class ConsoleSnakeRenderer extends Renderer {
 
     const { print } = extra;
     function render() {
-      const { grid, snakes } = game;
+      const { grid, snakes } = game.data;
       const newGrid = deepClone(grid).map((row) =>
         row.map((col) => col.toString()),
       );
@@ -34,13 +34,10 @@ export class ConsoleSnakeRenderer extends Renderer {
     }
 
     // 游戏开始，渲染一帧
-    game.afterStart(() => {
-      render();
-    });
-
+    game.afterStart(render);
     // 步行一次，渲染
-    game.afterStep(() => {
-      render();
-    });
+    game.afterStep(render);
+    // 强制渲染
+    game.customBind('render', render);
   }
 }

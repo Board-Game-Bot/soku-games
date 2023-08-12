@@ -72,13 +72,13 @@ importers:
   example/soku-game-reversi:
     dependencies:
       '@soku-games/core':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../packages/core
 
   example/soku-game-snake:
     dependencies:
       '@soku-games/core':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../packages/core
 
   packages/cli:

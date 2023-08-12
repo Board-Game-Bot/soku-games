@@ -6,7 +6,7 @@ import { deepClone } from './util';
 export class SnakeValidator extends Validator {
   override bindGame(game: SnakeGame) {
     game.afterStep(() => {
-      const { snakes, grid } = game;
+      const { snakes, grid } = game.data;
       const newGrid = deepClone(grid);
       let die = 0;
       snakes.forEach((snake) => {

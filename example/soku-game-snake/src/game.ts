@@ -6,11 +6,17 @@ type P = [number, number];
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
-  grid: number[][] = [];
-  r = 0;
-  c = 0;
-
-  snakes: P[][] = [];
+  data: {
+    grid: number[][];
+    r: number;
+    c: number;
+    snakes: P[][];
+  } = {
+    grid: [],
+    r: 0,
+    c: 0,
+    snakes: [],
+  };
 
   _end(reason: string): void {}
 
@@ -30,7 +36,9 @@ export class SnakeGame extends Game {
       return [snake0, snake1];
     })();
 
-    Object.assign(this, { r, c, grid, snakes });
+    const data = { r, c, grid, snakes };
+
+    Object.assign(this, { data });
   }
 
   _start(): void {
@@ -47,9 +55,10 @@ export class SnakeGame extends Game {
      * snake[0..n] 0 是蛇头，顺延到蛇尾
      */
     const [d0, d1, incr] = stepStr.split('').map((c) => +c);
+    const { data } = this;
 
     [d0, d1].forEach((d, i) => {
-      const snake = this.snakes[i];
+      const snake = data.snakes[i];
       const h = [...snake[0]];
       const nh = h.map((x, j) => x + dir[j][d]);
 

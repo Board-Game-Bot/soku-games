@@ -1,13 +1,22 @@
 import { Game, Renderer, RendererImpl } from '@soku-games/core';
 
+export interface TRecord {
+  reason: string;
+  steps: string;
+  initData: string;
+}
+
 @RendererImpl('recorder')
 export class RecordRenderer extends Renderer {
+  game?: Game;
   bindGame(
     game: Game,
     extra?: {
-      getResult?: (record: Record<string, any>) => void;
+      getResult?: (record: TRecord) => void;
     },
   ): void {
+    this.game = game;
+
     let initData: string = '';
 
     game.afterPrepare((strData) => {

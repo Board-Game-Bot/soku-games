@@ -1,4 +1,4 @@
-import { createSignal, JSX, onMount } from 'solid-js';
+import { createSignal, For, JSX, onMount } from 'solid-js';
 import solidLogo from './assets/solid.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -16,13 +16,22 @@ import {
   NewValidator,
 } from '@soku-games/core';
 
+interface RecordPlayer {
+  prepare: (record: Record<string, any>) => void;
+  step: () => boolean;
+  revStep: () => boolean;
+  stepTo: () => boolean;
+}
+
 function App(): JSX.Element {
   const [count, setCount] = createSignal(0);
   const [view, setView] = createSignal('');
   const objectiveView = () =>
     view()
-      .replace(/0/g, '🌿️')
-      .replace(/1/g, '🧱️')
+      // .replace(/0/g, '🌿️')
+      // .replace(/1/g, '🧱️')
+      .replace(/0/g, '⚫️')
+      .replace(/1/g, '⚪️️')
       .replace(/2/g, '🟩')
       .replace(/A/g, '🐱')
       .replace(/B/g, '🐶');
@@ -38,7 +47,7 @@ function App(): JSX.Element {
   }
 
   // 获取游戏实例
-  const gameName = 'snake';
+  const gameName = 'reversi';
   const game = NewGame(gameName);
   const generator = NewGenerator(gameName);
   const renderer = NewRenderer(gameName);
@@ -47,19 +56,22 @@ function App(): JSX.Element {
   const recorder = NewRenderer('recorder');
 
   let control: (strStep: string) => void;
+  let record: Record<string, any>;
+  let turn = 0;
 
   onMount(() => {
-    validator.bindGame(game);
-
     renderer.bindGame(game, {
       print: setView,
     });
 
     recorder.bindGame(game, {
-      getResult(record: Record<string, any>) {
-        console.log(record);
+      getResult(_record: Record<string, any>) {
+        console.log(_record);
+        record = _record;
       },
     });
+
+    validator.bindGame(game);
 
     controller.bindRenderer(renderer, {
       bindController: (con: (strStep: string) => void) => {
@@ -68,10 +80,45 @@ function App(): JSX.Element {
     });
 
     const initData = generator.generate(8, 8, 10);
+    game.customBind('pass', (t: number) => {
+      turn = t;
+    });
     game.prepare(initData);
 
     game.start();
   });
+
+  let recordPlayer: RecordPlayer;
+  function handleClickBind() {
+    const game = NewGame(gameName);
+    const renderer = NewRenderer(gameName);
+    const recorder = NewRenderer('recorder');
+    const player = NewController('recorder');
+
+    renderer.bindGame(game, { print: setView });
+    recorder.bindGame(game);
+    player.bindRenderer(recorder, {
+      bindController: (controller: RecordPlayer) => {
+        recordPlayer = controller;
+        recordPlayer.prepare(record);
+      },
+    });
+  }
+  function handleClickPlay() {
+    const timer = setInterval(() => {
+      if (!recordPlayer.step()) {
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
+
+  function handleLeft() {
+    recordPlayer.revStep();
+  }
+
+  function handleRight() {
+    recordPlayer.step();
+  }
 
   return (
     <>
@@ -92,15 +139,28 @@ function App(): JSX.Element {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <div style={{ display: 'flex', gap: '30px' }}>
+      <div style={{ display: 'flex', gap: '30px', 'font-size': '20px' }}>
         <pre>{objectiveView()}</pre>
         <pre>{abstractiveView()}</pre>
+        <ButtonGroup
+          r={8}
+          c={8}
+          onClick={(i, j) => {
+            const step = `${turn}${i.toString(36)}${j.toString(36)}`;
+            turn ^= 1;
+            control(step);
+          }}
+        />
       </div>
       <input
         ref={(t) => (inputRef = t)}
         type="text"
         onKeyDown={handleKeyDown}
       />
+      <button onClick={handleClickBind}>绑定</button>
+      <button onClick={handleClickPlay}>播放</button>
+      <button onClick={handleLeft}>左</button>
+      <button onClick={handleRight}>右</button>
       <p class="read-the-docs">
         Click on the Vite and Solid logos to learn more
       </p>
@@ -109,3 +169,32 @@ function App(): JSX.Element {
 }
 
 export default App;
+
+function ButtonGroup(props: {
+  r: number;
+  c: number;
+  onClick: (x: number, y: number) => void;
+}) {
+  return (
+    <div>
+      <For each={Array(props.r).fill(0)}>
+        {(_, i) => (
+          <div>
+            <For each={Array(props.c).fill(0)}>
+              {(_, j) => (
+                <button
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    'background-color': (i() + j()) & 1 ? 'black' : 'gray',
+                  }}
+                  onClick={() => props.onClick(i(), j())}
+                />
+              )}
+            </For>
+          </div>
+        )}
+      </For>
+    </div>
+  );
+}
