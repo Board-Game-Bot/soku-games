@@ -1,6 +1,4 @@
 import { createSignal, For, JSX, onMount } from 'solid-js';
-import solidLogo from './assets/solid.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 
 import 'soku-game-snake';
@@ -16,6 +14,18 @@ import {
   NewValidator,
 } from '@soku-games/core';
 
+function App(): JSX.Element {
+  return (
+    <>
+      <SnakeDemo />
+      <ReversiDemo />
+      <div />
+    </>
+  );
+}
+
+export default App;
+
 interface RecordPlayer {
   prepare: (record: Record<string, any>) => void;
   step: () => boolean;
@@ -23,22 +33,42 @@ interface RecordPlayer {
   stepTo: () => boolean;
 }
 
-function App(): JSX.Element {
-  const [count, setCount] = createSignal(0);
+function SnakeDemo(): JSX.Element {
   const [view, setView] = createSignal('');
+  const gameName = 'snake';
+  const game = NewGame(gameName);
+  const renderer = NewRenderer(gameName);
+  const controller = NewController(gameName);
+  const validator = NewValidator(gameName);
+  const generator = NewGenerator(gameName);
+
+  const recorder = NewRenderer('snake');
+
+  let control: (strStep: string) => void;
+
+  onMount(() => {
+    renderer.bindGame(game, {
+      print: setView,
+    });
+    recorder.bindGame(game, {});
+    control = controller.bindRenderer(renderer) as unknown as (
+      strStep: string,
+    ) => void;
+    validator.bindGame(game);
+    game.prepare(generator.generate(13, 14, 20)).start();
+  });
+
+  const abstractView = () => view();
   const objectiveView = () =>
-    view()
-      // .replace(/0/g, '🌿️')
-      // .replace(/1/g, '🧱️')
-      .replace(/0/g, '⚫️')
-      .replace(/1/g, '⚪️️')
-      .replace(/2/g, '🟩')
+    abstractView()
+      .replace(/0/g, '🌿️')
+      .replace(/1/g, '🧱️')
       .replace(/A/g, '🐱')
       .replace(/B/g, '🐶');
-  const abstractiveView = () => view();
+
   let inputRef: HTMLInputElement;
 
-  function handleKeyDown(e: KeyboardEvent) {
+  function handleSubmit(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       const str = inputRef.value;
       control(str);
@@ -46,155 +76,128 @@ function App(): JSX.Element {
     }
   }
 
-  // 获取游戏实例
+  return (
+    <>
+      <div style={{ display: 'flex', gap: '20px', 'font-size': '25px' }}>
+        <pre>{objectiveView()}</pre>
+        <pre>{abstractView()}</pre>
+      </div>
+      <input
+        style={{ 'font-size': '25px', 'padding-inline': '10px' }}
+        ref={(el) => (inputRef = el)}
+        type="text"
+        onKeyDown={handleSubmit}
+      />
+    </>
+  );
+}
+
+function ReversiDemo(): JSX.Element {
+  const [view, setView] = createSignal('');
+  const abstractView = () => view();
+  const objectiveView = () =>
+    view()
+      .split('\n')
+      .map((line, i) => (
+        <div>
+          <For each={line.split(' ')}>
+            {(c, j) => (
+              <button
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  'box-sizing': 'border-box',
+                  'background-color':
+                    c === '2' ? '#040' : c === '0' ? '#333' : '#ccc',
+                }}
+                onClick={() => {
+                  const step = `${turn}${i.toString(36)}${j().toString(36)}`;
+                  turn ^= 1;
+                  control(step);
+                }}
+              />
+            )}
+          </For>
+        </div>
+      ));
+
+  let turn = 0;
+
   const gameName = 'reversi';
-  const game = NewGame(gameName);
-  const generator = NewGenerator(gameName);
-  const renderer = NewRenderer(gameName);
+  let game = NewGame(gameName);
+  let renderer = NewRenderer(gameName);
   const controller = NewController(gameName);
   const validator = NewValidator(gameName);
-  const recorder = NewRenderer('recorder');
+  const generator = NewGenerator(gameName);
 
+  let recorder = NewRenderer('recorder');
   let control: (strStep: string) => void;
   let record: Record<string, any>;
-  let turn = 0;
 
   onMount(() => {
     renderer.bindGame(game, {
       print: setView,
     });
-
-    recorder.bindGame(game, {
-      getResult(_record: Record<string, any>) {
-        console.log(_record);
-        record = _record;
-      },
-    });
-
-    validator.bindGame(game);
-
+    recorder.bindGame(game);
     control = controller.bindRenderer(renderer) as unknown as (
       strStep: string,
     ) => void;
-
-    const initData = generator.generate(8, 8, 10);
-
-    game.customBind('pass', (t: number) => {
-      turn = t;
+    validator.bindGame(game);
+    game.customBind('record-result', (_record: Record<string, any>) => {
+      record = _record;
     });
-    game.prepare(initData);
-    game.start();
+    game.prepare(generator.generate(8, 8)).start();
   });
 
-  let currentRecordPlayer: RecordPlayer;
+  let recordPlayer: RecordPlayer;
 
-  // 绑定游戏录像
-  function handleClickBind() {
-    const game = NewGame(gameName);
-    const renderer = NewRenderer(gameName);
-    const recorder = NewRenderer('recorder');
-    const recordPlayer = NewController('recorder');
-
+  function handleLoad() {
+    game = NewGame(gameName);
+    renderer = NewRenderer(gameName);
+    recorder = NewRenderer('recorder');
+    const recordController = NewController('recorder');
     renderer.bindGame(game, { print: setView });
     recorder.bindGame(game);
-
-    currentRecordPlayer = recordPlayer.bindRenderer(
+    recordPlayer = recordController.bindRenderer(
       recorder,
     ) as unknown as RecordPlayer;
-    currentRecordPlayer.prepare(record);
+    recordPlayer.prepare(record);
   }
-  //
-  function handleClickPlay() {
-    const timer = setInterval(() => {
-      if (!currentRecordPlayer.step()) {
+
+  let timer: NodeJS.Timer;
+  function handlePlay() {
+    timer = setInterval(() => {
+      if (!recordPlayer.step()) {
         clearInterval(timer);
       }
     }, 1000);
   }
 
+  function handlePause() {
+    clearInterval(timer);
+  }
+
   function handleLeft() {
-    currentRecordPlayer.revStep();
+    recordPlayer.revStep();
   }
 
   function handleRight() {
-    currentRecordPlayer.step();
+    recordPlayer.step();
   }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={solidLogo} class="logo solid" alt="Solid logo" />
-        </a>
+      <div style={{ display: 'flex', gap: '20px', 'font-size': '25px' }}>
+        <div>{objectiveView()}</div>
+        <pre>{abstractView()}</pre>
       </div>
-      <h1>Vite + Solid</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count()}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div style={{ 'margin-top': '30px' }}>
+        <button onClick={handleLoad}>load</button>
+        <button onClick={handlePlay}>play</button>
+        <button onClick={handlePause}>pause</button>
+        <button onClick={handleLeft}>{'<'}</button>
+        <button onClick={handleRight}>{'>'}</button>
       </div>
-      <div style={{ display: 'flex', gap: '30px', 'font-size': '20px' }}>
-        <pre>{objectiveView()}</pre>
-        <pre>{abstractiveView()}</pre>
-        <ButtonGroup
-          r={8}
-          c={8}
-          onClick={(i, j) => {
-            const step = `${turn}${i.toString(36)}${j.toString(36)}`;
-            turn ^= 1;
-            control(step);
-          }}
-        />
-      </div>
-      <input
-        ref={(t) => (inputRef = t)}
-        type="text"
-        onKeyDown={handleKeyDown}
-      />
-      <button onClick={handleClickBind}>绑定</button>
-      <button onClick={handleClickPlay}>播放</button>
-      <button onClick={handleLeft}>左</button>
-      <button onClick={handleRight}>右</button>
-      <p class="read-the-docs">
-        Click on the Vite and Solid logos to learn more
-      </p>
     </>
-  );
-}
-
-export default App;
-
-function ButtonGroup(props: {
-  r: number;
-  c: number;
-  onClick: (x: number, y: number) => void;
-}) {
-  return (
-    <div>
-      <For each={Array(props.r).fill(0)}>
-        {(_, i) => (
-          <div>
-            <For each={Array(props.c).fill(0)}>
-              {(_, j) => (
-                <button
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                    'background-color': (i() + j()) & 1 ? 'black' : 'gray',
-                  }}
-                  onClick={() => props.onClick(i(), j())}
-                />
-              )}
-            </For>
-          </div>
-        )}
-      </For>
-    </div>
   );
 }
