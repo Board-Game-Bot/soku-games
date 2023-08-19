@@ -2,19 +2,25 @@ import { Controller, ControllerImpl } from '@soku-games/core';
 import { RecordRenderer, TRecord } from './renderer';
 import { deepClone } from './utils';
 
+export interface TRecordPlayer {
+  prepare: (record: TRecord) => void;
+  step: () => void;
+  revStep: () => void;
+  stepTo: (target: number) => void;
+}
+
 @ControllerImpl('recorder')
 export class RecordPlayer extends Controller {
   bindRenderer(
     renderer: RecordRenderer,
     extra?: {
-      bindController: (controller: any) => void;
+      bindController?: (controller: any) => void;
     },
-  ): void {
+  ): TRecordPlayer {
     const { game } = renderer;
-    const { bindController } = extra || {};
 
-    if (!game || !bindController) {
-      return;
+    if (!game) {
+      throw new Error('There is not game instance on the renderer`.');
     }
 
     const dataStack: Record<string, any>[] = [];
@@ -73,11 +79,11 @@ export class RecordPlayer extends Controller {
       return true;
     };
 
-    bindController({
+    return {
       prepare,
       step,
       revStep,
       stepTo,
-    });
+    };
   }
 }

@@ -73,51 +73,51 @@ function App(): JSX.Element {
 
     validator.bindGame(game);
 
-    controller.bindRenderer(renderer, {
-      bindController: (con: (strStep: string) => void) => {
-        control = con;
-      },
-    });
+    control = controller.bindRenderer(renderer) as unknown as (
+      strStep: string,
+    ) => void;
 
     const initData = generator.generate(8, 8, 10);
+
     game.customBind('pass', (t: number) => {
       turn = t;
     });
     game.prepare(initData);
-
     game.start();
   });
 
-  let recordPlayer: RecordPlayer;
+  let currentRecordPlayer: RecordPlayer;
+
+  // 绑定游戏录像
   function handleClickBind() {
     const game = NewGame(gameName);
     const renderer = NewRenderer(gameName);
     const recorder = NewRenderer('recorder');
-    const player = NewController('recorder');
+    const recordPlayer = NewController('recorder');
 
     renderer.bindGame(game, { print: setView });
     recorder.bindGame(game);
-    player.bindRenderer(recorder, {
-      bindController: (controller: RecordPlayer) => {
-        recordPlayer = controller;
-        recordPlayer.prepare(record);
-      },
-    });
+
+    currentRecordPlayer = recordPlayer.bindRenderer(
+      recorder,
+    ) as unknown as RecordPlayer;
+    currentRecordPlayer.prepare(record);
   }
+  //
   function handleClickPlay() {
     const timer = setInterval(() => {
-      if (!recordPlayer.step()) {
+      if (!currentRecordPlayer.step()) {
         clearInterval(timer);
       }
     }, 1000);
   }
 
   function handleLeft() {
-    recordPlayer.revStep();
+    currentRecordPlayer.revStep();
   }
 
   function handleRight() {
-    recordPlayer.step();
+    currentRecordPlayer.step();
   }
 
   return (
