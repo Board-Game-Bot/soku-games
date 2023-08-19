@@ -30,7 +30,7 @@ export class RecordRenderer extends Renderer {
     });
 
     game.afterEnd((reason) => {
-      extra?.getResult?.({
+      game.customEmit('record-result', {
         reason,
         steps: steps.join('#'),
         initData,
