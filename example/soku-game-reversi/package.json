@@ -1,6 +1,6 @@
 {
   "name": "soku-game-reversi",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The example of reversi game",
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",

@@ -1,6 +1,6 @@
 {
   "name": "soku-game-snake",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The example of snake game",
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
