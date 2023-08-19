@@ -3,17 +3,33 @@
   "version": "1.0.0",
   "description": "The cli for Soku-Game",
   "scripts": {
-    "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
-    "build": "rimraf ./dist && rollup -c --configPlugin typescript"
+    "dev": "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
+    "build": "rimraf ./dist && rollup -c --configPlugin typescript",
+    "pub": "pnpm build && npm publish --access public"
   },
   "bin": {
     "soku-game-cli": "./bin/index.js"
   },
-  "files": ["bin", "dist"],
-  "keywords": ["soku-games", "cli"],
+  "type": "module",
+  "files": [
+    "bin",
+    "dist",
+    "template"
+  ],
+  "keywords": [
+    "soku-games",
+    "cli"
+  ],
   "author": "SokuRitszZ <1062708758@qq.com>",
   "license": "MIT",
   "devDependencies": {
-    "commander": "^11.0.0"
+    "@types/inquirer": "^9.0.3",
+    "commander": "^11.0.0",
+    "rollup": "^3.27.2",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-typescript2": "^0.35.0"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.10"
   }
 }
