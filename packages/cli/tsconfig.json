@@ -16,18 +16,9 @@
     "types": ["node"],
     "paths": { }
   },
-  "include": ["packages"],
   "exclude": [
-    "**/draft/**",
     "**/dist/**",
     "**/node_modules/**",
-    "**/client/**",
-    "**/playground/**",
-    "**/web-app/**",
-    "**/examples/**",
-    "**/fixtures/**",
-    "**/interactive/**",
-    "**/test/dts/**",
     "**/template/**"
   ]
 }

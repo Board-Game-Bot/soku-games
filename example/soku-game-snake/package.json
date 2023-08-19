@@ -1,0 +1,29 @@
+{
+  "name": "soku-game-snake",
+  "version": "0.1.3",
+  "description": "The example of snake game",
+  "scripts": {
+    "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
+    "build": "rimraf ./dist && rollup -c --configPlugin typescript",
+    "pub": "npm publish --access public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "games"
+  ],
+  "dependencies": {
+    "@soku-games/core": "latest"
+  }
+}

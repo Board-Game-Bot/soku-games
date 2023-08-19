@@ -1,0 +1,32 @@
+{
+  "name": "soku-game-{{name}}",
+  "version": "1.0.0",
+  "description": "The example: soku-game-{{name}}.",
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "pub": "npm publish --access public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "keywords": ["soku-game"],
+  "author": "{{author}}<{{email}}>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.5.1",
+    "typescript": "^5.1.6",
+    "unbuild": "^1.2.1"
+  },
+  "dependencies": {
+    "@soku-games/core": "*"
+  }
+}
