@@ -1,10 +1,9 @@
-import { Controller, ControllerImpl } from '@soku-games/core';
-import { ConsoleSnakeRenderer } from './renderer';
+import { GamePlugin, GamePluginImpl } from '@soku-games/core';
+import { SnakeGame } from './game';
 
-@ControllerImpl('snake')
-export class ConsoleSnakeController extends Controller {
-  bindRenderer(renderer: ConsoleSnakeRenderer): (strStep: string) => void {
-    const { game } = renderer;
+@GamePluginImpl('snake-controller')
+export class ConsoleSnakeController extends GamePlugin {
+  bindGame(game: SnakeGame): void | Record<string, any> {
     const control = (strStep: string) => {
       if (!game) {
         return;
@@ -12,6 +11,10 @@ export class ConsoleSnakeController extends Controller {
       game.step(strStep);
     };
 
-    return control;
+    return {
+      controller: {
+        control,
+      },
+    };
   }
 }

@@ -1,12 +1,12 @@
-import { Renderer, RendererImpl } from '@soku-games/core';
 import { SnakeGame } from './game';
 import { deepClone } from './util';
+import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 /**
  * console 渲染
  */
-@RendererImpl('snake')
-export class ConsoleSnakeRenderer extends Renderer {
+@GamePluginImpl('snake-render')
+export class ConsoleSnakeRenderer extends GamePlugin {
   game?: SnakeGame;
   bindGame(
     game: SnakeGame,
@@ -34,10 +34,10 @@ export class ConsoleSnakeRenderer extends Renderer {
     }
 
     // 游戏开始，渲染一帧
-    game.afterStart(render);
+    game.subscribe(LifeCycle.AFTER_START, render);
     // 步行一次，渲染
-    game.afterStep(render);
+    game.subscribe(LifeCycle.AFTER_STEP, render);
     // 强制渲染
-    game.customBind('render', render);
+    game.subscribe('custom:render', render);
   }
 }

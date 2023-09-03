@@ -18,9 +18,9 @@ export class SnakeGame extends Game {
     snakes: [],
   };
 
-  _end(reason: string): void {}
+  __end(): void {}
 
-  _prepare(strData: string): void {
+  __prepare(strData: string): void {
     /**
      * 数据格式：r c mask
      * r: 行数
@@ -41,11 +41,11 @@ export class SnakeGame extends Game {
     Object.assign(this, { data });
   }
 
-  _start(): void {
+  __start(): void {
     console.log('Snake Game Start!');
   }
 
-  _step(stepStr: string): void {
+  __step(stepStr: string): void {
     /**
      * 数据格式：{d0}{d1}{incr}
      * d0: 0蛇方向
@@ -69,7 +69,7 @@ export class SnakeGame extends Game {
     });
   }
 
-  isValidFormat(stepStr: string): boolean {
-    return /^[0-3]{2}[0-1]$/.test(stepStr);
+  __isStepValidFormat(stepStr: string): string {
+    return /^[0-3]{2}[0-1]$/.test(stepStr) ? '' : 'invalid';
   }
 }
