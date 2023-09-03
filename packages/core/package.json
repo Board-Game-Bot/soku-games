@@ -1,6 +1,6 @@
 {
   "name": "@soku-games/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The core engine of Soku-Games",
   "author": "SokuRitszZ <1062708758@qq.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
     "build": "rimraf ./dist && rollup -c --configPlugin typescript",
-    "pub": "npm publish --access public"
+    "pub": "npm run build && npm publish --access public"
   },
   "keywords": ["games"]
 }

@@ -30,6 +30,7 @@ export abstract class Game {
   abstract __isStepValidFormat(stepStr: string): string;
   abstract __end(reason: string): void;
   public subscribe = this.pubsub.subscribe.bind(this.pubsub);
+  public publish = this.pubsub.publish.bind(this.pubsub);
 
   public prepare(initDataMask: string) {
     this.pubsub.publish(LifeCycle.BEFORE_PREPARE, initDataMask);
