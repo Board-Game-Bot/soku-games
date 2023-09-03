@@ -1,8 +1,8 @@
-import Generator from './generator';
+import { Generator } from './generator';
 
 const CONTAINER = new Map<string, any>();
 
-export default function GeneratorImpl(tag: string): ClassDecorator {
+export function GeneratorImpl(tag: string): ClassDecorator {
   return (target) => {
     CONTAINER.set(tag, target);
   };
