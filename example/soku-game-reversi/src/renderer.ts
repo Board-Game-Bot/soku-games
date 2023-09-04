@@ -1,8 +1,8 @@
-import { Renderer, RendererImpl } from '@soku-games/core';
 import { ReversiGame } from './game';
+import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
-@RendererImpl('reversi')
-export default class ConsoleReversiRenderer extends Renderer {
+@GamePluginImpl('reversi-renderer')
+export default class ConsoleReversiRenderer extends GamePlugin {
   game?: ReversiGame;
   bindGame(
     game: ReversiGame,
@@ -20,8 +20,8 @@ export default class ConsoleReversiRenderer extends Renderer {
         print(grid.map((row) => row.join(' ')).join('\n'));
       }
     }
-    game.afterStart(render);
-    game.afterStep(render);
-    game.customBind('render', render);
+    game.subscribe(LifeCycle.AFTER_START, render);
+    game.subscribe(LifeCycle.AFTER_STEP, render);
+    game.subscribe('custom:render', render);
   }
 }
