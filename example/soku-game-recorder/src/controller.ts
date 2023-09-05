@@ -1,31 +1,24 @@
-import { Controller, ControllerImpl } from '@soku-games/core';
-import { RecordRenderer, TRecord } from './renderer';
+import { TRecord } from './renderer';
 import { deepClone } from './utils';
+import { Game, GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 export interface TRecordPlayer {
   prepare: (record: TRecord) => void;
-  step: () => void;
-  revStep: () => void;
+  step: () => boolean;
+  revStep: () => boolean;
   stepTo: (target: number) => void;
 }
 
-@ControllerImpl('recorder')
-export class RecordPlayer extends Controller {
-  bindRenderer(
-    renderer: RecordRenderer,
-    extra?: {
-      bindController?: (controller: any) => void;
-    },
-  ): TRecordPlayer {
-    const { game } = renderer;
-
+@GamePluginImpl('record-controller')
+export class RecordPlayer extends GamePlugin {
+  bindGame(game: Game): { recordPlayer: TRecordPlayer } {
     if (!game) {
       throw new Error('There is not game instance on the renderer`.');
     }
 
     const dataStack: Record<string, any>[] = [];
 
-    game.beforeStep(() => {
+    game.subscribe(LifeCycle.BEFORE_STEP, () => {
       dataStack.push(deepClone(game.data));
     });
 
@@ -59,7 +52,7 @@ export class RecordPlayer extends Controller {
       --index;
       const data = dataStack.pop();
       Object.assign(game, { data });
-      game.customEmit('render');
+      game.publish('custom:render');
       return true;
     };
 
@@ -80,10 +73,12 @@ export class RecordPlayer extends Controller {
     };
 
     return {
-      prepare,
-      step,
-      revStep,
-      stepTo,
+      recordPlayer: {
+        prepare,
+        step,
+        revStep,
+        stepTo,
+      },
     };
   }
 }

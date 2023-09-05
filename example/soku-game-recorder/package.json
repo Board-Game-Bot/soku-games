@@ -1,6 +1,6 @@
 {
   "name": "soku-game-recorder",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "The example that use to be recorder.",
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",

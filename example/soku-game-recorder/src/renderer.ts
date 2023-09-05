@@ -1,4 +1,4 @@
-import { Game, Renderer, RendererImpl } from '@soku-games/core';
+import { Game, GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 export interface TRecord {
   reason: string;
@@ -6,35 +6,37 @@ export interface TRecord {
   initData: string;
 }
 
-@RendererImpl('recorder')
-export class RecordRenderer extends Renderer {
+@GamePluginImpl('record-renderer')
+export class RecordRenderer extends GamePlugin {
   game?: Game;
-  bindGame(
-    game: Game,
-    extra?: {
-      getResult?: (record: TRecord) => void;
-    },
-  ): void {
+  bindGame(game: Game) {
     this.game = game;
 
     let initData: string = '';
 
-    game.afterPrepare((strData) => {
+    game.subscribe(LifeCycle.BEFORE_PREPARE, (strData) => {
       initData = strData;
     });
 
     const steps: string[] = [];
 
-    game.afterStep((stepStr) => {
+    game.subscribe(LifeCycle.BEFORE_STEP, (stepStr) => {
       steps.push(stepStr);
     });
 
-    game.afterEnd((reason) => {
-      game.customEmit('record-result', {
-        reason,
-        steps: steps.join('#'),
+    let resolve: (record: TRecord) => void;
+    const resultPromise: Promise<TRecord> = new Promise((_resolve) => {
+      resolve = _resolve;
+    });
+
+    game.subscribe(LifeCycle.AFTER_END, (reason) => {
+      resolve({
         initData,
+        steps: steps.join('#'),
+        reason,
       });
     });
+
+    return { resultPromise };
   }
 }

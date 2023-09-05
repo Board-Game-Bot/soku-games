@@ -5,7 +5,7 @@ import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 /**
  * console 渲染
  */
-@GamePluginImpl('snake-render')
+@GamePluginImpl('snake-renderer')
 export class ConsoleSnakeRenderer extends GamePlugin {
   game?: SnakeGame;
   bindGame(
