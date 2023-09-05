@@ -6,13 +6,10 @@ import 'soku-game-reversi';
 import 'soku-game-recorder';
 
 // 获取游戏的方式
-import {
-  NewController,
-  NewGame,
-  NewGenerator,
-  NewRenderer,
-  NewValidator,
-} from '@soku-games/core';
+import { buildGame, NewGenerator } from '@soku-games/core';
+import type { TRecord, TRecordPlayer } from 'soku-game-recorder';
+
+const [theRecord, setTheRecord] = createSignal<TRecord>();
 
 function App(): JSX.Element {
   return (
@@ -36,26 +33,30 @@ interface RecordPlayer {
 function SnakeDemo(): JSX.Element {
   const [view, setView] = createSignal('');
   const gameName = 'snake';
-  const game = NewGame(gameName);
-  const renderer = NewRenderer(gameName);
-  const controller = NewController(gameName);
-  const validator = NewValidator(gameName);
   const generator = NewGenerator(gameName);
-
-  const recorder = NewRenderer('snake');
 
   let control: (strStep: string) => void;
 
   onMount(() => {
-    renderer.bindGame(game, {
-      print: setView,
-    });
-    recorder.bindGame(game, {});
-    control = controller.bindRenderer(renderer) as unknown as (
-      strStep: string,
-    ) => void;
-    validator.bindGame(game);
-    game.prepare(generator.generate(13, 14, 20)).start();
+    const game = buildGame({
+      name: 'snake',
+      plugins: [
+        {
+          name: 'snake-renderer',
+          extra: {
+            print: setView,
+          },
+        },
+        'snake-controller',
+        'snake-validator',
+        'record-renderer',
+      ],
+    })!;
+    const { controller, resultPromise } = game.bundler;
+    game.prepare(generator.generate(13, 14, 20));
+    control = controller.control;
+    game.start();
+    (resultPromise as Promise<any>).then(setTheRecord);
   });
 
   const abstractView = () => view();
@@ -88,6 +89,7 @@ function SnakeDemo(): JSX.Element {
         type="text"
         onKeyDown={handleSubmit}
       />
+      <RecordPlayer name="snake" print={setView} record={theRecord()} />
     </>
   );
 }
@@ -107,61 +109,90 @@ function ReversiDemo(): JSX.Element {
                   width: '60px',
                   height: '60px',
                   'box-sizing': 'border-box',
-                  'background-color':
-                    c === '2' ? '#040' : c === '0' ? '#333' : '#ccc',
+                  padding: '5px',
+                  'background-color': '#040',
                 }}
                 onClick={() => {
                   const step = `${turn}${i.toString(36)}${j().toString(36)}`;
                   turn ^= 1;
                   control(step);
                 }}
-              />
+              >
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    'border-radius': '5px',
+                    'background-color':
+                      c === '2' ? '#040' : c === '0' ? '#333' : '#ccc',
+                    'border-color':
+                      c === '2' ? '#040' : c === '0' ? '#ccc' : '#333',
+                    border: '3px',
+                  }}
+                />
+              </button>
             )}
           </For>
         </div>
       ));
 
   let turn = 0;
-
-  const gameName = 'reversi';
-  let game = NewGame(gameName);
-  let renderer = NewRenderer(gameName);
-  const controller = NewController(gameName);
-  const validator = NewValidator(gameName);
-  const generator = NewGenerator(gameName);
-
-  let recorder = NewRenderer('recorder');
   let control: (strStep: string) => void;
-  let record: Record<string, any>;
 
   onMount(() => {
-    renderer.bindGame(game, {
-      print: setView,
-    });
-    recorder.bindGame(game);
-    control = controller.bindRenderer(renderer) as unknown as (
-      strStep: string,
-    ) => void;
-    validator.bindGame(game);
-    game.customBind('record-result', (_record: Record<string, any>) => {
-      record = _record;
-    });
-    game.prepare(generator.generate(8, 8)).start();
+    const game = buildGame({
+      name: 'reversi',
+      plugins: [
+        {
+          name: 'reversi-renderer',
+          extra: { print: setView },
+        },
+        'reversi-controller',
+        'reversi-validator',
+        'record-renderer',
+      ],
+    })!;
+    const { controller, resultPromise } = game.bundler;
+    control = controller.control;
+    const generator = NewGenerator('reversi');
+    game.prepare(generator.generate(8, 8));
+    resultPromise.then(setTheRecord);
+    game.start();
   });
 
-  let recordPlayer: RecordPlayer;
+  return (
+    <>
+      <div style={{ display: 'flex', gap: '20px', 'font-size': '25px' }}>
+        <div>{objectiveView()}</div>
+        <pre>{abstractView()}</pre>
+      </div>
+      <RecordPlayer name="reversi" record={theRecord()} print={setView} />
+    </>
+  );
+}
+
+function RecordPlayer(props: {
+  record?: TRecord;
+  name: string;
+  print: (view: string) => void;
+}) {
+  let recordPlayer: TRecordPlayer;
 
   function handleLoad() {
-    game = NewGame(gameName);
-    renderer = NewRenderer(gameName);
-    recorder = NewRenderer('recorder');
-    const recordController = NewController('recorder');
-    renderer.bindGame(game, { print: setView });
-    recorder.bindGame(game);
-    recordPlayer = recordController.bindRenderer(
-      recorder,
-    ) as unknown as RecordPlayer;
-    recordPlayer.prepare(record);
+    const game = buildGame({
+      name: props.name,
+      plugins: [
+        {
+          name: `${props.name}-renderer`,
+          extra: {
+            print: props.print,
+          },
+        },
+        'record-controller',
+      ],
+    })!;
+    recordPlayer = game.bundler.recordPlayer;
+    recordPlayer.prepare(props.record!);
   }
 
   let timer: NodeJS.Timer;
@@ -184,20 +215,13 @@ function ReversiDemo(): JSX.Element {
   function handleRight() {
     recordPlayer.step();
   }
-
   return (
-    <>
-      <div style={{ display: 'flex', gap: '20px', 'font-size': '25px' }}>
-        <div>{objectiveView()}</div>
-        <pre>{abstractView()}</pre>
-      </div>
-      <div style={{ 'margin-top': '30px' }}>
-        <button onClick={handleLoad}>load</button>
-        <button onClick={handlePlay}>play</button>
-        <button onClick={handlePause}>pause</button>
-        <button onClick={handleLeft}>{'<'}</button>
-        <button onClick={handleRight}>{'>'}</button>
-      </div>
-    </>
+    <div style={{ 'margin-top': '30px' }}>
+      <button onClick={handleLoad}>load</button>
+      <button onClick={handlePlay}>play</button>
+      <button onClick={handlePause}>pause</button>
+      <button onClick={handleLeft}>{'<'}</button>
+      <button onClick={handleRight}>{'>'}</button>
+    </div>
   );
 }
