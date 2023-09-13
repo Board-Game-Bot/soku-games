@@ -1,17 +1,18 @@
 import { Game, GameImpl } from '@soku-games/core';
+import { StepResult } from './types';
 
 @GameImpl('{{name}}')
 export class __name__Game extends Game {
   data = {};
-  _end(reason: string): void {}
+  __end(reason: string): void {}
 
-  _prepare(strData: string): void {}
+  __prepare(strData: string): void {}
 
-  _start(): void {}
+  __start(): void {}
 
-  _step(stepStr: string): void {}
+  __step(stepStr: string): void | StepResult {}
 
-  isValidFormat(stepStr: string): boolean {
-    return false;
+  __isStepValidFormat(stepStr: string): string {
+    return '';
   }
 }

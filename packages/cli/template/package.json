@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "pub": "npm publish --access public"
+    "pub": "unbuild && npm publish --access public"
   },
   "exports": {
     ".": {
@@ -27,6 +27,6 @@
     "unbuild": "^1.2.1"
   },
   "dependencies": {
-    "@soku-games/core": "*"
+    "@soku-games/core": "^0.1.1"
   }
 }
