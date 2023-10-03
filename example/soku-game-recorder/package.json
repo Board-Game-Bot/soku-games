@@ -1,11 +1,11 @@
 {
   "name": "soku-game-recorder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The example that use to be recorder.",
   "scripts": {
     "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
     "build": "rimraf ./dist && rollup -c --configPlugin typescript",
-    "pub": "pnpm build && npm publish --access public"
+    "pub": "npm run build && npm publish --access public"
   },
   "exports": {
     ".": {
@@ -24,6 +24,6 @@
     "games"
   ],
   "dependencies": {
-    "@soku-games/core": "workspace:*"
+    "@soku-games/core": "^0.1.1"
   }
 }
