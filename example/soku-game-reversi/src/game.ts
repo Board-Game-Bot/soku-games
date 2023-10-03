@@ -1,6 +1,12 @@
 import { Game, GameImpl } from '@soku-games/core';
 import { reverse } from './utils';
 
+export interface ReversiStepDetail {
+  id: number;
+  x: number;
+  y: number;
+}
+
 @GameImpl('reversi')
 export class ReversiGame extends Game {
   data = {
@@ -8,9 +14,9 @@ export class ReversiGame extends Game {
     r: 0,
     c: 0,
   };
-  _end(reason: string): void {}
+  __end(): void {}
 
-  _prepare(strData: string): void {
+  __prepare(strData: string): void {
     /**
      * 初始化数据，格式：r c mask
      * r：行数
@@ -35,25 +41,27 @@ export class ReversiGame extends Game {
     Object.assign(this, { data });
   }
 
-  _start(): void {
+  __start(): void {
     console.log('Reversi Game Start!');
   }
 
-  _step(stepStr: string): void {
+  __step(stepStr: string): ReversiStepDetail {
     /**
      * 一步数据格式：{id}{r}{c}
      */
-    const [id, r, c] = stepStr.split('').map((x) => +x);
-    reverse(this.data.grid, id, r, c);
-    this.data.grid[r][c] = id;
+    const [id, x, y] = stepStr.split('').map((x) => +x);
+    reverse(this.data.grid, id, x, y);
+    this.data.grid[x][y] = id;
+
+    return { x, y, id };
   }
 
-  isValidFormat(stepStr: string): boolean {
+  __isStepValidFormat(stepStr: string): string {
     if (!/^[0-1]\d\d$/.test(stepStr)) {
-      return false;
+      return 'invalid';
     }
     const { data } = this;
     const [, x, y] = stepStr.split('').map((x) => +x);
-    return 0 <= x && x < data.r && 0 <= y && y < data.c;
+    return 0 <= x && x < data.r && 0 <= y && y < data.c ? '' : 'invalid';
   }
 }

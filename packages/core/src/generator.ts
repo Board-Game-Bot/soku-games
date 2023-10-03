@@ -1,6 +1,6 @@
 /**
  * The base of Generator
  */
-export default abstract class Generator {
+export abstract class Generator {
   abstract generate(...args: any[]): string;
 }

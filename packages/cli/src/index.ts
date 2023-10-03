@@ -7,9 +7,6 @@ import * as fs from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-console.log('hello cli');
-console.log(__dirname);
-
 const QUESTIONS: QuestionCollection = [
   {
     name: 'project-name',

@@ -1,16 +1,17 @@
-import { Controller, ControllerImpl } from '@soku-games/core';
-import ConsoleReversiRenderer from './renderer';
+import { GamePlugin, GamePluginImpl } from '@soku-games/core';
+import { ReversiGame } from './game';
 
-@ControllerImpl('reversi')
-export class ConsoleReversiController extends Controller {
-  bindRenderer(renderer: ConsoleReversiRenderer): (strStep: string) => void {
-    const { game } = renderer;
+@GamePluginImpl('reversi-controller')
+export class ConsoleReversiController extends GamePlugin {
+  bindGame(game: ReversiGame) {
     const control = (strStep: string) => {
       if (!game) {
         return;
       }
       game.step(strStep);
     };
-    return control;
+    return {
+      controller: { control },
+    };
   }
 }

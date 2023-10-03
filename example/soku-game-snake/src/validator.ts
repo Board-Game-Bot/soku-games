@@ -1,11 +1,11 @@
-import { Validator, ValidatorImpl } from '@soku-games/core';
 import { SnakeGame } from './game';
 import { deepClone } from './util';
+import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
-@ValidatorImpl('snake')
-export class SnakeValidator extends Validator {
-  override bindGame(game: SnakeGame) {
-    game.afterStep(() => {
+@GamePluginImpl('snake-validator')
+export class SnakeValidator extends GamePlugin {
+  bindGame(game: SnakeGame) {
+    game.subscribe(LifeCycle.AFTER_STEP, () => {
       const { snakes, grid } = game.data;
       const newGrid = deepClone(grid);
       let die = 0;

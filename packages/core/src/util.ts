@@ -1,24 +1,47 @@
 type Fn = (...args: any[]) => void;
 
-export class EventEmitter {
-  fns: {
-    tag: string;
-    cb: Fn;
-  }[] = [];
+export class Pubsub {
+  callbackMap: Map<
+    string | number,
+    {
+      event: string | number;
+      callback: Fn;
+      count: number;
+    }[]
+  > = new Map();
 
-  on(tag: string, cb: Fn) {
-    this.fns.push({ tag, cb });
+  subscribe(event: string | number, callback: Fn, count?: number) {
+    const callbacks = this.callbackMap.get(event) ?? [];
+    callbacks.push({
+      event,
+      callback,
+      count: count ?? -1,
+    });
+    this.callbackMap.set(event, callbacks);
   }
 
-  off(tag: string) {
-    this.fns = this.fns.filter((fn) => fn.tag !== tag);
+  publish(event: string | number, ...args: any[]) {
+    const callbacks = this.callbackMap.get(event) ?? [];
+
+    this.callbackMap.set(
+      event,
+      callbacks?.filter((callback) => {
+        callback.callback(...args);
+        return --callback.count;
+      }),
+    );
   }
 
-  emit(tag: string, ...args: any[]) {
-    this.fns.filter((fn) => fn.tag === tag).forEach((fn) => fn.cb(...args));
-  }
-
-  clear() {
-    this.fns = [];
+  unsubscribe(event: string | number, callback?: Fn) {
+    if (callback) {
+      const callbacks = this.callbackMap
+        .get(event)
+        ?.filter((callbackDetail) => {
+          return callbackDetail.callback !== callback;
+        });
+      this.callbackMap.set(event, callbacks ?? []);
+    } else {
+      this.callbackMap.delete(event);
+    }
   }
 }
