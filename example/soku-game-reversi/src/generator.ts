@@ -2,8 +2,7 @@ import { Generator, GeneratorImpl } from '@soku-games/core';
 
 @GeneratorImpl('reversi')
 export class ReversiGenerator extends Generator {
-  generate(...args: any[]): string {
-    const [r, c] = args as [number, number];
+  generate(r = 8, c = 8): string {
     const grid = Array(r)
       .fill(0)
       .map(() => Array(c).fill(2));

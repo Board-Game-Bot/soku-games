@@ -32,7 +32,7 @@ const TheGame = ({ gameName }: Props) => {
         },
       ],
     })!;
-    const data = NewGenerator(gameName).generate(8, 8, 10);
+    const data = NewGenerator(gameName).generate();
     game.prepare(data);
   }
 
