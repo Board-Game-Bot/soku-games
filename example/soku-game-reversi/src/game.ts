@@ -10,6 +10,7 @@ export interface ReversiStepDetail {
 
 @GameImpl('reversi')
 export class ReversiGame extends Game {
+  turn = 0;
   data: ReversiSnapshot = {
     grid: <number[][]>[],
     r: 0,
@@ -48,17 +49,21 @@ export class ReversiGame extends Game {
 
   __step(stepStr: string): ReversiStepDetail {
     /**
-     * 一步数据格式：{id}{r}{c}
+     * 一步数据格式：{i}{r}{c}
      */
-    const [id, x, y] = stepStr.split('').map(Number);
-    reverse(this.data.grid, id, x, y);
-    this.data.grid[x][y] = id;
+    const [i, x, y] = stepStr.split('').map(Number);
+    const turn = i === -1 ? this.turn : i;
 
-    return { x, y, id };
+    reverse(this.data.grid, turn, x, y);
+    this.data.grid[x][y] = turn;
+
+    this.turn ^= 1;
+
+    return { x, y, id: turn };
   }
 
   __isStepValidFormat(stepStr: string): string {
-    if (!/^[0-1]\d\d$/.test(stepStr)) {
+    if (!/^[0-1]\d{2}$/.test(stepStr)) {
       return 'invalid';
     }
     const { data } = this;

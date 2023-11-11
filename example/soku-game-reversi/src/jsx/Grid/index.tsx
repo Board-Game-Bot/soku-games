@@ -4,7 +4,11 @@ import { LifeCycle } from '@soku-games/core';
 import { useGameContext } from '../context';
 import styles from './index.module.scss';
 
-export const Grid = React.memo(() => {
+interface Props {
+  couldControl: boolean[];
+}
+
+export const Grid = React.memo((props: Props) => {
   const { game } = useGameContext();
   const [grid, setGrid] = React.useState<number[][]>([]);
 
@@ -21,10 +25,14 @@ export const Grid = React.memo(() => {
   );
 
   const { emit } = useGameContext();
+  const { couldControl } = props;
   function handleClick(i: number, r: number, c: number) {
     if (i !== 2)
       return;
-    emit?.(`${r}${c}`);
+    if (!couldControl[game?.turn ?? 0])
+      return;
+
+    emit?.(`${game?.turn}${r}${c}`);
   }
 
   return (

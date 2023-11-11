@@ -21,7 +21,8 @@ export const Snake = React.memo((props: Props) => {
   React.useEffect(
     () => {
       game?.subscribe(LifeCycle.AFTER_STEP, () => {
-        setAllow(true);
+        if (game?.dirs.every(i => i === -1))
+          setAllow(true);
       });
     },
     [game],
@@ -29,7 +30,7 @@ export const Snake = React.memo((props: Props) => {
 
   function handleClick(d: number) {
     setAllow(false);
-    emit?.(`${index}${d}`);
+    emit?.(`${index}${d}${game?.incr[index] === -1 ? 1 : game?.incr[index]}`);
   }
 
   return (

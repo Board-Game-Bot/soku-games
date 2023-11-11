@@ -13,7 +13,7 @@ export const App = React.memo((props: Props) => {
   return (
     <GameContext.Provider value={{ game, emit }}>
       <div style={{ width: 800, height: 800, position: 'relative' }} >
-        <Grid />
+        <Grid couldControl={props.couldControl} />
       </div>
     </GameContext.Provider>
   );
