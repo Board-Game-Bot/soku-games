@@ -1,11 +1,11 @@
 {
   "name": "soku-game-reversi",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "The example: soku-game-reversi.",
   "scripts": {
     "dev": "unbuild --stub",
     "build": "webpack",
-    "pub": "webpack && npm publish --access public"
+    "pub": "pnpm build && npm publish --access public"
   },
   "exports": {
     ".": {
@@ -46,7 +46,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@soku-games/core": "^0.1.1",
+    "@soku-games/core": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
