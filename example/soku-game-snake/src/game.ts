@@ -1,17 +1,13 @@
 import { Game, GameImpl } from '@soku-games/core';
 import { initialGrid } from './util';
 import { dir } from './constants';
-
-type P = [number, number];
+import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
-  data: {
-    grid: number[][];
-    r: number;
-    c: number;
-    snakes: P[][];
-  } = {
+  dirs: number[] = [-1, -1];
+  incr: number[] = [-1, -1];
+  data: SnakeSnapshot = {
     grid: [],
     r: 0,
     c: 0,
@@ -47,29 +43,37 @@ export class SnakeGame extends Game {
 
   __step(stepStr: string): void {
     /**
-     * 数据格式：{d0}{d1}{incr}
-     * d0: 0蛇方向
-     * d1: 1蛇方向
+     * 数据格式：{i}{d}{incr}
+     * i: 哪条蛇
+     * d: 方向
      * incr: 是否增长
      * 方向：0 1 2 3 从上开始顺时针
      * snake[0..n] 0 是蛇头，顺延到蛇尾
      */
-    const [d0, d1, incr] = stepStr.split('').map((c) => +c);
-    const { data } = this;
+    const [i, d, incr] = stepStr.split('').map(Number);
+    this.dirs[i] = d;
+    this.incr[i] = incr;
 
-    [d0, d1].forEach((d, i) => {
-      const snake = data.snakes[i];
-      const h = [...snake[0]];
-      const nh = h.map((x, j) => x + dir[j][d]);
+    if (this.dirs.every(i => ~i)) {
+      for (let i = 0; i < 2; ++i) {
+        const d = this.dirs[i];
+        const incr = this.incr[i];
+        const { data } = this;
+        const snake = data.snakes[i];
+        const h = [...snake[0]];
+        const nh = h.map((x, j) => x + dir[j][d]);
 
-      snake.unshift(nh as P);
-      if (!incr) {
-        snake.pop();
+        snake.unshift(nh as P);
+        if (!incr)
+          snake.pop();
       }
-    });
+      this.dirs = [-1, -1];
+      this.incr = [-1, -1];
+    }
+    return;
   }
 
   __isStepValidFormat(stepStr: string): string {
-    return /^[0-3]{2}[0-1]$/.test(stepStr) ? '' : 'invalid';
+    return /^[0-3]{2}[0-1]$/.test(stepStr) || /^[0-1][0-3]$/.test(stepStr) ? '' : 'invalid';
   }
 }

@@ -4,8 +4,7 @@ import { dir } from './constants';
 
 @GeneratorImpl('snake')
 export class SnakeGenerator extends Generator {
-  generate(...args: any[]): string {
-    const [r, c, wallCount] = args as number[];
+  generate(r = 13, c = 14, wallCount = 10): string {
     const grid = generate(
       Array(r)
         .fill(0)
@@ -22,8 +21,8 @@ function generate(grid: number[][], wc: number) {
   const c = grid[0].length;
 
   function step() {
-    const rr = (Math.random() * r) | 0;
-    const cc = (Math.random() * c) | 0;
+    const rr = Math.random() * r | 0;
+    const cc = Math.random() * c | 0;
     return [rr, cc];
   }
 

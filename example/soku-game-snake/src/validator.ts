@@ -1,6 +1,6 @@
+import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 import { SnakeGame } from './game';
 import { deepClone } from './util';
-import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 @GamePluginImpl('snake-validator')
 export class SnakeValidator extends GamePlugin {
@@ -15,20 +15,18 @@ export class SnakeValidator extends GamePlugin {
 
       snakes.forEach((snake, i) => {
         const [x, y] = snake[0];
-        if (newGrid[x][y] > 1) {
+        if (newGrid[x][y] > 1)
           die |= 1 << i;
-        }
       });
 
       setTimeout(() => {
         if (die) {
-          if (die === 3) {
-            game.end(`双方平局：两蛇皆撞`);
-          } else if (die === 1) {
-            game.end(`零蛇战败`);
-          } else if (die === 2) {
-            game.end(`壹蛇战败`);
-          }
+          if (die === 3)
+            game.end('draw game');
+          else if (die === 1)
+            game.end('1 win');
+          else if (die === 2)
+            game.end('0 win');
         }
       });
     });

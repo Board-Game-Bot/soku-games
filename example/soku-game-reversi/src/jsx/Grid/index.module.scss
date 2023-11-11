@@ -1,0 +1,45 @@
+.normal-cell {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+
+.cell {
+  @extend .normal-cell;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.black-cell {
+  @extend .normal-cell;
+  background-color: #ddd;
+  animation: flip .5s linear;
+}
+
+.white-cell {
+  @extend .normal-cell;
+  background-color: #111;
+  animation: flipRev .5s linear;
+}
+
+@keyframes flip {
+  from {
+    background-color: #ddd;
+    transform: rotateX(180deg);
+  }
+  to {
+    background-color: #111;
+    transform: rotateX(0);
+  }
+}
+
+@keyframes flipRev {
+  to {
+    background-color: #ddd;
+    transform: rotateX(180deg);
+  }
+  from {
+    background-color: #111;
+    transform: rotateX(0);
+  }
+}

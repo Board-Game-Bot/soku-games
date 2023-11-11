@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "esnext",
+    "module": "NodeNext",
     "lib": ["esnext", "dom"],
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
@@ -12,12 +12,14 @@
     "skipLibCheck": true,
 
     "strict": true,
-
-    "types": ["node"],
+    "jsx": "react-jsx",
+    "types": [
+      "node"
+    ],
     "paths": { }
   },
   "exclude": [
     "**/dist/**",
-    "**/node_modules/**",
+    "**/node_modules/**"
   ]
 }
