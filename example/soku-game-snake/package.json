@@ -1,29 +1,41 @@
 {
   "name": "soku-game-snake",
-  "version": "0.2.1",
-  "description": "The example of snake game",
+  "version": "1.1.3",
+  "description": "The example: soku-game-snake.",
   "scripts": {
-    "dev":  "rollup -c -w --watch.onStart \"rimraf ./dist\" --configPlugin typescript",
-    "build": "rimraf ./dist && rollup -c --configPlugin typescript",
-    "pub": "npm run build && npm publish --access public"
+    "jiti-fix": "find ./dist -type f -exec sed -i '' 's|file://||g' {} \\;",
+    "dev": "unbuild --stub && pnpm jiti-fix",
+    "build": "unbuild",
+    "pub": "unbuild && npm publish --access public"
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "keywords": [
-    "games"
+    "soku-game"
   ],
+  "author": "andrew<1062708758@qq.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.5.1",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "typescript": "^5.1.6",
+    "unbuild": "^1.2.1"
+  },
   "dependencies": {
-    "@soku-games/core": "^0.1.1"
+    "@soku-games/core": "^0.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

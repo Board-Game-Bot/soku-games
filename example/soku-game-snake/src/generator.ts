@@ -22,8 +22,8 @@ function generate(grid: number[][], wc: number) {
   const c = grid[0].length;
 
   function step() {
-    const rr = (Math.random() * r) | 0;
-    const cc = (Math.random() * c) | 0;
+    const rr = Math.random() * r | 0;
+    const cc = Math.random() * c | 0;
     return [rr, cc];
   }
 

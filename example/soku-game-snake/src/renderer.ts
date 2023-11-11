@@ -1,6 +1,6 @@
+import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 import { SnakeGame } from './game';
 import { deepClone } from './util';
-import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 /**
  * console 渲染

@@ -1,17 +1,11 @@
 import { Game, GameImpl } from '@soku-games/core';
 import { initialGrid } from './util';
 import { dir } from './constants';
-
-type P = [number, number];
+import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
-  data: {
-    grid: number[][];
-    r: number;
-    c: number;
-    snakes: P[][];
-  } = {
+  data: SnakeSnapshot = {
     grid: [],
     r: 0,
     c: 0,
