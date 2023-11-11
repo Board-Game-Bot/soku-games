@@ -1,5 +1,6 @@
 import { Game, GameImpl } from '@soku-games/core';
 import { reverse } from './utils';
+import { ReversiSnapshot } from './types';
 
 export interface ReversiStepDetail {
   id: number;
@@ -9,7 +10,7 @@ export interface ReversiStepDetail {
 
 @GameImpl('reversi')
 export class ReversiGame extends Game {
-  data = {
+  data: ReversiSnapshot = {
     grid: <number[][]>[],
     r: 0,
     c: 0,
@@ -49,7 +50,7 @@ export class ReversiGame extends Game {
     /**
      * 一步数据格式：{id}{r}{c}
      */
-    const [id, x, y] = stepStr.split('').map((x) => +x);
+    const [id, x, y] = stepStr.split('').map(Number);
     reverse(this.data.grid, id, x, y);
     this.data.grid[x][y] = id;
 
