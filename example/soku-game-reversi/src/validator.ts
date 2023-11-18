@@ -49,7 +49,9 @@ export class ReversiValidator extends GamePlugin {
       }
       const turn = game.turn;
       if (checkPass(game.data.grid, turn)) {
-        game.__step('pas');
+        setTimeout(() => {
+          game.forceStep('pas');
+        });
       }
     });
   }
