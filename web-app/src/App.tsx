@@ -2,37 +2,52 @@ import { buildGame, Game, NewGenerator } from '@soku-games/core';
 
 import 'soku-game-snake';
 import 'soku-game-reversi';
+import { createEffect, createSignal, For } from 'solid-js';
 
 export function App() {
-  return <TheGame gameName={'reversi'} />;
+  const [gameName, setGameName] = createSignal('snake');
+
+  const games = ['snake', 'reversi'];
+
+  return (
+    <>
+      <For each={games}>
+        {(gameName) => 
+          <button onClick={() => setGameName(gameName)}>
+            {gameName}
+          </button>
+        }
+      </For>
+      <TheGame gameName={gameName()} />
+    </>
+  );
 }
 
 interface Props {
   gameName: string;
 }
 
-const TheGame = ({ gameName }: Props) => {
+const TheGame = (props: Props) => {
   let game: Game;
   let ref: HTMLDivElement;
 
-  function handleClick() {
+  function handlePrepare() {
     game = buildGame({
-      name: gameName,
+      name: props.gameName,
       plugins: [
         {
-          name: `${gameName}-screen`,
+          name: `${props.gameName}-screen`,
           extra: {
             el: ref,
             couldControl: [true, true],
             emit: (stepStr: string) => {
               game?.step(stepStr);
-              // 这里以后会统一成通过 socket 去发送/接受信息
             },
           },
         },
       ],
     })!;
-    const data = NewGenerator(gameName).generate();
+    const data = NewGenerator(props.gameName).generate();
     game.prepare(data);
   }
 
@@ -40,11 +55,15 @@ const TheGame = ({ gameName }: Props) => {
     game?.start();
   }
 
+  createEffect(() => {
+    handlePrepare();
+  });
+
   return (
     <>
+      <button>prepare</button>
+      <button onClick={handleStart}>start {props.gameName}</button>
       <div ref={el => ref = el} />
-      <button onClick={handleClick}>Click</button>
-      <button onClick={handleStart}>Start</button>
     </>
   );
 };
