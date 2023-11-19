@@ -6,11 +6,21 @@ import styles from './index.module.scss';
 
 interface Props {
   couldControl: boolean[];
+  ratio: {
+    width: number;
+    height: number;
+  }
 }
 
 export const Grid = React.memo((props: Props) => {
   const { game } = useGameContext();
   const [grid, setGrid] = React.useState<number[][]>([]);
+
+  const { ratio } = props;
+  const wid = Math.min(
+    ratio.width / (game?.data.c ?? 1) | 0,
+    ratio.height / (game?.data.r ?? 1) | 0,
+  );
 
   React.useEffect(
     () => {
@@ -49,8 +59,10 @@ export const Grid = React.memo((props: Props) => {
                   : styles['black-cell'],
             ].join(' ')}
             style={{
-              top: rowI * 50,
-              left: colI * 50,
+              width: wid,
+              height: wid,
+              top: rowI * wid,
+              left: colI * wid,
               backgroundColor: value === 2
                 ? '#090'
                 : value

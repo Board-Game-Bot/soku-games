@@ -21,6 +21,7 @@
     "eslint": "^8.46.0",
     "eslint-plugin-solid": "^0.12.1",
     "typescript": "^5.0.2",
+    "unocss": "^0.57.5",
     "vite": "^4.4.5",
     "vite-plugin-solid": "^2.7.0"
   }

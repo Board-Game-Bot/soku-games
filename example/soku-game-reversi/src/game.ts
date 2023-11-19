@@ -48,6 +48,10 @@ export class ReversiGame extends Game {
   }
 
   __step(stepStr: string): ReversiStepDetail {
+    if (stepStr === 'pas') {
+      this.turn ^= 1;
+      return { x: -1, y: -1, id: this.turn ^ 1 } ;
+    }
     /**
      * 一步数据格式：{i}{r}{c}
      */

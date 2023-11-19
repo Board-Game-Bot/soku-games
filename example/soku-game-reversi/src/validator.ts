@@ -1,6 +1,6 @@
+import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 import { ReversiGame } from './game';
 import { checkBetween, checkGameOver, checkPass, isIn } from './utils';
-import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 export enum ReversiEvent {
   PASS = 'pass',
@@ -9,9 +9,9 @@ export enum ReversiEvent {
 @GamePluginImpl('reversi-validator')
 export class ReversiValidator extends GamePlugin {
   bindGame(game: ReversiGame): void {
-    let turn = 0;
     game.checkStep((stepStr) => {
       const id = +stepStr[0];
+      const turn = game.turn;
 
       return id === turn ? '' : 'Not the correct turn.';
     });
@@ -32,7 +32,7 @@ export class ReversiValidator extends GamePlugin {
 
       return checkBetween(game.data.grid, id, x, y)
         ? ''
-        : "You can' place a disk on this position.";
+        : 'You can\' place a disk on this position.';
     });
     game.subscribe(LifeCycle.BEFORE_STEP, (stepStr) => {
       // 有棋子翻面？
@@ -41,16 +41,17 @@ export class ReversiValidator extends GamePlugin {
       }
     });
     game.subscribe(LifeCycle.AFTER_STEP, () => {
-      turn ^= 1;
       // 检查游戏结束？跳过？
-      let result = '';
-      if ((result = checkGameOver(game.data.grid))) {
+      const result = checkGameOver(game.data.grid);
+      if (result) {
         setTimeout(() => game.end(result));
         return;
       }
+      const turn = game.turn;
       if (checkPass(game.data.grid, turn)) {
-        turn ^= 1;
-        game.publish(ReversiEvent.PASS, turn);
+        setTimeout(() => {
+          game.forceStep('pas');
+        });
       }
     });
   }
