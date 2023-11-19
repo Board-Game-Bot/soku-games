@@ -10,10 +10,14 @@ interface Props {
   game: SnakeGame;
   emit: (stepStr: string) => void;
   couldControl: boolean[];
+  ratio: {
+    width: number;
+    height: number;
+  }
 }
 
 export const App = React.memo((props: Props) => {
-  const { game, couldControl, emit } = props;
+  const { game, couldControl, emit, ratio } = props;
   const [data, setData] = React.useState<SnakeSnapshot>();
 
   React.useEffect(
@@ -28,16 +32,9 @@ export const App = React.memo((props: Props) => {
     [],
   );
 
-  const [width, setWidth] = React.useState(0);
   const ref = React.useRef<HTMLElement>();
 
-  React.useEffect(
-    () => {
-      const el = ref.current!.parentElement!;
-      setWidth(Math.min(el.clientWidth / game.data.c | 0, el.clientHeight / game.data.r | 0));
-    },
-    [],
-  );
+  const width = Math.min(ratio.width / game.data.c | 0, ratio.height / game.data.r | 0);
 
   return (
     <GameContext.Provider value={{ game, emit, wid: width }}>

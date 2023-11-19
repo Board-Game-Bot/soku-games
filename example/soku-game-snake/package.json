@@ -1,6 +1,6 @@
 {
   "name": "soku-game-snake",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "The example: soku-game-snake.",
   "scripts": {
     "dev": "unbuild --stub",
