@@ -14,8 +14,12 @@ export class SnakeScreen extends GamePlugin {
     const { el, couldControl, emit } = extra;
     function display() {
       const root = createRoot(el);
+      const ratio = {
+        width: el.clientWidth,
+        height: el.clientHeight,
+      };
       root.render(
-        <App game={game} couldControl={couldControl} emit={emit} />,
+        <App ratio={ratio} game={game} couldControl={couldControl} emit={emit} />,
       );
     }
     display();

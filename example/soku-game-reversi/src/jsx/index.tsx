@@ -1,4 +1,5 @@
 import React from 'react';
+import { LifeCycle } from '@soku-games/core';
 import { ReversiGame } from '../game';
 import { Extra } from '../types';
 import { Grid } from './grid';
@@ -6,35 +7,37 @@ import { GameContext } from './context';
 
 interface Props extends Omit<Extra, 'el'> {
   game: ReversiGame;
+  ratio: {
+    width: number;
+    height: number;
+  }
 }
 
 export const App = React.memo((props: Props) => {
-  const { game, emit } = props;
+  const { game, emit, ratio } = props;
   const ref = React.useRef<HTMLElement>();
-  const [ratio, setRatio] = React.useState({
-    width: 0,
-    height: 0,
-  });
-
+  const [wid, setWid] = React.useState(0);
 
   React.useEffect(
     () => {
-      const el = ref.current?.parentElement;
-      setRatio({
-        width: el?.clientWidth ?? 0,
-        height: el?.clientHeight ?? 0,
+      game.subscribe(LifeCycle.AFTER_START, () => {
+        const wid = Math.min(ratio.height / game.data.r | 0, ratio.width / game.data.c | 0);
+        setWid(wid);
       });
     },
     [],
   );
 
-  const height = (ratio.height / game.data?.r | 0) * game.data?.r;
-
-  const aspectRatio = `${game.data.r}/${game.data.c}`;
-
   return (
     <GameContext.Provider value={{ game, emit }}>
-      <div ref={el => ref.current = el!} style={{ height, aspectRatio, position: 'relative' }} >
+      <div
+        ref={el => ref.current = el!}
+        style={{
+          width: wid * game.data.c,
+          height: wid * game.data.r,
+          position: 'relative',
+        }}
+      >
         <Grid ratio={ratio} couldControl={props.couldControl} />
       </div>
     </GameContext.Provider>

@@ -1,6 +1,6 @@
 {
   "name": "soku-game-reversi",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "The example: soku-game-reversi.",
   "scripts": {
     "dev": "unbuild --stub",
