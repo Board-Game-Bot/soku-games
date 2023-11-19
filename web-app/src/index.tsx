@@ -6,4 +6,6 @@ import { App } from './App';
 
 const root = document.getElementById('root');
 
+import 'virtual:uno.css';
+
 render(() => <App />, root!);

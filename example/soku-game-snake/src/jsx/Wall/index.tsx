@@ -1,4 +1,5 @@
 import React from 'react';
+import { useGameContext } from '../context';
 
 interface Props {
   walls: number[][];
@@ -6,6 +7,8 @@ interface Props {
 
 export const Wall = React.memo((props: Props) => {
   const { walls } = props;
+  const { wid = 0 } = useGameContext();
+
   return (
     <>
       {walls.map((row, rowI) =>
@@ -14,10 +17,10 @@ export const Wall = React.memo((props: Props) => {
             key={`${rowI}${colI}`}
             style={{
               position: 'absolute',
-              top: rowI * 50,
-              left: colI * 50,
-              width: 50,
-              height: 50,
+              top: rowI * wid,
+              left: colI * wid,
+              width: wid,
+              height: wid,
               backgroundColor: value
                 ? '#c91'
                 : rowI + colI & 1

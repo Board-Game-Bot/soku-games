@@ -10,16 +10,18 @@ export function App() {
   const games = ['snake', 'reversi'];
 
   return (
-    <>
-      <For each={games}>
-        {(gameName) => 
-          <button onClick={() => setGameName(gameName)}>
-            {gameName}
-          </button>
-        }
-      </For>
-      <TheGame gameName={gameName()} />
-    </>
+    <div class={'w-screen h-screen flex justify-center items-center'}>
+      <div>
+        <For each={games}>
+          {(gameName) => 
+            <button onClick={() => setGameName(gameName)}>
+              {gameName}
+            </button>
+          }
+        </For>
+        <TheGame gameName={gameName()} />
+      </div>
+    </div>
   );
 }
 
@@ -63,7 +65,7 @@ const TheGame = (props: Props) => {
     <>
       <button>prepare</button>
       <button onClick={handleStart}>start {props.gameName}</button>
-      <div ref={el => ref = el} />
+      <div class={'ma w-1200px aspect-ratio-video bg-black flex justify-center items-center'} ref={el => ref = el} />
     </>
   );
 };

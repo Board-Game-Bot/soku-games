@@ -1,6 +1,6 @@
 {
   "name": "soku-game-reversi",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "The example: soku-game-reversi.",
   "scripts": {
     "dev": "unbuild --stub",
@@ -19,7 +19,6 @@
   ],
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "keywords": [
     "soku-game"
   ],
@@ -41,6 +40,7 @@
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.0",
     "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
     "unbuild": "^1.2.1",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
