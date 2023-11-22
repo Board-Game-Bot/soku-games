@@ -1,17 +1,5 @@
 import { Pubsub } from './util';
-
-export enum LifeCycle {
-  BEFORE_PREPARE,
-  AFTER_PREPARE,
-  BEFORE_START,
-  AFTER_START,
-  BEFORE_STEP,
-  AFTER_STEP,
-  BEFORE_END,
-  AFTER_END,
-  INVALID_FORMAT,
-  INVALID_STEP,
-}
+import { LifeCycle } from './types';
 
 /**
  * The core of game
