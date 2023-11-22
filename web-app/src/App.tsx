@@ -2,12 +2,13 @@ import { buildGame, Game, NewGenerator } from '@soku-games/core';
 
 import 'soku-game-snake';
 import 'soku-game-reversi';
+import 'soku-game-backgammon';
 import { createEffect, createSignal, For } from 'solid-js';
 
 export function App() {
   const [gameName, setGameName] = createSignal('snake');
 
-  const games = ['snake', 'reversi'];
+  const games = ['snake', 'reversi', 'backgammon'];
 
   return (
     <div class={'w-screen h-screen flex justify-center items-center'}>
@@ -34,6 +35,7 @@ const TheGame = (props: Props) => {
   let ref: HTMLDivElement;
 
   function handlePrepare() {
+    ref.innerHTML = '';
     game = buildGame({
       name: props.gameName,
       plugins: [
@@ -42,9 +44,7 @@ const TheGame = (props: Props) => {
           extra: {
             el: ref,
             couldControl: [true, true],
-            emit: (stepStr: string) => {
-              game?.step(stepStr);
-            },
+            emit: (stepStr: string) => game?.step(stepStr),
           },
         },
       ],
@@ -65,7 +65,7 @@ const TheGame = (props: Props) => {
     <>
       <button>prepare</button>
       <button onClick={handleStart}>start {props.gameName}</button>
-      <div class={'ma w-1200px aspect-ratio-video bg-black flex justify-center items-center'} ref={el => ref = el} />
+      <div class={'ababab ma w-1200px aspect-ratio-video bg-black flex justify-center items-center'} ref={el => ref = el} />
     </>
   );
 };

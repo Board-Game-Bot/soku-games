@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@soku-games/core": "workspace:^",
+    "soku-game-backgammon": "^0.0.3",
     "soku-game-recorder": "workspace:^",
     "soku-game-reversi": "workspace:^",
     "soku-game-snake": "workspace:^",
