@@ -1,4 +1,4 @@
-import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
+import { CustomEvent, GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 import { SnakeGame } from './game';
 import { deepClone } from './util';
 
@@ -33,11 +33,9 @@ export class ConsoleSnakeRenderer extends GamePlugin {
       print(newGrid.map((row) => row.join(' ')).join('\n'));
     }
 
-    // 游戏开始，渲染一帧
-    game.subscribe(LifeCycle.AFTER_START, render);
-    // 步行一次，渲染
-    game.subscribe(LifeCycle.AFTER_STEP, render);
-    // 强制渲染
-    game.subscribe('custom:render', render);
+    game.subscribe(
+      [LifeCycle.AFTER_START, LifeCycle.AFTER_STEP, CustomEvent.CHANGE_SNAPSHOT],
+      render,
+    );
   }
 }

@@ -1,17 +1,6 @@
+import { flatten } from 'lodash-es';
 import { Pubsub } from './util';
-
-export enum LifeCycle {
-  BEFORE_PREPARE,
-  AFTER_PREPARE,
-  BEFORE_START,
-  AFTER_START,
-  BEFORE_STEP,
-  AFTER_STEP,
-  BEFORE_END,
-  AFTER_END,
-  INVALID_FORMAT,
-  INVALID_STEP,
-}
+import { Event, LifeCycle } from './types';
 
 /**
  * The core of game
@@ -29,8 +18,18 @@ export abstract class Game {
   abstract __step(stepStr: string): any;
   abstract __isStepValidFormat(stepStr: string): string;
   abstract __end(reason: string): void;
-  public subscribe = this.pubsub.subscribe.bind(this.pubsub);
-  public publish = this.pubsub.publish.bind(this.pubsub);
+
+  public subscribe(events: Event | Event[], fn: (...args: any[]) => any) {
+    flatten([events]).forEach((event: Event) => {
+      this.pubsub.subscribe(event, fn);
+    });
+  }
+
+  public publish(events: Event | Event[], ...args: any[]) {
+    flatten([events]).forEach((event: Event) => {
+      this.pubsub.publish(event, ...args);
+    });
+  }
 
   public prepare(initDataMask: string) {
     this.pubsub.publish(LifeCycle.BEFORE_PREPARE, initDataMask);

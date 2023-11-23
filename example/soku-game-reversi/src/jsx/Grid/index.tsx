@@ -1,5 +1,5 @@
 import React from 'react';
-import { LifeCycle } from '@soku-games/core';
+import { CustomEvent, LifeCycle } from '@soku-games/core';
 
 import { useGameContext } from '../context';
 import styles from './index.module.scss';
@@ -24,12 +24,10 @@ export const Grid = React.memo((props: Props) => {
 
   React.useEffect(
     () => {
-      game?.subscribe(LifeCycle.AFTER_START, () => {
-        setGrid(game?.data.grid);
-      });
-      game?.subscribe(LifeCycle.AFTER_STEP, () => {
-        setGrid([...game!.data.grid]);
-      });
+      game?.subscribe(
+        [LifeCycle.AFTER_START, LifeCycle.AFTER_STEP, CustomEvent.CHANGE_SNAPSHOT],
+        () => setGrid([...game.data.grid]),
+      );
     },
     [game],
   );

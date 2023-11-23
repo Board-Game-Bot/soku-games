@@ -1,5 +1,5 @@
 import React from 'react';
-import { LifeCycle } from '@soku-games/core';
+import { CustomEvent, LifeCycle } from '@soku-games/core';
 import { SnakeGame } from '../game';
 import { SnakeSnapshot } from '../types';
 import { Wall } from './Wall';
@@ -22,12 +22,10 @@ export const App = React.memo((props: Props) => {
 
   React.useEffect(
     () => {
-      game.subscribe(LifeCycle.AFTER_START, () => {
-        setData({ ...game.data });
-      });
-      game.subscribe(LifeCycle.AFTER_STEP, () => {
-        setData({ ...game.data });
-      });
+      game.subscribe(
+        [LifeCycle.AFTER_START, LifeCycle.AFTER_STEP, CustomEvent.CHANGE_SNAPSHOT],
+        () => setData({ ...game.data }),
+      );
     },
     [],
   );
