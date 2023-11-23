@@ -1,5 +1,5 @@
+import { CustomEvent, GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 import { ReversiGame } from './game';
-import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 
 @GamePluginImpl('reversi-renderer')
 export default class ConsoleReversiRenderer extends GamePlugin {
@@ -20,8 +20,9 @@ export default class ConsoleReversiRenderer extends GamePlugin {
         print(grid.map((row) => row.join(' ')).join('\n'));
       }
     }
-    game.subscribe(LifeCycle.AFTER_START, render);
-    game.subscribe(LifeCycle.AFTER_STEP, render);
-    game.subscribe('custom:render', render);
+    game.subscribe(
+      [LifeCycle.AFTER_START, LifeCycle.AFTER_STEP, CustomEvent.CHANGE_SNAPSHOT],
+      render,
+    );
   }
 }

@@ -2647,8 +2647,10 @@ packages:
     resolution: {integrity: sha512-RdBg3YtMwX2c7oSfqzgU62WBiGLGt2aXXmvqhEVibXS2X2LGLicrV2X1Sj+PSss/SzaYloUpxrpgXgNlulxkeA==}
     dev: false
 
-  /@soku-games/core@0.2.0:
-    resolution: {integrity: sha512-vhtZRpKcP3HbqmKFgWCV4GRa81CEG6AjUxlYmiXkvEye3MPU1Uu6XWz6Ef4z34CyYsiRz6w+IasJcmLwCUdPCg==}
+  /@soku-games/core@0.3.0:
+    resolution: {integrity: sha512-Q7bIYFXKcm/DRvQ6HF8o8ZBHi7BrZDz+4RpegOocAVInTchgEKu8iiVn0UsM+Zifw31e/bf7jFMTKNHe0ClNZA==}
+    dependencies:
+      lodash-es: 4.17.21
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -6852,7 +6854,7 @@ packages:
   /soku-game-backgammon@0.0.3:
     resolution: {integrity: sha512-MnEDJCy/WfZF8+W8DHCxaEL9l1wq/SjCkkxwR/te9pfThYvGGNpLMJnie4ueqBSzwA7KYKZAMiavwZ15GeJmNQ==}
     dependencies:
-      '@soku-games/core': 0.2.0
+      '@soku-games/core': 0.3.0
       lodash-es: 4.17.21
       solid-js: 1.8.5
     dev: false
