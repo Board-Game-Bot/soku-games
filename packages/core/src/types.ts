@@ -15,3 +15,4 @@ export enum CustomEvent {
   CHANGE_SNAPSHOT = 'CustomEvent_CHANGE_SNAPSHOT' // FOR RENDERER & CONTROLLER
 }
 
+export type Event = LifeCycle | CustomEvent;
