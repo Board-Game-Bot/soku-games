@@ -40,8 +40,21 @@ export class Pubsub {
           return callbackDetail.callback !== callback;
         });
       this.callbackMap.set(event, callbacks ?? []);
-    } else {
+    }
+    else {
       this.callbackMap.delete(event);
     }
   }
 }
+
+type DeepArray<T> = (T | DeepArray<T>)[];
+
+export const flatten = <T>(array: DeepArray<T>) => {
+  const result: T[] = [];
+  array.forEach((item) => {
+    if (Array.isArray(item))
+      result.push(...flatten(item));
+    else result.push(item);
+  });
+  return result;
+};

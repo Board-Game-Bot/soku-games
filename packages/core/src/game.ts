@@ -1,5 +1,4 @@
-import { flatten } from 'lodash-es';
-import { Pubsub } from './util';
+import { flatten, Pubsub } from './util';
 import { Event, LifeCycle } from './types';
 
 /**
