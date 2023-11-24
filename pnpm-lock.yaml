@@ -66,7 +66,7 @@ importers:
   example/soku-game-reversi:
     dependencies:
       '@soku-games/core':
-        specifier: latest
+        specifier: workspace:^
         version: link:../../packages/core
       react:
         specifier: ^18.2.0
@@ -136,7 +136,7 @@ importers:
   example/soku-game-snake:
     dependencies:
       '@soku-games/core':
-        specifier: workspace:^
+        specifier: ^0.3.0
         version: link:../../packages/core
       react:
         specifier: ^18.2.0
@@ -184,10 +184,6 @@ importers:
         version: 0.35.0(rollup@3.27.2)(typescript@5.2.2)
 
   packages/core:
-    dependencies:
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
     devDependencies:
       '@types/lodash-es':
         specifier: ^4.17.12
@@ -199,8 +195,8 @@ importers:
         specifier: workspace:^
         version: link:../packages/core
       soku-game-backgammon:
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.1.0
+        version: 0.1.0
       soku-game-recorder:
         specifier: workspace:^
         version: link:../example/soku-game-recorder
@@ -6851,8 +6847,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /soku-game-backgammon@0.0.3:
-    resolution: {integrity: sha512-MnEDJCy/WfZF8+W8DHCxaEL9l1wq/SjCkkxwR/te9pfThYvGGNpLMJnie4ueqBSzwA7KYKZAMiavwZ15GeJmNQ==}
+  /soku-game-backgammon@0.1.0:
+    resolution: {integrity: sha512-fizXIz4VHIdybkT8j4sDSR0dLLhWhXUK3a0Ee7mxTRtjjMh1mcOzyVlK9WItRk42YiqUg77NuE7x/SQj/HOU4g==}
     dependencies:
       '@soku-games/core': 0.3.0
       lodash-es: 4.17.21
