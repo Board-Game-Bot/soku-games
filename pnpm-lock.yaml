@@ -66,7 +66,7 @@ importers:
   example/soku-game-reversi:
     dependencies:
       '@soku-games/core':
-        specifier: workspace:^
+        specifier: latest
         version: link:../../packages/core
       react:
         specifier: ^18.2.0
@@ -136,7 +136,7 @@ importers:
   example/soku-game-snake:
     dependencies:
       '@soku-games/core':
-        specifier: ^0.3.0
+        specifier: latest
         version: link:../../packages/core
       react:
         specifier: ^18.2.0
@@ -195,8 +195,8 @@ importers:
         specifier: workspace:^
         version: link:../packages/core
       soku-game-backgammon:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.3.3
+        version: 0.3.3(@soku-games/core@packages+core)
       soku-game-recorder:
         specifier: workspace:^
         version: link:../example/soku-game-recorder
@@ -2641,12 +2641,6 @@ packages:
 
   /@soku-games/core@0.1.2:
     resolution: {integrity: sha512-RdBg3YtMwX2c7oSfqzgU62WBiGLGt2aXXmvqhEVibXS2X2LGLicrV2X1Sj+PSss/SzaYloUpxrpgXgNlulxkeA==}
-    dev: false
-
-  /@soku-games/core@0.3.0:
-    resolution: {integrity: sha512-Q7bIYFXKcm/DRvQ6HF8o8ZBHi7BrZDz+4RpegOocAVInTchgEKu8iiVn0UsM+Zifw31e/bf7jFMTKNHe0ClNZA==}
-    dependencies:
-      lodash-es: 4.17.21
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -6780,8 +6774,8 @@ packages:
       randombytes: 2.1.0
     dev: true
 
-  /seroval@0.12.4:
-    resolution: {integrity: sha512-JIsZHp98o+okpYN8HEPyI9Blr0gxAUPIGvg3waXrEMFjPz9obiLYMz0uFiUGezKiCK8loosYbn8WsqO8WtAJUA==}
+  /seroval@0.14.1:
+    resolution: {integrity: sha512-ZlC9y1KVDhZFdEHLYZup1RjKDutyX1tt3ffOauqRbRURa2vRr2NU/bHuVEuNEqR3zE2uCU3WM6LqH6Oinc3tWg==}
     engines: {node: '>=10'}
     dev: false
 
@@ -6847,12 +6841,14 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /soku-game-backgammon@0.1.0:
-    resolution: {integrity: sha512-fizXIz4VHIdybkT8j4sDSR0dLLhWhXUK3a0Ee7mxTRtjjMh1mcOzyVlK9WItRk42YiqUg77NuE7x/SQj/HOU4g==}
+  /soku-game-backgammon@0.3.3(@soku-games/core@packages+core):
+    resolution: {integrity: sha512-sspz8HA9nRUrYAOXi6uYVSxruenyGRFlZ3bE1ac/1Vda9swPbdAzX0NVnNWAN7rOdG3AnYKsmgBPWYQTr4bwbg==}
+    peerDependencies:
+      '@soku-games/core': ^0.3.1
     dependencies:
-      '@soku-games/core': 0.3.0
+      '@soku-games/core': link:packages/core
       lodash-es: 4.17.21
-      solid-js: 1.8.5
+      solid-js: 1.8.6
     dev: false
 
   /solid-js@1.7.8:
@@ -6861,11 +6857,11 @@ packages:
       csstype: 3.1.2
       seroval: 0.5.1
 
-  /solid-js@1.8.5:
-    resolution: {integrity: sha512-xvtJvzJzWbsn35oKFhW9kNwaxG1Z/YLMsDp4tLVcYZTMPzvzQ8vEZuyDQ6nt7xDArVgZJ7TUFrJUwrui/oq53A==}
+  /solid-js@1.8.6:
+    resolution: {integrity: sha512-yiH6ZfBBZ3xj/aU/PBpVKB+8r8WWp100NGF7k/Z0IrK9Y8Lv0jwvFiJY1cHdc6Tj7GqXArKnMBabM0m1k+LzkA==}
     dependencies:
       csstype: 3.1.2
-      seroval: 0.12.4
+      seroval: 0.14.1
     dev: false
 
   /solid-refresh@0.5.3(solid-js@1.7.8):
