@@ -44,7 +44,7 @@ export class ReversiValidator extends GamePlugin {
       // 检查游戏结束？跳过？
       const result = checkGameOver(game.data.grid);
       if (result) {
-        setTimeout(() => game.end(result));
+        setTimeout(() => game.end(result.join(';')));
         return;
       }
       const turn = game.turn;

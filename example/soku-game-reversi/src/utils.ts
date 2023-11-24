@@ -85,13 +85,11 @@ export function checkGameOver(grid: number[][]) {
   const r = grid.length;
   const c = grid[0].length;
 
-  let ext = 0;
   let emptyCount = 0;
   const cnt = [0, 0];
 
   for (let i = 0; i < r; ++i) {
     for (let j = 0; j < c; ++j) {
-      ext |= 1 << grid[i][j];
       emptyCount += +(grid[i][j] === 2);
       if (grid[i][j] !== 2) {
         cnt[grid[i][j]] += 1;
@@ -99,17 +97,9 @@ export function checkGameOver(grid: number[][]) {
     }
   }
 
-  if (emptyCount === 0) {
-    return cnt[0] === cnt[1]
-      ? '两边棋数相同平局'
-      : cnt[0] > cnt[1]
-      ? '零棋获胜'
-      : '壹棋获胜';
-  }
+  if (emptyCount === 0)
+    return cnt.map((_, i) => cnt[i] > cnt[1 - i] ? '+1' : '-1');
 
-  if ((ext & 3) !== 3) {
-    return ext === 1 ? '只存在零棋，零棋获胜' : '只存在壹棋，壹棋获胜';
-  }
-
-  return '';
+  if (cnt.find(x => !x))
+    return cnt.map((x) => x ? '+1' : '-1');
 }
