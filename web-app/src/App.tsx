@@ -2,7 +2,9 @@ import { buildGame, Game, NewGenerator } from '@soku-games/core';
 
 import 'soku-game-snake';
 import 'soku-game-reversi';
-import 'soku-game-backgammon';
+import 'soku-game-backgammon/core';
+import 'soku-game-backgammon/screen';
+
 import { createEffect, createSignal, For } from 'solid-js';
 
 export function App() {
@@ -39,6 +41,7 @@ const TheGame = (props: Props) => {
     game = buildGame({
       name: props.gameName,
       plugins: [
+        `${props.gameName}-validator`,
         {
           name: `${props.gameName}-screen`,
           extra: {
@@ -65,7 +68,7 @@ const TheGame = (props: Props) => {
     <>
       <button>prepare</button>
       <button onClick={handleStart}>start {props.gameName}</button>
-      <div class={'ababab ma w-1200px aspect-ratio-video bg-black flex justify-center items-center'} ref={el => ref = el} />
+      <div class={'ma w-1200px aspect-ratio-video bg-black flex justify-center items-center'} ref={el => ref = el} />
     </>
   );
 };

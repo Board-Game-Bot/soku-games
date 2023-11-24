@@ -37,17 +37,19 @@ export function buildGame(option: BuildGameOptions) {
       if (typeof pluginNameOrOption === 'string') {
         plugin = NewPlugin(pluginNameOrOption);
         Object.assign(game.bundler, {
-          ...(plugin.bindGame(game) ?? {}),
+          ...plugin.bindGame(game) ?? {},
         });
-      } else {
+      }
+      else {
         plugin = NewPlugin(pluginNameOrOption.name);
         Object.assign(game.bundler, {
-          ...(plugin.bindGame(game, pluginNameOrOption.extra) ?? {}),
+          ...plugin.bindGame(game, pluginNameOrOption.extra) ?? {},
         });
       }
     });
     return game;
-  } catch (e) {
+  }
+  catch (e) {
     const err = e as Error;
     console.error(err.message);
   }

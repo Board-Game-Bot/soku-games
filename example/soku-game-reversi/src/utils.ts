@@ -100,6 +100,7 @@ export function checkGameOver(grid: number[][]) {
   if (emptyCount === 0)
     return cnt.map((_, i) => cnt[i] > cnt[1 - i] ? '+1' : '-1');
 
-  if (cnt.find(x => !x))
+  if (typeof cnt.find(x => !x) !== 'undefined')
     return cnt.map((x) => x ? '+1' : '-1');
+
 }
