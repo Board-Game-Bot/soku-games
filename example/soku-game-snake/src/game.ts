@@ -5,13 +5,13 @@ import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
-  dirs: number[] = [-1, -1];
-  incr: number[] = [-1, -1];
   data: SnakeSnapshot = {
     grid: [],
     r: 0,
     c: 0,
     snakes: [],
+    dirs: [-1, -1],
+    incr: [-1, -1],
   };
 
   __end(): void {}
@@ -34,7 +34,7 @@ export class SnakeGame extends Game {
 
     const data = { r, c, grid, snakes };
 
-    Object.assign(this, { data });
+    Object.assign(this.data, data);
   }
 
   __start(): void {
@@ -51,13 +51,13 @@ export class SnakeGame extends Game {
      * snake[0..n] 0 是蛇头，顺延到蛇尾
      */
     const [i, d, incr] = stepStr.split('').map(Number);
-    this.dirs[i] = d;
-    this.incr[i] = incr;
+    this.data.dirs[i] = d;
+    this.data.incr[i] = incr;
 
-    if (this.dirs.every(i => ~i)) {
+    if (this.data.dirs.every(i => ~i)) {
       for (let i = 0; i < 2; ++i) {
-        const d = this.dirs[i];
-        const incr = this.incr[i];
+        const d = this.data.dirs[i];
+        const incr = this.data.incr[i];
         const { data } = this;
         const snake = data.snakes[i];
         const h = [...snake[0]];
@@ -67,8 +67,8 @@ export class SnakeGame extends Game {
         if (!incr)
           snake.pop();
       }
-      this.dirs = [-1, -1];
-      this.incr = [-1, -1];
+      this.data.dirs = [-1, -1];
+      this.data.incr = [-1, -1];
     }
     return;
   }
