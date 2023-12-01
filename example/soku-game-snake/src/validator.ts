@@ -9,14 +9,14 @@ export class SnakeValidator extends GamePlugin {
       const { snakes, grid } = game.data;
       const newGrid = deepClone(grid);
       snakes.forEach((snake) => {
-        snake.forEach(([x, y]) => newGrid[x][y]++);
+        snake.forEach(([x, y]) => ++newGrid[x][y] > 2);
       });
-
-      const result = snakes.map(([[x, y]]) => newGrid[x][y] > 1 ? '-1' : '+1');
-
-      setTimeout(() => {
-        game.end(result.join(';'));
-      });
+      if (snakes.some(snake => newGrid[snake[0][0]][snake[0][1]] > 1)) {
+        const result = snakes.map((snake) => newGrid[snake[0][0]][snake[0][1]] > 1 ? '-1' : '+1');
+        setTimeout(() => {
+          game.end(result.join(';'));
+        });
+      }
     });
   }
 }
