@@ -9,7 +9,7 @@ import { GameContext } from './context';
 interface Props {
   game: SnakeGame;
   emit: (stepStr: string) => void;
-  couldControl: boolean[];
+  couldControl?: boolean[];
   ratio: {
     width: number;
     height: number;
@@ -46,7 +46,7 @@ export const App = React.memo((props: Props) => {
       >
         <Wall walls={data?.grid || []} />
         {data?.snakes.map((snake, i) =>
-          <Snake key={i} index={i} snake={[...snake]} couldControl={couldControl[i]} color={i ? '#f00' : '#00f'}/>,
+          <Snake key={i} index={i} snake={[...snake]} couldControl={couldControl?.[i]} color={i ? '#f00' : '#00f'}/>,
         )}
       </div>
     </GameContext.Provider>

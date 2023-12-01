@@ -6,7 +6,7 @@ import { useGameContext } from '../context';
 interface Props {
   index: number;
   snake: P[];
-  couldControl: boolean;
+  couldControl?: boolean;
   color?: string;
 }
 
@@ -21,7 +21,7 @@ export const Snake = React.memo((props: Props) => {
   React.useEffect(
     () => {
       game?.subscribe(LifeCycle.AFTER_STEP, () => {
-        if (game?.dirs.every(i => i === -1))
+        if (game?.data.dirs.every(i => i === -1))
           setAllow(true);
       });
     },
@@ -30,7 +30,7 @@ export const Snake = React.memo((props: Props) => {
 
   function handleClick(d: number) {
     setAllow(false);
-    emit?.(`${index}${d}${game?.incr[index] === -1 ? 1 : game?.incr[index]}`);
+    emit?.(`${index}${d}${game?.data.incr[index] === -1 ? 1 : game?.data.incr[index]}`);
   }
 
   const body = React.useMemo(
