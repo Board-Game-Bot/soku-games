@@ -6,8 +6,6 @@ import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
-
-
   data: SnakeSnapshot = {
     grid: [],
     r: 0,
@@ -23,8 +21,10 @@ export class SnakeGame extends Game {
     return `${data.grid.length} ${data.grid[0].length} ${data.grid.toString().replace(/,/g, ' ')} ${data.snakes[0].length} ${data.snakes[0].toString().replace(/,/g, ' ')} ${data.snakes[1].length} ${data.snakes[1].toString().replace(/,/g, ' ')}`;
   }
 
+  allowed = true;
+
   isAllowed(): boolean {
-    return true;
+    return this.allowed;
   }
 
   __end(): void {}
@@ -93,5 +93,4 @@ export class SnakeGame extends Game {
   __isStepValidFormat(stepStr: string): string {
     return /^[0-3]{2}[0-1]$/.test(stepStr) || /^[0-1][0-3]$/.test(stepStr) ? '' : 'invalid';
   }
-
 }
