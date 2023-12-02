@@ -1,14 +1,11 @@
 import { flatten, Pubsub } from './util';
 import { Event, LifeCycle } from './types';
 
-/**
- * The core of game
- */
 export abstract class Game {
   private pubsub: Pubsub = new Pubsub();
   private stepCheckChain: ((stepStr: string) => string)[] = [];
 
-  public data: Record<string, any> = {};
+  public data: Record<string, any> & { turn: number } = { turn: -1 };
   public bundler: Record<string, any> = {};
   public _deps: Map<string, any> = new Map();
 
@@ -17,6 +14,7 @@ export abstract class Game {
   abstract __step(stepStr: string): any;
   abstract __isStepValidFormat(stepStr: string): string;
   abstract __end(reason: string): void;
+  abstract toString(): string;
 
   public subscribe(events: Event | Event[], fn: (...args: any[]) => any) {
     flatten([events]).forEach((event: Event) => {
