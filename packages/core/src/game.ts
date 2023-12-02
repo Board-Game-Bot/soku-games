@@ -15,6 +15,7 @@ export abstract class Game {
   abstract __isStepValidFormat(stepStr: string): string;
   abstract __end(reason: string): void;
   abstract toString(): string;
+  abstract isAllowed(): boolean;
 
   public subscribe(events: Event | Event[], fn: (...args: any[]) => any) {
     flatten([events]).forEach((event: Event) => {
