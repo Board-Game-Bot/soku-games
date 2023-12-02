@@ -13,4 +13,5 @@ export interface SnakeSnapshot {
   snakes: P[][];
   dirs: number[];
   incr: number[];
+  turn: number;
 }
