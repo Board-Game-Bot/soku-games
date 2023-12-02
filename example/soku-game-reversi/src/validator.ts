@@ -2,10 +2,6 @@ import { GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
 import { ReversiGame } from './game';
 import { checkBetween, checkGameOver, checkPass, isIn } from './utils';
 
-export enum ReversiEvent {
-  PASS = 'pass',
-}
-
 @GamePluginImpl('reversi-validator')
 export class ReversiValidator extends GamePlugin {
   bindGame(game: ReversiGame): void {
@@ -34,14 +30,8 @@ export class ReversiValidator extends GamePlugin {
         ? ''
         : 'You can\' place a disk on this position.';
     });
-    game.subscribe(LifeCycle.BEFORE_STEP, (stepStr) => {
-      // 有棋子翻面？
-      if (!/^\d{3}$/.test(stepStr)) {
-        return;
-      }
-    });
     game.subscribe(LifeCycle.AFTER_STEP, () => {
-      // 检查游戏结束？跳过？
+      game.allowed = false;
       const result = checkGameOver(game.data.grid);
       if (result) {
         setTimeout(() => game.end(result.join(';')));
@@ -52,6 +42,9 @@ export class ReversiValidator extends GamePlugin {
         setTimeout(() => {
           game.forceStep('pas');
         });
+      }
+      else {
+        game.allowed = true;
       }
     });
   }
