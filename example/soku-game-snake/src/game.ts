@@ -5,6 +5,7 @@ import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
+
   data: SnakeSnapshot = {
     grid: [],
     r: 0,
@@ -12,7 +13,13 @@ export class SnakeGame extends Game {
     snakes: [],
     dirs: [-1, -1],
     incr: [-1, -1],
+    turn: -1,
   };
+
+  toString(): string {
+    const data = this.data;
+    return `${data.grid.length} ${data.grid[0].length} ${data.grid.toString().replace(/,/g, ' ')} ${data.snakes[0].length} ${data.snakes[0].toString().replace(/,/g, ' ')} ${data.snakes[1].length} ${data.snakes[1].toString().replace(/,/g, ' ')}`;
+  }
 
   __end(): void {}
 
@@ -53,6 +60,7 @@ export class SnakeGame extends Game {
     const [i, d, incr] = stepStr.split('').map(Number);
     this.data.dirs[i] = d;
     this.data.incr[i] = incr;
+    this.data.turn = Math.max(i + 1, this.data.turn);
 
     if (this.data.dirs.every(i => ~i)) {
       for (let i = 0; i < 2; ++i) {
@@ -67,8 +75,11 @@ export class SnakeGame extends Game {
         if (!incr)
           snake.pop();
       }
-      this.data.dirs = [-1, -1];
-      this.data.incr = [-1, -1];
+      Object.assign(this.data, {
+        dirs: [-1, -1],
+        incr: [-1, -1],
+        turn: 0,
+      });
     }
     return;
   }

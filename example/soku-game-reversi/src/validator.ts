@@ -11,7 +11,7 @@ export class ReversiValidator extends GamePlugin {
   bindGame(game: ReversiGame): void {
     game.checkStep((stepStr) => {
       const id = +stepStr[0];
-      const turn = game.turn;
+      const turn = game.data.turn;
 
       return id === turn ? '' : 'Not the correct turn.';
     });
@@ -47,7 +47,7 @@ export class ReversiValidator extends GamePlugin {
         setTimeout(() => game.end(result.join(';')));
         return;
       }
-      const turn = game.turn;
+      const turn = game.data.turn;
       if (checkPass(game.data.grid, turn)) {
         setTimeout(() => {
           game.forceStep('pas');
