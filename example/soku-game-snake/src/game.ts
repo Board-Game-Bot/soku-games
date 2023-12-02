@@ -1,3 +1,4 @@
+import * as console from 'console';
 import { Game, GameImpl } from '@soku-games/core';
 import { initialGrid } from './util';
 import { dir } from './constants';
@@ -5,6 +6,7 @@ import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
+
 
   data: SnakeSnapshot = {
     grid: [],
@@ -19,6 +21,10 @@ export class SnakeGame extends Game {
   toString(): string {
     const data = this.data;
     return `${data.grid.length} ${data.grid[0].length} ${data.grid.toString().replace(/,/g, ' ')} ${data.snakes[0].length} ${data.snakes[0].toString().replace(/,/g, ' ')} ${data.snakes[1].length} ${data.snakes[1].toString().replace(/,/g, ' ')}`;
+  }
+
+  isAllowed(): boolean {
+    return true;
   }
 
   __end(): void {}
@@ -87,4 +93,5 @@ export class SnakeGame extends Game {
   __isStepValidFormat(stepStr: string): string {
     return /^[0-3]{2}[0-1]$/.test(stepStr) || /^[0-1][0-3]$/.test(stepStr) ? '' : 'invalid';
   }
+
 }
