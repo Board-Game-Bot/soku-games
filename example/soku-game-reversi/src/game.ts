@@ -10,12 +10,19 @@ export interface ReversiStepDetail {
 
 @GameImpl('reversi')
 export class ReversiGame extends Game {
-  turn = 0;
   data: ReversiSnapshot = {
     grid: <number[][]>[],
     r: 0,
     c: 0,
+    turn: 0,
   };
+
+  toString(): string {
+    const { data } = this;
+
+    return `${data.r} ${data.c} ${data.grid.toString().replace(/,/g, ' ')}`;
+  }
+
   __end(): void {}
 
   __prepare(strData: string): void {
@@ -32,11 +39,9 @@ export class ReversiGame extends Game {
       .fill(0)
       .map(() => Array(c).fill(2));
 
-    for (let i = 0; i < r; ++i) {
-      for (let j = 0; j < c; ++j) {
+    for (let i = 0; i < r; ++i)
+      for (let j = 0; j < c; ++j)
         grid[i][j] = +mask[i * c + j];
-      }
-    }
 
     const data = { r, c, grid };
 
@@ -49,19 +54,19 @@ export class ReversiGame extends Game {
 
   __step(stepStr: string): ReversiStepDetail {
     if (stepStr === 'pas') {
-      this.turn ^= 1;
-      return { x: -1, y: -1, id: this.turn ^ 1 } ;
+      this.data.turn ^= 1;
+      return { x: -1, y: -1, id: this.data.turn ^ 1 } ;
     }
     /**
      * 一步数据格式：{i}{r}{c}
      */
     const [i, x, y] = stepStr.split('').map(Number);
-    const turn = i === -1 ? this.turn : i;
+    const turn = i === -1 ? this.data.turn : i;
 
     reverse(this.data.grid, turn, x, y);
     this.data.grid[x][y] = turn;
 
-    this.turn ^= 1;
+    this.data.turn ^= 1;
 
     return { x, y, id: turn };
   }

@@ -8,4 +8,5 @@ export interface ReversiSnapshot {
   grid: number[][];
   r: number;
   c: number;
+  turn: number;
 }
