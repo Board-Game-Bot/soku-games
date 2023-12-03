@@ -30,7 +30,7 @@ export const Snake = React.memo((props: Props) => {
 
   function handleClick(d: number) {
     setAllow(false);
-    emit?.(`${index}${d}${game?.data.incr[index] === -1 ? 1 : game?.data.incr[index]}`);
+    emit?.(`${index}${d}`);
   }
 
   const body = React.useMemo(
