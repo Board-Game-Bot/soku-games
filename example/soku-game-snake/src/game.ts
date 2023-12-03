@@ -1,3 +1,4 @@
+import * as console from 'console';
 import { Game, GameImpl } from '@soku-games/core';
 import { initialGrid } from './util';
 import { dir } from './constants';
@@ -5,7 +6,6 @@ import { P, SnakeSnapshot } from './types';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {
-
   data: SnakeSnapshot = {
     grid: [],
     r: 0,
@@ -19,6 +19,12 @@ export class SnakeGame extends Game {
   toString(): string {
     const data = this.data;
     return `${data.grid.length} ${data.grid[0].length} ${data.grid.toString().replace(/,/g, ' ')} ${data.snakes[0].length} ${data.snakes[0].toString().replace(/,/g, ' ')} ${data.snakes[1].length} ${data.snakes[1].toString().replace(/,/g, ' ')}`;
+  }
+
+  allowed = true;
+
+  isAllowed(): boolean {
+    return this.allowed;
   }
 
   __end(): void {}

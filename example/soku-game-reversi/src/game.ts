@@ -17,10 +17,16 @@ export class ReversiGame extends Game {
     turn: 0,
   };
 
+  allowed = true;
+
   toString(): string {
     const { data } = this;
 
     return `${data.r} ${data.c} ${data.grid.toString().replace(/,/g, ' ')}`;
+  }
+
+  isAllowed(): boolean {
+    return this.allowed;
   }
 
   __end(): void {}
@@ -57,10 +63,8 @@ export class ReversiGame extends Game {
       this.data.turn ^= 1;
       return { x: -1, y: -1, id: this.data.turn ^ 1 } ;
     }
-    /**
-     * 一步数据格式：{i}{r}{c}
-     */
-    const [i, x, y] = stepStr.split('').map(Number);
+    
+    const [i, x, y] = stepStr.split('').map(x => +x);
     const turn = i === -1 ? this.data.turn : i;
 
     reverse(this.data.grid, turn, x, y);
