@@ -51,7 +51,7 @@ export class ReversiGame extends Game {
 
     const data = { r, c, grid };
 
-    Object.assign(this, { data });
+    Object.assign(this.data, data);
   }
 
   __start(): void {
