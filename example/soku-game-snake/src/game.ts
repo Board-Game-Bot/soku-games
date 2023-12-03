@@ -17,7 +17,7 @@ export class SnakeGame extends Game {
 
   toString(): string {
     const data = this.data;
-    return `${data.grid.length} ${data.grid[0].length} ${data.grid.toString().replace(/,/g, ' ')} ${data.snakes[0].length} ${data.snakes[0].toString().replace(/,/g, ' ')} ${data.snakes[1].length} ${data.snakes[1].toString().replace(/,/g, ' ')}`;
+    return `${data.grid.length} ${data.grid[0].length} ${data.grid.toString().replace(/,/g, ' ')} ${data.snakes[0].length} ${data.snakes[0].toString().replace(/,/g, ' ')} ${data.snakes[1].length} ${data.snakes[1].toString().replace(/,/g, ' ')} ${data.incr.join(' ')}`;
   }
 
   allowed = true;
@@ -55,22 +55,21 @@ export class SnakeGame extends Game {
 
   __step(stepStr: string): void {
     /**
-     * 数据格式：{i}{d}{incr}
+     * 数据格式：{i}{d}
      * i: 哪条蛇
      * d: 方向
-     * incr: 是否增长
      * 方向：0 1 2 3 从上开始顺时针
      * snake[0..n] 0 是蛇头，顺延到蛇尾
      */
-    const [i, d, incr] = stepStr.split('').map(Number);
+    const [i, d] = stepStr.split('').map(Number);
+    const incr = this.data.incr[i];
     this.data.dirs[i] = d;
-    this.data.incr[i] = incr;
     this.data.turn = Math.max(i + 1, this.data.turn);
 
     if (this.data.dirs.every(i => ~i)) {
       for (let i = 0; i < 2; ++i) {
         const d = this.data.dirs[i];
-        const incr = this.data.incr[i];
+
         const { data } = this;
         const snake = data.snakes[i];
         const h = [...snake[0]];
@@ -90,6 +89,6 @@ export class SnakeGame extends Game {
   }
 
   __isStepValidFormat(stepStr: string): string {
-    return /^[0-3]{2}[0-1]$/.test(stepStr) || /^[0-1][0-3]$/.test(stepStr) ? '' : 'invalid';
+    return /^[0-1][0-3]$/.test(stepStr) ? '' : 'invalid';
   }
 }
