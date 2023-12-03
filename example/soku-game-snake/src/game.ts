@@ -1,4 +1,3 @@
-import * as console from 'console';
 import { Game, GameImpl } from '@soku-games/core';
 import { initialGrid } from './util';
 import { dir } from './constants';
