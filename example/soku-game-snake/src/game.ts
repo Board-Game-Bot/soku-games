@@ -12,7 +12,7 @@ export class SnakeGame extends Game {
     snakes: [],
     dirs: [-1, -1],
     incr: [-1, -1],
-    turn: -1,
+    turn: 0,
   };
 
   toString(): string {
