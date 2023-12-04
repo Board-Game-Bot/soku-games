@@ -37,10 +37,10 @@ export const Grid = React.memo((props: Props) => {
   function handleClick(i: number, r: number, c: number) {
     if (i !== 2)
       return;
-    if (!couldControl[game?.turn ?? 0])
+    if (!couldControl[game?.data.turn ?? 0])
       return;
 
-    emit?.(`${game?.turn}${r}${c}`);
+    emit?.(`${game?.data.turn}${r}${c}`);
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CustomEvent, LifeCycle } from '@soku-games/core';
-import { SnakeGame } from '../game';
-import { SnakeSnapshot } from '../types';
+import { SnakeGame } from '../core/game.js';
+import { SnakeSnapshot } from '../core/types.js';
 import { Wall } from './Wall';
 import { Snake } from './Snake';
 import { GameContext } from './context';

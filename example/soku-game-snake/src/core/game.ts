@@ -1,7 +1,7 @@
 import { Game, GameImpl } from '@soku-games/core';
-import { initialGrid } from './util';
-import { dir } from './constants';
-import { P, SnakeSnapshot } from './types';
+import { initialGrid } from './util.js';
+import { dir } from './constants.js';
+import { P, SnakeSnapshot } from './types.js';
 
 @GameImpl('snake')
 export class SnakeGame extends Game {

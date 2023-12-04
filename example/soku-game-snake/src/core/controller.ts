@@ -1,5 +1,5 @@
 import { GamePlugin, GamePluginImpl } from '@soku-games/core';
-import { SnakeGame } from './game';
+import { SnakeGame } from './game.js';
 
 @GamePluginImpl('snake-controller')
 export class ConsoleSnakeController extends GamePlugin {

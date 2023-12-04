@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReversiGame } from '../game';
+import { ReversiGame } from '../core/game';
 
 interface ContextType {
   game?: ReversiGame;

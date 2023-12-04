@@ -1,6 +1,6 @@
 import React from 'react';
 import { LifeCycle } from '@soku-games/core';
-import { P } from '../../types';
+import { P } from '../../core/types.js';
 import { useGameContext } from '../context';
 
 interface Props {
