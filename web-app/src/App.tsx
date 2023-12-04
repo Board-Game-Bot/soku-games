@@ -1,25 +1,39 @@
 import { buildGame, Game, NewGenerator } from '@soku-games/core';
+import * as core from '@soku-games/core';
 
-import 'soku-game-snake/core';
-import 'soku-game-snake/screen';
-import 'soku-game-reversi/core';
-import 'soku-game-reversi/screen';
-import 'soku-game-backgammon/core';
-import 'soku-game-backgammon/screen';
+import { createSignal, For, onMount } from 'solid-js';
+import { downloadGame, loadingMap, setLoadingMap } from './utils';
 
-import { createEffect, createSignal, For } from 'solid-js';
+Object.assign(window, {
+  core,
+});
 
 export function App() {
   const [gameName, setGameName] = createSignal('snake');
 
   const games = ['snake', 'reversi', 'backgammon'];
+  const versions = ['1.7.3', '1.6.0', '0.5.1'];
+
+  onMount(() => {
+    games.forEach((gameName, i) => {
+      const ok = () => {
+        const cnt = loadingMap()[gameName] ?? 0;
+        setLoadingMap({
+          ...loadingMap(),
+          [gameName]: cnt + 1,
+        });
+      };
+      downloadGame(`soku-game-${gameName}`, versions[i], 'core', ok);
+      downloadGame(`soku-game-${gameName}`, versions[i], 'screen', ok);
+    });
+  });
 
   return (
     <div class={'w-screen h-screen flex justify-center items-center'}>
       <div>
         <For each={games}>
           {(gameName) => 
-            <button onClick={() => setGameName(gameName)}>
+            <button onClick={() => setGameName(gameName)} disabled={loadingMap()[gameName] !== 2}>
               {gameName}
             </button>
           }
@@ -62,13 +76,9 @@ const TheGame = (props: Props) => {
     game?.start();
   }
 
-  createEffect(() => {
-    handlePrepare();
-  });
-
   return (
     <>
-      <button>prepare</button>
+      <button onClick={handlePrepare}>prepare</button>
       <button onClick={handleStart}>start {props.gameName}</button>
       <div class={'ma w-1200px aspect-ratio-video bg-black flex justify-center items-center'} ref={el => ref = el} />
     </>
