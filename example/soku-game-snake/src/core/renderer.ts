@@ -1,6 +1,6 @@
 import { CustomEvent, GamePlugin, GamePluginImpl, LifeCycle } from '@soku-games/core';
-import { SnakeGame } from './game';
-import { deepClone } from './util';
+import { SnakeGame } from './game.js';
+import { deepClone } from './util.js';
 
 /**
  * console 渲染

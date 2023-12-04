@@ -1,6 +1,6 @@
 import { Generator, GeneratorImpl } from '@soku-games/core';
-import { deepClone } from './util';
-import { dir } from './constants';
+import { deepClone } from './util.js';
+import { dir } from './constants.js';
 
 @GeneratorImpl('snake')
 export class SnakeGenerator extends Generator {

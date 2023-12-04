@@ -1,7 +1,9 @@
 import { buildGame, Game, NewGenerator } from '@soku-games/core';
 
-import 'soku-game-snake';
-import 'soku-game-reversi';
+import 'soku-game-snake/core';
+import 'soku-game-snake/screen';
+import 'soku-game-reversi/core';
+import 'soku-game-reversi/screen';
 import 'soku-game-backgammon/core';
 import 'soku-game-backgammon/screen';
 

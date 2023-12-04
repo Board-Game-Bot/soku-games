@@ -1,7 +1,7 @@
 import React from 'react';
 import { LifeCycle } from '@soku-games/core';
-import { ReversiGame } from '../game';
-import { Extra } from '../types';
+import { ReversiGame } from '../core/game';
+import { Extra } from '../core/types';
 import { Grid } from './grid';
 import { GameContext } from './context';
 

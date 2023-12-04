@@ -1,9 +1,9 @@
 import { GamePlugin, GamePluginImpl } from '@soku-games/core';
 import { createRoot } from 'react-dom/client';
 import React from 'react';
-import { ReversiGame } from './game';
-import { Extra } from './types';
-import { App } from './jsx';
+import { ReversiGame } from '../core/game';
+import { Extra } from '../core/types';
+import { App } from './index';
 
 @GamePluginImpl('reversi-screen')
 export class ReversiScreen extends GamePlugin {

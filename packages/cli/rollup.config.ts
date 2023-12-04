@@ -4,7 +4,7 @@ import copy from 'rollup-plugin-copy';
 
 export default defineConfig([
   {
-    input: './src/index.ts',
+    input: './src/core.ts',
     output: [
       {
         file: './dist/index.js',

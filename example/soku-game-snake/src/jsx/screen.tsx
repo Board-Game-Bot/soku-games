@@ -1,9 +1,9 @@
 import { GamePlugin, GamePluginImpl } from '@soku-games/core';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { SnakeGame } from './game';
-import { Extra } from './types';
-import { App } from './jsx';
+import { SnakeGame } from '../core/game.js';
+import { Extra } from '../core/types.js';
+import { App } from './index.js';
 
 @GamePluginImpl('snake-screen')
 export class SnakeScreen extends GamePlugin {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SnakeGame } from '../game';
+import { SnakeGame } from '../core/game.js';
 
 interface ContextType {
   game?: SnakeGame;
