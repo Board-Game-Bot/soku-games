@@ -6,46 +6,27 @@ export default defineConfig(({ mode }) => {
     react(),
   ];
   function makeConfig(name: string): UserConfig {
+    const suffix = (format: string) =>
+      format === 'iife'
+        ? 'js'
+        : format === 'es'
+          ? 'mjs'
+          : 'cjs';
     return {
       plugins,
       build: {
+        lib: {
+          entry: `./src/${name}.ts`,
+          name: 'index',
+          fileName: (format) => `index.${suffix(format)}`,
+          formats: ['iife', 'cjs', 'es'],
+        },
         outDir: `./dist-${name}`,
         rollupOptions: {
-          input: `./src/${name}.ts`,
-          output: {
-            name: 'index',
-            entryFileNames: 'index.js',
-            format: 'iife',
-          },
           external: ['@soku-games/core'],
         },
       },
     };
   }
-  if (!['production', 'development'].includes(mode))
-    return makeConfig(mode);
-  else
-    return {
-      plugins,
-      build: {
-        outDir: './dist',
-        rollupOptions: {
-          input: {
-            'core/index': './src/core.ts',
-            'screen/index': './src/screen.ts',
-          },
-          output: [
-            {
-              entryFileNames: '[name].cjs',
-              format: 'cjs',
-            },
-            {
-              entryFileNames: '[name].mjs',
-              format: 'esm',
-            },
-          ],
-          external: ['@soku-games/core'],
-        },
-      },
-    };
+  return makeConfig(mode);
 });

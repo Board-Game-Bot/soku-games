@@ -1,6 +1,6 @@
 {
   "name": "soku-game-snake",
-  "version": "1.7.3",
+  "version": "1.7.6",
   "description": "The example: soku-game-snake.",
   "scripts": {
     "build": "./build.sh",

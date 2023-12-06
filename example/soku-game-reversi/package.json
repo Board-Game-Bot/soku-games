@@ -1,6 +1,6 @@
 {
   "name": "soku-game-reversi",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "The example: soku-game-reversi.",
   "scripts": {
     "build": "./build.sh",
