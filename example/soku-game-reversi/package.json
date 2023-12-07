@@ -1,6 +1,6 @@
 {
   "name": "soku-game-reversi",
-  "version": "1.6.4",
+  "version": "1.6.6",
   "description": "The example: soku-game-reversi.",
   "scripts": {
     "build": "./build.sh",
@@ -8,10 +8,12 @@
   },
   "exports": {
     "./core": {
+      "browser": "./dist/core/index.iife.js",
       "import": "./dist/core/index.esm.js",
       "require": "./dist/core/index.cjs.js"
     },
     "./screen": {
+      "browser": "./dist/screen/index.iife.js",
       "import": "./dist/screen/index.esm.js",
       "require": "./dist/screen/index.cjs.js"
     }
