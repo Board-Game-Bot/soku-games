@@ -1,6 +1,6 @@
 {
   "name": "soku-game-snake",
-  "version": "1.7.3",
+  "version": "1.7.9",
   "description": "The example: soku-game-snake.",
   "scripts": {
     "build": "./build.sh",
@@ -8,20 +8,19 @@
   },
   "exports": {
     "./core": {
-      "import": "./dist/core/index.mjs",
-      "require": "./dist/core/index.cjs"
+      "import": "./dist/core/index.esm.js",
+      "require": "./dist/core/index.cjs.js"
     },
     "./screen": {
-      "import": "./dist/screen/index.mjs",
-      "require": "./dist/screen/index.cjs"
+      "import": "./dist/screen/index.esm.js",
+      "require": "./dist/screen/index.cjs.js"
     }
   },
   "files": [
     "dist"
   ],
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "type": "module",
   "keywords": [
     "soku-game"

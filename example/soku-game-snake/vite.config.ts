@@ -12,40 +12,21 @@ export default defineConfig(({ mode }) => {
         outDir: `./dist-${name}`,
         rollupOptions: {
           input: `./src/${name}.ts`,
-          output: {
+          output: [{
             name: 'index',
-            entryFileNames: 'index.js',
+            entryFileNames: 'index.iife.js',
             format: 'iife',
-          },
+          }, {
+            entryFileNames: 'index.cjs.js',
+            format: 'cjs',
+          }, {
+            entryFileNames: 'index.esm.js',
+            format: 'esm',
+          }],
           external: ['@soku-games/core'],
         },
       },
     };
   }
-  if (!['production', 'development'].includes(mode))
-    return makeConfig(mode);
-  else
-    return {
-      plugins,
-      build: {
-        outDir: './dist',
-        rollupOptions: {
-          input: {
-            'core/index': './src/core.ts',
-            'screen/index': './src/screen.ts',
-          },
-          output: [
-            {
-              entryFileNames: '[name].cjs',
-              format: 'cjs',
-            },
-            {
-              entryFileNames: '[name].mjs',
-              format: 'esm',
-            },
-          ],
-          external: ['@soku-games/core'],
-        },
-      },
-    };
+  return makeConfig(mode);
 });

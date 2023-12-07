@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGameContext } from '../context';
+import { useGameContext } from '../context.js';
 
 interface Props {
   walls: number[][];
