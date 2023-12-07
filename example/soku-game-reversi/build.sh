@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+rm -rf dist
+
 npx vite build -m core
 npx vite build -m screen
 

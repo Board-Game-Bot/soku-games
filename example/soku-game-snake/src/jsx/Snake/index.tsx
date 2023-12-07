@@ -1,7 +1,7 @@
 import React from 'react';
 import { LifeCycle } from '@soku-games/core';
 import { P } from '../../core/types.js';
-import { useGameContext } from '../context';
+import { useGameContext } from '../context.js';
 
 interface Props {
   index: number;
