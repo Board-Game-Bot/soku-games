@@ -75,6 +75,9 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@soku-games/vite-plugin':
+        specifier: ^1.0.0
+        version: 1.0.0(vite@4.4.8)
       '@types/node':
         specifier: ^20.5.1
         version: 20.9.0
@@ -112,6 +115,9 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@soku-games/vite-plugin':
+        specifier: ^1.0.0
+        version: 1.0.0(vite@4.4.8)
       '@types/node':
         specifier: ^20.5.1
         version: 20.9.0
@@ -1214,6 +1220,14 @@ packages:
   /@soku-games/core@0.1.2:
     resolution: {integrity: sha512-RdBg3YtMwX2c7oSfqzgU62WBiGLGt2aXXmvqhEVibXS2X2LGLicrV2X1Sj+PSss/SzaYloUpxrpgXgNlulxkeA==}
     dev: false
+
+  /@soku-games/vite-plugin@1.0.0(vite@4.4.8):
+    resolution: {integrity: sha512-h7JgYQVoSKAJ1A4Ii9P4al7H70/83ZicjZiQMQboy6N2BW5VHAhDG0QfObjx1mDYjZRLfgXcjPjSw8p0jyqdQQ==}
+    peerDependencies:
+      vite: ^5.0.0
+    dependencies:
+      vite: 4.4.8(@types/node@20.9.0)(sass@1.69.5)
+    dev: true
 
   /@types/babel__core@7.20.1:
     resolution: {integrity: sha512-aACu/U/omhdk15O4Nfb+fHgH/z3QsfQzpnvRZhYhThms83ZnAOZz7zZAWO7mn2yyNQaA4xTO8GLK3uqFU4bYYw==}

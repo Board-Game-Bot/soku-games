@@ -1,34 +1,12 @@
-import { defineConfig, PluginOption, UserConfig } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
+import sokuGames from '@soku-games/vite-plugin';
 
-export default defineConfig(({ mode }) => {
-  const plugins: PluginOption[] = [
+export default defineConfig({
+  plugins: [
     cssInjectedByJsPlugin(),
     react(),
-  ];
-  function makeConfig(name: string): UserConfig {
-    return {
-      plugins,
-      build: {
-        outDir: `./dist-${name}`,
-        rollupOptions: {
-          input: `./src/${name}.ts`,
-          output: [{
-            name: 'index',
-            entryFileNames: 'index.iife.js',
-            format: 'iife',
-          }, {
-            entryFileNames: 'index.cjs.js',
-            format: 'cjs',
-          }, {
-            entryFileNames: 'index.esm.js',
-            format: 'esm',
-          }],
-          external: ['@soku-games/core'],
-        },
-      },
-    };
-  }
-  return makeConfig(mode);
+    sokuGames(),
+  ],
 });
